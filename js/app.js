@@ -341,6 +341,9 @@ let targetPlayerCount = (() => {
 let completedPlayers = []; // Array of { name: string, likes: number[] }
 let soloLikedCards = [];
 let soloCurrentWinnerIdx = 0;
+let soloDuelQueue = [];
+let soloDuelChamp = null;
+let soloDuelNextIdx = 1;
 let lastMatchMeta = null;
 
 function setPlayerCount(count) {
@@ -875,6 +878,10 @@ function setLang(lang) {
     }
     if (!document.getElementById('screen-match').classList.contains('hidden') && matchedCard) {
         updateWinnerAffiliateLinks(matchedCard);
+    }
+    const soloDuelEl = document.getElementById('screen-solo-duel');
+    if (soloDuelEl && !soloDuelEl.classList.contains('hidden')) {
+        renderSoloDuelUI();
     }
 }
 
@@ -1461,12 +1468,12 @@ function finishSwipingRound() {
 
     // FALL 0: SOLO-MODUS (1 Person entscheidet für sich alleine)
     if (targetPlayerCount === 1 && completedPlayers.length === 0) {
-        if (deck.mode === 'chores') {
-            completedPlayers = [{ name: myName, likes: [...myLikes] }];
-            triggerChoresResultScreen();
-            return;
-        }
         if (myLikes.length === 0) {
+            if (deck.mode === 'chores') {
+                completedPlayers = [{ name: myName, likes: [] }];
+                triggerChoresResultScreen();
+                return;
+            }
             const inputEl = document.getElementById('p1-custom-idea-input');
             if (inputEl) inputEl.value = '';
             showScreen('screen-p1-zero');
@@ -1478,7 +1485,15 @@ function finishSwipingRound() {
         }
         soloCurrentWinnerIdx = 0;
         lastMatchMeta = { mode: 'solo', totalLiked: soloLikedCards.length };
-        triggerMatchScreen(soloLikedCards[0]);
+
+        // Wenn nur 1 Karte geliked wurde -> Direkt Gewinner!
+        if (soloLikedCards.length === 1) {
+            triggerMatchScreen(soloLikedCards[0]);
+            return;
+        }
+
+        // Wenn 2 oder mehr Karten geliked wurden -> 1-gegen-1 K.O.-Stechen starten!
+        startSoloDuel(soloLikedCards);
         return;
     }
 
@@ -1592,6 +1607,103 @@ function finishSwipingRound() {
 }
 
 // Fall A: Spieler 1 platziert eine eigene Idee direkt in diese Runde
+function startSoloDuel(cardsQueue) {
+    soloDuelQueue = [...cardsQueue];
+    soloDuelChamp = soloDuelQueue[0];
+    soloDuelNextIdx = 1;
+    showScreen('screen-solo-duel');
+    renderSoloDuelUI();
+}
+
+function renderSoloDuelCardSlot(slotSuffix, card) {
+    if (!card) return;
+    const imgEl = document.getElementById(`duel-img-${slotSuffix}`);
+    const emojiEl = document.getElementById(`duel-emoji-${slotSuffix}`);
+    const tagEl = document.getElementById(`duel-tag-${slotSuffix}`);
+    const titleEl = document.getElementById(`duel-title-${slotSuffix}`);
+    const descEl = document.getElementById(`duel-desc-${slotSuffix}`);
+
+    const fluentFile = (typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji) ? FLUENT_EMOJI_MAP[card.emoji] : null;
+    if (fluentFile && imgEl) {
+        imgEl.src = `options_gallery/images/${fluentFile}`;
+        imgEl.alt = card.title[currentLang] || card.title.de || '';
+        imgEl.classList.remove('hidden');
+        if (emojiEl) emojiEl.classList.add('hidden');
+    } else {
+        if (imgEl) imgEl.classList.add('hidden');
+        if (emojiEl) {
+            emojiEl.innerText = card.emoji || '✨';
+            emojiEl.classList.remove('hidden');
+        }
+    }
+
+    if (tagEl) tagEl.innerText = (card.tag && (card.tag[currentLang] || card.tag.de)) || '';
+    if (titleEl) titleEl.innerText = (card.title && (card.title[currentLang] || card.title.de)) || '';
+    if (descEl) descEl.innerText = (card.desc && (card.desc[currentLang] || card.desc.de)) || '';
+}
+
+function renderSoloDuelUI() {
+    const challenger = soloDuelQueue[soloDuelNextIdx];
+    if (!soloDuelChamp || !challenger) return;
+
+    const t = I18N[currentLang] || I18N.de;
+    const deck = DECKS[currentDeckId];
+    const isChores = deck && deck.mode === 'chores';
+    const totalDuels = Math.max(1, soloDuelQueue.length - 1);
+    const curDuel = Math.min(totalDuels, soloDuelNextIdx);
+
+    const badgeEl = document.getElementById('t-duel-badge');
+    const titleEl = document.getElementById('t-duel-title');
+    const subEl = document.getElementById('t-duel-sub');
+    const coinBtnEl = document.getElementById('t-duel-coin-btn');
+    const backBtnEl = document.getElementById('t-duel-back-btn');
+
+    if (badgeEl) {
+        badgeEl.innerText = (t.soloDuelBadge || 'K.O.-Stechen · Duell {cur} von {total}')
+            .replace('{cur}', curDuel)
+            .replace('{total}', totalDuels);
+    }
+    if (titleEl) {
+        titleEl.innerText = isChores
+            ? (t.soloDuelChoresTitle || 'Womit fängst du zuerst an?')
+            : (t.soloDuelTitle || 'Bauchgefühl: Eins gegen Eins!');
+    }
+    if (subEl) {
+        subEl.innerText = isChores
+            ? (t.soloDuelChoresSub || 'Tippe die Aufgabe an, die du jetzt als Erstes anpackst:')
+            : (t.soloDuelSub || 'Du hast mehrere Favoriten gewählt. Tippe spontan an, worauf du jetzt mehr Lust hast:');
+    }
+    if (coinBtnEl) coinBtnEl.innerText = t.soloDuelCoinBtn || 'Münze werfen (Beides gut)';
+    if (backBtnEl) backBtnEl.innerText = t.retryBtn || 'Zurück zur Übersicht';
+
+    renderSoloDuelCardSlot('a', soloDuelChamp);
+    renderSoloDuelCardSlot('b', challenger);
+}
+
+function pickSoloDuelWinner(choice) {
+    playSwipeClick(true);
+    const challenger = soloDuelQueue[soloDuelNextIdx];
+    if (choice === 'b') {
+        soloDuelChamp = challenger;
+    } else if (choice === 'coin') {
+        if (Math.random() < 0.5 && challenger) {
+            soloDuelChamp = challenger;
+        }
+    }
+
+    soloDuelNextIdx++;
+    if (soloDuelNextIdx < soloDuelQueue.length) {
+        renderSoloDuelUI();
+    } else {
+        // Solo Champion steht fest! Sortiere ihn auf Platz 1 von soloLikedCards
+        const rest = soloLikedCards.filter(c => c.id !== soloDuelChamp.id);
+        soloLikedCards = [soloDuelChamp, ...rest];
+        soloCurrentWinnerIdx = 0;
+        lastMatchMeta = { mode: 'solo', totalLiked: soloLikedCards.length };
+        triggerMatchScreen(soloDuelChamp);
+    }
+}
+
 function injectPlayer1CustomIdea() {
     const inputEl = document.getElementById('p1-custom-idea-input');
     const ideaText = inputEl ? inputEl.value.trim() : '';
@@ -2396,7 +2508,9 @@ function updateHeroRoundCardUI() {
         }
     } else {
         if (badgeEl) badgeEl.innerText = t.badge;
-        if (titleEl) titleEl.innerHTML = t.heroTitle;
+        if (titleEl) {
+            titleEl.innerHTML = (targetPlayerCount === 1 && t.heroTitleSolo) ? t.heroTitleSolo : t.heroTitle;
+        }
         if (subEl) {
             if (targetPlayerCount === 1) {
                 subEl.innerText = t.heroSubSolo || t.heroSub;
@@ -2409,6 +2523,23 @@ function updateHeroRoundCardUI() {
         if (ctaEl) ctaEl.innerText = t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten';
         if (ringEl) ringEl.setAttribute('stroke-dashoffset', '175');
         if (imgEl) imgEl.src = 'options_gallery/images/spaghetti_3d.png';
+    }
+
+    // Update Chores Card Labels for Solo vs. Duo/Group Mode
+    const macroChoresSubEl = document.getElementById('t-macro-chores-sub');
+    const heroChoresTitleEl = document.getElementById('t-hero-chores-title');
+    const heroChoresSubEl = document.getElementById('t-hero-chores-sub');
+    const heroChoresBtnEl = document.getElementById('t-hero-chores-btn');
+    if (targetPlayerCount === 1) {
+        if (macroChoresSubEl && t.macroChoresSubSolo) macroChoresSubEl.innerText = t.macroChoresSubSolo;
+        if (heroChoresTitleEl && t.heroChoresTitleSolo) heroChoresTitleEl.innerText = t.heroChoresTitleSolo;
+        if (heroChoresSubEl && t.heroChoresSubSolo) heroChoresSubEl.innerText = t.heroChoresSubSolo;
+        if (heroChoresBtnEl && t.heroChoresBtnSolo) heroChoresBtnEl.innerText = t.heroChoresBtnSolo;
+    } else {
+        if (macroChoresSubEl && t.macroChoresSub) macroChoresSubEl.innerText = t.macroChoresSub;
+        if (heroChoresTitleEl && t.heroChoresTitle) heroChoresTitleEl.innerText = t.heroChoresTitle;
+        if (heroChoresSubEl && t.heroChoresSub) heroChoresSubEl.innerText = t.heroChoresSub;
+        if (heroChoresBtnEl && t.heroChoresBtn) heroChoresBtnEl.innerText = t.heroChoresBtn;
     }
 }
 
@@ -2439,6 +2570,7 @@ function showScreen(screenId) {
         'screen-game',
         'screen-share',
         'screen-p1-zero',
+        'screen-solo-duel',
         'screen-match',
         'screen-nomatch',
         'screen-chores-result'
