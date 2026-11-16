@@ -263,9 +263,10 @@
     </div>
 
     <footer class="pt-4 pb-2 border-t border-[var(--border)] text-[11.5px] text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-2">
-        <div id="g-footer-note">* Hinweis: Einige Links sind Partner-Links (u. a. Amazon &amp; Partnernetzwerke). Für euch entstehen keine Mehrkosten.</div>
-        <div class="flex items-center gap-2">
-            <span class="opacity-60 text-[11px]">ID: 2d31</span>
+        <div id="g-footer-note">* Hinweis: Einige Links sind Partner-Links (u. a. Amazon, Awin &amp; Takeads). Für euch entstehen keine Mehrkosten.</div>
+        <div class="flex items-center gap-3">
+            <a href="/#impressum" id="g-footer-impressum" class="hover:text-[var(--text-primary)] transition-colors">Impressum</a>
+            <a href="/#datenschutz" id="g-footer-datenschutz" class="hover:text-[var(--text-primary)] transition-colors">Datenschutz</a>
             <a href="/" id="g-footer-back" class="font-bold text-[var(--text-primary)] hover:underline">← Agreesy</a>
         </div>
     </footer>
@@ -391,7 +392,9 @@
                 s3Btn2: 'Hotels bei Booking.com →',
                 s3Btn3: 'Tickets bei Eventim →',
                 s3Btn4: 'Spiele für Paare (Amazon) →',
-                footerNote: '* Hinweis: Einige Links sind Partner-Links (u. a. Amazon & Partnernetzwerke). Für euch entstehen keine Mehrkosten.'
+                footerNote: '* Hinweis: Einige Links sind Partner-Links (u. a. Amazon, Awin & Takeads). Für euch entstehen keine Mehrkosten.',
+                impressum: 'Impressum',
+                datenschutz: 'Datenschutz'
             },
             en: {
                 back: '← Back',
@@ -422,7 +425,9 @@
                 s3Btn2: 'Hotels on Booking.com →',
                 s3Btn3: 'Live Tickets on Ticketmaster →',
                 s3Btn4: 'Couple Games (Amazon) →',
-                footerNote: '* Note: Some links are affiliate partner links. There is no extra cost to you.'
+                footerNote: '* Note: Some links are affiliate partner links (Amazon, Awin & Takeads). There is no extra cost to you.',
+                impressum: 'Legal Notice',
+                datenschutz: 'Privacy Policy'
             },
             es: {
                 back: '← Volver',
@@ -453,7 +458,9 @@
                 s3Btn2: 'Hoteles en Booking.com →',
                 s3Btn3: 'Entradas en Ticketmaster →',
                 s3Btn4: 'Juegos para parejas (Amazon) →',
-                footerNote: '* Nota: Algunos enlaces son de afiliados. No suponen ningún coste adicional para vosotros.'
+                footerNote: '* Nota: Algunos enlaces son de afiliados (Amazon, Awin y Takeads). No suponen ningún coste adicional para vosotros.',
+                impressum: 'Aviso Legal',
+                datenschutz: 'Privacidad'
             },
             fr: {
                 back: '← Retour',
@@ -484,7 +491,9 @@
                 s3Btn2: 'Hôtels sur Booking.com →',
                 s3Btn3: 'Billets sur Ticketmaster →',
                 s3Btn4: 'Jeux pour couples (Amazon) →',
-                footerNote: '* Note : Certains liens sont des liens partenaires affiliés, sans aucun coût supplémentaire pour vous.'
+                footerNote: '* Note : Certains liens sont des liens partenaires affiliés (Amazon, Awin et Takeads), sans aucun coût supplémentaire pour vous.',
+                impressum: 'Mentions Légales',
+                datenschutz: 'Confidentialité'
             },
             it: {
                 back: '← Indietro',
@@ -515,7 +524,9 @@
                 s3Btn2: 'Hotel su Booking.com →',
                 s3Btn3: 'Biglietti su TicketOne →',
                 s3Btn4: 'Giochi di coppia (Amazon) →',
-                footerNote: '* Nota: Alcuni link sono link di affiliazione, senza alcun costo aggiuntivo per voi.'
+                footerNote: '* Nota: Alcuni link sono link di affiliazione (Amazon, Awin e Takeads), senza alcun costo aggiuntivo per voi.',
+                impressum: 'Note Legali',
+                datenschutz: 'Privacy'
             }
         };
 
@@ -576,6 +587,10 @@
             s3b4.textContent = t.s3Btn4; s3b4.href = urls.s3Url4;
 
             document.getElementById('g-footer-note').textContent = t.footerNote;
+            const impEl = document.getElementById('g-footer-impressum');
+            const privEl = document.getElementById('g-footer-datenschutz');
+            if (impEl && t.impressum) impEl.textContent = t.impressum;
+            if (privEl && t.datenschutz) privEl.textContent = t.datenschutz;
             const menu = document.getElementById('g-lang-menu');
             if (menu) menu.classList.add('hidden');
         }
