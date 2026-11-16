@@ -327,11 +327,79 @@ let activeRoundCards = []; // Die für diese Runde gezogenen & gemischten Karten
 let partnerRoundCardIds = null; // Welche Karten-IDs Spieler 1 in seiner Runde hatte
 let partnerSenderName = null;   // Name oder Codename des Partners
 let myLikes = [];          // Card-IDs mit JA-Swipe
-let partnerLikes = null;   // null = Spieler 1; Array = Spieler 2
+let partnerLikes = null;   // null = Spieler 1; Array = Spieler 2+
 let matchedCard = null;
 let timerInterval = null;
 let timeLeft = 30;
 let selectedCategory = 'all';
+
+// Player Count & Multi-Player Chain State (1 = Solo, 2 = Duo, 3..6 = Group)
+let targetPlayerCount = (() => {
+    const saved = parseInt(localStorage.getItem('agreesy_player_count') || '2', 10);
+    return (!isNaN(saved) && saved >= 1 && saved <= 6) ? saved : 2;
+})();
+let completedPlayers = []; // Array of { name: string, likes: number[] }
+let soloLikedCards = [];
+let soloCurrentWinnerIdx = 0;
+let lastMatchMeta = null;
+
+function setPlayerCount(count) {
+    const parsed = parseInt(count, 10);
+    targetPlayerCount = (!isNaN(parsed) && parsed >= 1 && parsed <= 6) ? parsed : 2;
+    try {
+        localStorage.setItem('agreesy_player_count', String(targetPlayerCount));
+    } catch (e) {}
+    updatePlayerModeUI();
+    updateHeroRoundCardUI();
+}
+
+function selectGroupMode() {
+    if (targetPlayerCount < 3) {
+        setPlayerCount(3);
+    } else {
+        updatePlayerModeUI();
+    }
+}
+
+function updatePlayerModeUI() {
+    const btn1 = document.getElementById('player-mode-btn-1');
+    const btn2 = document.getElementById('player-mode-btn-2');
+    const btnGroup = document.getElementById('player-mode-btn-group');
+    const picker = document.getElementById('group-size-picker');
+    const badge = document.getElementById('group-count-badge');
+
+    const activeCls = "h-9 rounded-full text-[12px] font-bold flex items-center justify-center gap-1.5 transition-all btn-primary shadow-sm";
+    const inactiveCls = "h-9 rounded-full text-[12px] font-bold flex items-center justify-center gap-1.5 transition-all text-secondary-role hover:text-primary-role";
+
+    if (btn1) btn1.className = (targetPlayerCount === 1) ? activeCls : inactiveCls;
+    if (btn2) btn2.className = (targetPlayerCount === 2) ? activeCls : inactiveCls;
+    if (btnGroup) btnGroup.className = (targetPlayerCount >= 3) ? activeCls : inactiveCls;
+
+    if (badge) {
+        if (targetPlayerCount >= 3) {
+            badge.innerText = `(${targetPlayerCount})`;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    if (picker) {
+        if (targetPlayerCount >= 3) {
+            picker.classList.remove('hidden');
+            [3, 4, 5, 6].forEach(n => {
+                const b = document.getElementById(`group-count-btn-${n}`);
+                if (b) {
+                    b.className = (n === targetPlayerCount)
+                        ? "w-8 h-7 rounded-full text-[12px] font-bold transition-all btn-primary"
+                        : "w-8 h-7 rounded-full text-[12px] font-bold transition-all surface-raised text-secondary-role hover:text-primary-role";
+                }
+            });
+        } else {
+            picker.classList.add('hidden');
+        }
+    }
+}
 
 // Custom Deck Builder State
 let customDeckMode = 'match';
@@ -462,16 +530,18 @@ function checkIncomingChallenge() {
         }
     }
 
-    // FALL 1: Standard-Deck Challenge (#m=deckId:likes:roundPool)
+    // FALL 1: Standard-Deck Challenge (#m=deckId:likes:roundPool:customIdea:totalPlayers:namesPipe)
     if (hash && hash.startsWith('#m=')) {
         try {
             const raw = hash.replace('#m=', '').split('&')[0];
-            const decodedStr = atob(raw); // Format: "dinner:0,14,5:14,3,0,19,5,8,11,2"
+            const decodedStr = atob(raw); // Format: "dinner:0,14,5:14,3,0,19,5,8,11,2::3:Felix|Max"
             const parts = decodedStr.split(':');
             const deckId = parts[0];
             const likesStr = parts[1] || '';
             const poolStr = parts[2] || '';
             const customIdeaEncoded = parts[3] || '';
+            const totalPlayersPart = parseInt(parts[4] || '2', 10);
+            const namesPipeEncoded = parts[5] || '';
 
             if (DECKS[deckId]) {
                 if (customIdeaEncoded) {
@@ -480,20 +550,34 @@ function checkIncomingChallenge() {
                     DECKS[deckId].cards.push({
                         id: 999,
                         emoji: '✨',
-                        tag: { de: 'Vorschlag', en: 'Suggestion', es: 'Sugerencia' },
-                        title: { de: ideaText, en: ideaText, es: ideaText },
-                        desc: { de: 'Eigene Idee für diese Runde', en: 'Custom idea for this round', es: 'Idea propia para esta ronda' }
+                        tag: { de: 'Vorschlag', en: 'Suggestion', es: 'Sugerencia', fr: 'Suggestion', it: 'Proposta' },
+                        title: { de: ideaText, en: ideaText, es: ideaText, fr: ideaText, it: ideaText },
+                        desc: { de: 'Eigene Idee für diese Runde', en: 'Custom idea for this round', es: 'Idea propia para esta ronda', fr: 'Idée personnelle pour cette manche', it: 'Idea personale per questa manche' }
                     });
                 }
                 currentDeckId = deckId;
-                partnerLikes = likesStr ? likesStr.split(',').filter(s => s !== '').map(Number) : [];
+                targetPlayerCount = (!isNaN(totalPlayersPart) && totalPlayersPart >= 2 && totalPlayersPart <= 6) ? totalPlayersPart : 2;
+                updatePlayerModeUI();
+
+                const likeGroups = likesStr.split('|');
+                const nameGroups = namesPipeEncoded
+                    ? namesPipeEncoded.split('|').map(s => { try { return decodeURIComponent(s); } catch (e) { return s; } })
+                    : [partnerSenderName || 'Person 1'];
+
+                completedPlayers = likeGroups.map((lg, idx) => ({
+                    name: nameGroups[idx] || (`Person ${idx + 1}`),
+                    likes: lg ? lg.split(',').filter(s => s !== '').map(Number) : []
+                }));
+
+                partnerSenderName = completedPlayers.map(p => p.name).join(', ');
+                partnerLikes = completedPlayers[0] ? completedPlayers[0].likes : [];
                 partnerRoundCardIds = poolStr ? poolStr.split(',').filter(s => s !== '').map(Number) : null;
 
                 if (DECKS[deckId].category) {
                     selectedCategory = DECKS[deckId].category;
                 }
 
-                // Jobs & Monte: SOFORTIGER START FÜR SPIELER 2 (Direkt in Karte 1!)
+                // Jobs & Monte: SOFORTIGER START FÜR NÄCHSTEN SPIELER (Direkt in Karte 1!)
                 setTimeout(() => {
                     startGame(deckId);
                 }, 80);
@@ -512,11 +596,27 @@ function checkIncomingChallenge() {
             if (payload && Array.isArray(payload.o) && payload.o.length >= 2) {
                 registerCustomDeckInMemory(payload.t, payload.m || 'match', payload.o);
                 currentDeckId = 'custom';
-                partnerLikes = Array.isArray(payload.l) ? payload.l.map(Number) : [];
+                const parsedTc = parseInt(payload.tc || '2', 10);
+                targetPlayerCount = (!isNaN(parsedTc) && parsedTc >= 2 && parsedTc <= 6) ? parsedTc : 2;
+                updatePlayerModeUI();
+
+                if (Array.isArray(payload.voters) && payload.voters.length > 0) {
+                    completedPlayers = payload.voters.map((v, idx) => ({
+                        name: v.n || (`Person ${idx + 1}`),
+                        likes: Array.isArray(v.l) ? v.l.map(Number) : []
+                    }));
+                } else {
+                    completedPlayers = [{
+                        name: partnerSenderName || 'Person 1',
+                        likes: Array.isArray(payload.l) ? payload.l.map(Number) : []
+                    }];
+                }
+                partnerSenderName = completedPlayers.map(p => p.name).join(', ');
+                partnerLikes = completedPlayers[0] ? completedPlayers[0].likes : [];
                 partnerRoundCardIds = null;
                 selectedCategory = 'all';
 
-                // Jobs & Monte: SOFORTIGER START FÜR SPIELER 2
+                // Jobs & Monte: SOFORTIGER START FÜR NÄCHSTEN SPIELER
                 setTimeout(() => {
                     startGame('custom');
                 }, 80);
@@ -695,6 +795,11 @@ function setLang(lang) {
     setText('t-pill-datenight', t.pillDatenight);
     setText('t-pill-weekend', t.pillWeekend);
     setText('t-pill-quickcook', t.pillQuickcook);
+    setText('t-mode-solo', t.modeSolo);
+    setText('t-mode-duo', t.modeDuo);
+    setText('t-mode-group', t.modeGroup);
+    setText('t-group-size-label', t.groupSizeLabel);
+    updatePlayerModeUI();
     renderProfileBlacklistUI();
     updateHeroRoundCardUI();
 
@@ -1125,7 +1230,11 @@ function startGame(deckId) {
         partnerLikes = null;
         partnerRoundCardIds = null;
         partnerSenderName = null;
+        completedPlayers = [];
         window.history.replaceState(null, null, window.location.pathname);
+    }
+    if (partnerLikes === null) {
+        completedPlayers = [];
     }
     currentDeckId = deckId;
     const deck = DECKS[currentDeckId];
@@ -1135,16 +1244,28 @@ function startGame(deckId) {
     currentCardIndex = 0;
     myLikes = [];
     matchedCard = null;
+    soloLikedCards = [];
+    soloCurrentWinnerIdx = 0;
+    lastMatchMeta = null;
 
     showScreen('screen-game');
 
     const p2LiveEl = document.getElementById('p2-live-indicator');
     const p2TextEl = document.getElementById('p2-live-text');
     if (p2LiveEl && p2TextEl) {
-        if (partnerLikes !== null) {
+        if (partnerLikes !== null && completedPlayers.length > 0) {
             const t = I18N[currentLang] || I18N.de;
-            const sender = partnerSenderName || t.choresPlayer1 || "Person 1";
-            p2TextEl.innerText = (t.p2LiveBanner || "{name} hat bereits gewählt").replace('{name}', sender);
+            if (targetPlayerCount >= 3) {
+                const curNum = Math.min(targetPlayerCount, completedPlayers.length + 1);
+                const namesStr = completedPlayers.map(p => p.name).join(', ');
+                p2TextEl.innerText = (t.groupLiveBanner || "Person {cur} von {total} · Bisher: {names}")
+                    .replace('{cur}', curNum)
+                    .replace('{total}', targetPlayerCount)
+                    .replace('{names}', namesStr);
+            } else {
+                const sender = partnerSenderName || t.choresPlayer1 || "Person 1";
+                p2TextEl.innerText = (t.p2LiveBanner || "{name} hat bereits gewählt").replace('{name}', sender);
+            }
             p2LiveEl.classList.remove('hidden');
         } else {
             p2LiveEl.classList.add('hidden');
@@ -1163,6 +1284,7 @@ function startFreshShuffleRound() {
     }
     partnerLikes = null;
     partnerRoundCardIds = null;
+    completedPlayers = [];
     window.history.replaceState(null, null, window.location.pathname);
     const banner = document.getElementById('p2-welcome-banner');
     if (banner) banner.classList.add('hidden');
@@ -1309,9 +1431,10 @@ function handleSwipe(isLike) {
     if (isLike) {
         myLikes.push(card.id);
 
-        // SUDDEN DEATH CHECK (Nur im klassischen Match-Modus!)
-        if (deck.mode !== 'chores' && partnerLikes !== null && partnerLikes.includes(card.id)) {
+        // SUDDEN DEATH CHECK (Im klassischen 2-Personen-Match-Modus!)
+        if (deck.mode !== 'chores' && targetPlayerCount === 2 && partnerLikes !== null && partnerLikes.includes(card.id)) {
             clearInterval(timerInterval);
+            lastMatchMeta = { mode: 'duo' };
             setTimeout(() => {
                 triggerMatchScreen(card);
             }, 220);
@@ -1333,48 +1456,136 @@ function handleSwipe(isLike) {
 function finishSwipingRound() {
     const deck = DECKS[currentDeckId];
     if (!deck) return;
+    const t = I18N[currentLang] || I18N.de;
+    const myName = getUserProfile().name;
 
-    // FALL A: Spieler 1 ist fertig -> Geheim-Link generieren mit &from=MyName
-    if (partnerLikes === null) {
-        // Wenn Spieler 1 im Match-Modus 0-mal JA gewischt hat -> Zwischenscreen für neue Karten oder eigene Idee
-        if (deck.mode !== 'chores' && myLikes.length === 0) {
+    // FALL 0: SOLO-MODUS (1 Person entscheidet für sich alleine)
+    if (targetPlayerCount === 1 && completedPlayers.length === 0) {
+        if (deck.mode === 'chores') {
+            completedPlayers = [{ name: myName, likes: [...myLikes] }];
+            triggerChoresResultScreen();
+            return;
+        }
+        if (myLikes.length === 0) {
             const inputEl = document.getElementById('p1-custom-idea-input');
             if (inputEl) inputEl.value = '';
             showScreen('screen-p1-zero');
             return;
         }
+        soloLikedCards = shuffleArray(activeRoundCards.filter(c => myLikes.includes(c.id)));
+        if (soloLikedCards.length === 0) {
+            soloLikedCards = [activeRoundCards[0] || deck.cards[0]];
+        }
+        soloCurrentWinnerIdx = 0;
+        lastMatchMeta = { mode: 'solo', totalLiked: soloLikedCards.length };
+        triggerMatchScreen(soloLikedCards[0]);
+        return;
+    }
 
+    // Wenn der allererste Spieler im Match-Modus 0-mal JA gewischt hat -> Zwischenscreen für neue Karten oder eigene Idee
+    if (completedPlayers.length === 0 && deck.mode !== 'chores' && myLikes.length === 0) {
+        const inputEl = document.getElementById('p1-custom-idea-input');
+        if (inputEl) inputEl.value = '';
+        showScreen('screen-p1-zero');
+        return;
+    }
+
+    // Aktuellen Spieler zur Abstimmungskette hinzufügen
+    const allVoters = [...completedPlayers, { name: myName, likes: [...myLikes] }];
+
+    // FALL A: Noch nicht alle Spieler durch (z. B. Spieler 1 von 2, oder Spieler 1/2 von 3..6) -> Link für nächsten Spieler generieren
+    if (allVoters.length < targetPlayerCount) {
         const baseUrl = window.location.origin + window.location.pathname;
         let shareUrl = '';
         const roundIds = activeRoundCards.map(c => c.id);
-        const myName = getUserProfile().name;
 
         if (currentDeckId === 'custom' && deck.customMeta) {
             const payload = {
                 t: deck.customMeta.t,
                 m: deck.customMeta.m,
                 o: deck.customMeta.o,
-                l: myLikes
+                l: allVoters[0].likes,
+                tc: targetPlayerCount,
+                voters: allVoters.map(v => ({ n: v.name, l: v.likes }))
             };
             shareUrl = `${baseUrl}#c=${encodeBase64Utf8(JSON.stringify(payload))}&from=${encodeURIComponent(myName)}`;
         } else {
-            // Format: deckId:likedIds:roundCardIds
-            const encodedPayload = btoa(`${currentDeckId}:${myLikes.join(',')}:${roundIds.join(',')}`);
+            const likesPipe = allVoters.map(v => v.likes.join(',')).join('|');
+            const namesPipe = allVoters.map(v => encodeURIComponent(v.name)).join('|');
+            const customCard999 = activeRoundCards.find(c => c.id === 999);
+            const ideaEnc = customCard999 ? encodeURIComponent(customCard999.title.de || '') : '';
+            const encodedPayload = btoa(`${currentDeckId}:${likesPipe}:${roundIds.join(',')}:${ideaEnc}:${targetPlayerCount}:${namesPipe}`);
             shareUrl = `${baseUrl}#m=${encodedPayload}&from=${encodeURIComponent(myName)}`;
         }
 
         document.getElementById('share-url-input').value = shareUrl;
+        const copyBtnSpan = document.getElementById('t-copy-btn');
+        if (copyBtnSpan) copyBtnSpan.innerText = t.copyBtn;
+
+        const shareTitleEl = document.getElementById('t-share-title');
+        const shareSubEl = document.getElementById('t-share-sub');
+        const passPhoneEl = document.getElementById('t-pass-phone');
+
+        if (targetPlayerCount >= 3) {
+            const cur = allVoters.length;
+            const next = cur + 1;
+            if (shareTitleEl) {
+                shareTitleEl.innerText = (t.groupShareTitle || "Auswahl {cur} von {total} steht")
+                    .replace('{cur}', cur)
+                    .replace('{total}', targetPlayerCount);
+            }
+            if (shareSubEl) {
+                shareSubEl.innerText = (t.groupShareSub || "Teile diesen Link mit Person {next}.")
+                    .replace('{next}', next)
+                    .replace(/\{total\}/g, targetPlayerCount);
+            }
+            if (passPhoneEl) {
+                passPhoneEl.innerText = (t.groupPassPhone || "Gerät direkt an Person {next} weitergeben")
+                    .replace('{next}', next);
+            }
+        } else {
+            if (shareTitleEl) shareTitleEl.innerText = t.shareTitle;
+            if (shareSubEl) shareSubEl.innerText = t.shareSub;
+            if (passPhoneEl) passPhoneEl.innerText = t.passPhone;
+        }
+
         showScreen('screen-share');
         return;
     }
 
-    // FALL B: Spieler 2 ist fertig im Chores / Anti-Match Modus -> Auswertungs- & Roulette-Screen zeigen
+    // FALL B: Letzter Spieler ist fertig im Chores / Anti-Match Modus -> Auswertungs- & Roulette-Screen zeigen
+    completedPlayers = allVoters;
     if (deck.mode === 'chores') {
         triggerChoresResultScreen();
         return;
     }
 
-    // FALL C: Spieler 2 ist fertig im Match-Modus ohne gemeinsamen Treffer
+    // FALL C: Letzter Spieler in einer Gruppe (3–6 Personen) ist fertig -> Gruppen-Stimmen auswerten!
+    if (targetPlayerCount >= 3) {
+        let bestCard = null;
+        let maxVotes = 0;
+
+        activeRoundCards.forEach(card => {
+            const votes = allVoters.reduce((acc, voter) => acc + (voter.likes.includes(card.id) ? 1 : 0), 0);
+            if (votes > maxVotes) {
+                maxVotes = votes;
+                bestCard = card;
+            }
+        });
+
+        if (bestCard && maxVotes >= 2) {
+            lastMatchMeta = {
+                mode: 'group',
+                votes: maxVotes,
+                total: allVoters.length,
+                names: allVoters.map(v => v.name)
+            };
+            triggerMatchScreen(bestCard);
+            return;
+        }
+    }
+
+    // FALL D: Kein gemeinsamer Treffer (0 Überschneidungen)
     const p2InputEl = document.getElementById('p2-counter-idea-input');
     if (p2InputEl) p2InputEl.value = '';
     showScreen('screen-nomatch');
@@ -1395,9 +1606,9 @@ function injectPlayer1CustomIdea() {
     const customCard = {
         id: 999,
         emoji: '✨',
-        tag: { de: 'Vorschlag', en: 'Suggestion', es: 'Sugerencia' },
-        title: { de: ideaText, en: ideaText, es: ideaText },
-        desc: { de: 'Eigene Idee für diese Runde', en: 'Custom idea for this round', es: 'Idea propia para esta ronda' }
+        tag: { de: 'Vorschlag', en: 'Suggestion', es: 'Sugerencia', fr: 'Suggestion', it: 'Proposta' },
+        title: { de: ideaText, en: ideaText, es: ideaText, fr: ideaText, it: ideaText },
+        desc: { de: 'Eigene Idee für diese Runde', en: 'Custom idea for this round', es: 'Idea propia para esta ronda', fr: 'Idée personnelle pour cette manche', it: 'Idea personale per questa manche' }
     };
     deck.cards.push(customCard);
 
@@ -1408,10 +1619,18 @@ function injectPlayer1CustomIdea() {
     }
     myLikes = [999];
 
+    if (targetPlayerCount === 1) {
+        soloLikedCards = [customCard];
+        soloCurrentWinnerIdx = 0;
+        lastMatchMeta = { mode: 'solo', totalLiked: 1 };
+        triggerMatchScreen(customCard);
+        return;
+    }
+
     const baseUrl = window.location.origin + window.location.pathname;
     const roundIds = activeRoundCards.map(c => c.id);
     const myName = getUserProfile().name;
-    const encodedPayload = btoa(`${currentDeckId}:${myLikes.join(',')}:${roundIds.join(',')}:${encodeURIComponent(ideaText)}`);
+    const encodedPayload = btoa(`${currentDeckId}:${myLikes.join(',')}:${roundIds.join(',')}:${encodeURIComponent(ideaText)}:${targetPlayerCount}:${encodeURIComponent(myName)}`);
     const shareUrl = `${baseUrl}#m=${encodedPayload}&from=${encodeURIComponent(myName)}`;
 
     document.getElementById('share-url-input').value = shareUrl;
@@ -1811,26 +2030,66 @@ function revealMatchScreen(card) {
         }
     }
 
+    const t = I18N[currentLang] || I18N.de;
+    const matchBadgeEl = document.getElementById('t-match-badge');
+    const matchTitleEl = document.getElementById('t-match-title');
     const partiesEl = document.getElementById('winner-parties');
-    if (partiesEl) {
-        const p1Name = partnerSenderName || "Person 1";
-        const p2Name = getUserProfile().name;
-        partiesEl.innerText = `${p1Name} & ${p2Name}`;
+    const myName = getUserProfile().name;
+
+    if (lastMatchMeta && lastMatchMeta.mode === 'solo') {
+        if (matchBadgeEl) matchBadgeEl.innerText = t.soloMatchBadge || 'Deine Auswahl';
+        if (matchTitleEl) matchTitleEl.innerText = t.soloMatchTitle || 'Dein Treffer für heute';
+        if (partiesEl) partiesEl.innerText = myName;
+    } else if (lastMatchMeta && lastMatchMeta.mode === 'group') {
+        if (matchBadgeEl) {
+            matchBadgeEl.innerText = (t.groupMatchBadge || 'Gruppen-Match ({votes}/{total} Stimmen)')
+                .replace('{votes}', lastMatchMeta.votes)
+                .replace('{total}', lastMatchMeta.total);
+        }
+        if (matchTitleEl) matchTitleEl.innerText = t.matchTitle;
+        if (partiesEl) partiesEl.innerText = (lastMatchMeta.names || []).join(' · ');
+    } else {
+        if (matchBadgeEl) matchBadgeEl.innerText = t.matchBadge;
+        if (matchTitleEl) matchTitleEl.innerText = t.matchTitle;
+        if (partiesEl) {
+            const p1Name = partnerSenderName || "Person 1";
+            partiesEl.innerText = `${p1Name} & ${myName}`;
+        }
     }
 
     updateWinnerAffiliateLinks(card);
 
     const continueBtn = document.getElementById('btn-continue-swiping');
     if (continueBtn) {
-        if (currentCardIndex + 1 < activeRoundCards.length) {
-            continueBtn.classList.remove('hidden');
-        } else {
+        if (lastMatchMeta && lastMatchMeta.mode === 'solo') {
+            if (soloLikedCards.length > 1) {
+                continueBtn.innerText = (t.soloNextPickBtn || 'Nächsten Favoriten zeigen ({cur}/{total})')
+                    .replace('{cur}', soloCurrentWinnerIdx + 1)
+                    .replace('{total}', soloLikedCards.length);
+                continueBtn.classList.remove('hidden');
+            } else {
+                continueBtn.classList.add('hidden');
+            }
+        } else if (lastMatchMeta && lastMatchMeta.mode === 'group') {
             continueBtn.classList.add('hidden');
+        } else {
+            continueBtn.innerText = t.continueSwiping;
+            if (currentCardIndex + 1 < activeRoundCards.length) {
+                continueBtn.classList.remove('hidden');
+            } else {
+                continueBtn.classList.add('hidden');
+            }
         }
     }
 }
 
 function continueSwiping() {
+    if (lastMatchMeta && lastMatchMeta.mode === 'solo' && soloLikedCards.length > 1) {
+        soloCurrentWinnerIdx = (soloCurrentWinnerIdx + 1) % soloLikedCards.length;
+        matchedCard = soloLikedCards[soloCurrentWinnerIdx];
+        revealMatchScreen(matchedCard);
+        return;
+    }
     currentCardIndex++;
     if (currentCardIndex < activeRoundCards.length) {
         showScreen('screen-game');
@@ -1867,20 +2126,31 @@ function triggerChoresResultScreen() {
     const voluntary = [];
     const antiMatches = [];
 
-    evaluatedCards.forEach(card => {
-        const p1Liked = partnerLikes && partnerLikes.includes(card.id);
-        const p2Liked = myLikes.includes(card.id);
+    if (completedPlayers.length >= 1 && (targetPlayerCount === 1 || targetPlayerCount >= 3)) {
+        evaluatedCards.forEach(card => {
+            const volunteers = completedPlayers.filter(v => v.likes.includes(card.id)).map(v => v.name);
+            if (volunteers.length > 0) {
+                voluntary.push({ card, owner: 'custom', ownerLabel: volunteers.join(', ') });
+            } else {
+                antiMatches.push({ card, assignedTo: null });
+            }
+        });
+    } else {
+        evaluatedCards.forEach(card => {
+            const p1Liked = partnerLikes && partnerLikes.includes(card.id);
+            const p2Liked = myLikes.includes(card.id);
 
-        if (p1Liked && p2Liked) {
-            voluntary.push({ card, owner: 'both' });
-        } else if (p1Liked) {
-            voluntary.push({ card, owner: 'p1' });
-        } else if (p2Liked) {
-            voluntary.push({ card, owner: 'p2' });
-        } else {
-            antiMatches.push({ card, assignedTo: null });
-        }
-    });
+            if (p1Liked && p2Liked) {
+                voluntary.push({ card, owner: 'both' });
+            } else if (p1Liked) {
+                voluntary.push({ card, owner: 'p1' });
+            } else if (p2Liked) {
+                voluntary.push({ card, owner: 'p2' });
+            } else {
+                antiMatches.push({ card, assignedTo: null });
+            }
+        });
+    }
 
     currentChoresSummary = {
         voluntary,
@@ -1910,6 +2180,7 @@ function renderChoresSummaryUI() {
         currentChoresSummary.voluntary.forEach(item => {
             const title = item.card.title[currentLang] || item.card.title.de;
             let badgeText = t.choresBothWant;
+            if (item.owner === 'custom' && item.ownerLabel) badgeText = item.ownerLabel;
             if (item.owner === 'p1') badgeText = p1Name;
             if (item.owner === 'p2') badgeText = p2Name;
 
@@ -1931,7 +2202,8 @@ function renderChoresSummaryUI() {
             const title = item.card.title[currentLang] || item.card.title.de;
             let statusText = t.choresOpen || "Offen";
             if (item.assignedTo === 'p1') statusText = p1Name;
-            if (item.assignedTo === 'p2') statusText = p2Name;
+            else if (item.assignedTo === 'p2') statusText = p2Name;
+            else if (item.assignedTo) statusText = item.assignedTo;
 
             const row = document.createElement('div');
             row.className = "flex items-center justify-between gap-2 p-2.5 rounded-[8px] surface-raised";
@@ -1963,13 +2235,25 @@ function resolveChoresAntiMatches() {
         try { navigator.vibrate([60, 40, 60, 40, 160]); } catch (e) {}
     }
 
-    let nextPlayer = Math.random() < 0.5 ? 'p1' : 'p2';
     const indices = currentChoresSummary.antiMatches.map((_, idx) => idx).sort(() => Math.random() - 0.5);
 
-    indices.forEach(idx => {
-        currentChoresSummary.antiMatches[idx].assignedTo = nextPlayer;
-        nextPlayer = (nextPlayer === 'p1') ? 'p2' : 'p1';
-    });
+    if (completedPlayers.length >= 3) {
+        const namesPool = shuffleArray(completedPlayers.map(p => p.name));
+        indices.forEach((idx, pos) => {
+            currentChoresSummary.antiMatches[idx].assignedTo = namesPool[pos % namesPool.length];
+        });
+    } else if (targetPlayerCount === 1 && completedPlayers.length === 1) {
+        const soloName = completedPlayers[0].name;
+        indices.forEach(idx => {
+            currentChoresSummary.antiMatches[idx].assignedTo = soloName;
+        });
+    } else {
+        let nextPlayer = Math.random() < 0.5 ? 'p1' : 'p2';
+        indices.forEach(idx => {
+            currentChoresSummary.antiMatches[idx].assignedTo = nextPlayer;
+            nextPlayer = (nextPlayer === 'p1') ? 'p2' : 'p1';
+        });
+    }
 
     currentChoresSummary.resolved = true;
     renderChoresSummaryUI();
@@ -1983,17 +2267,25 @@ function shareChoresPlanViaWhatsApp() {
     const t = I18N[currentLang];
     const p1Name = partnerSenderName || "Person 1";
     const p2Name = getUserProfile().name;
-    const lines = [t.waChoresSummaryHeader, `${p1Name} & ${p2Name}`, ""];
+    const headerNames = (completedPlayers.length >= 3)
+        ? completedPlayers.map(p => p.name).join(' · ')
+        : (targetPlayerCount === 1 ? p2Name : `${p1Name} & ${p2Name}`);
+    const lines = [t.waChoresSummaryHeader, headerNames, ""];
 
     currentChoresSummary.voluntary.forEach(item => {
         const title = item.card.title[currentLang] || item.card.title.de;
-        const who = item.owner === 'p1' ? p1Name : (item.owner === 'p2' ? p2Name : t.choresBothWant);
+        let who = t.choresBothWant;
+        if (item.owner === 'custom' && item.ownerLabel) who = item.ownerLabel;
+        else if (item.owner === 'p1') who = p1Name;
+        else if (item.owner === 'p2') who = p2Name;
         lines.push(`• ${title}: ${who}`);
     });
 
     currentChoresSummary.antiMatches.forEach(item => {
         const title = item.card.title[currentLang] || item.card.title.de;
-        const who = item.assignedTo === 'p1' ? p1Name : p2Name;
+        let who = item.assignedTo || p2Name;
+        if (item.assignedTo === 'p1') who = p1Name;
+        else if (item.assignedTo === 'p2') who = p2Name;
         lines.push(`• ${title}: ${who}`);
     });
 
@@ -2025,15 +2317,20 @@ function sendWinnerToPartner() {
     if (!matchedCard) return;
     const p1Name = partnerSenderName || (I18N[currentLang]?.choresPlayer1 || "Person 1");
     const p2Name = getUserProfile().name;
+    const partiesLabel = (lastMatchMeta && lastMatchMeta.mode === 'solo')
+        ? p2Name
+        : (lastMatchMeta && lastMatchMeta.mode === 'group' && Array.isArray(lastMatchMeta.names))
+            ? lastMatchMeta.names.join(' · ')
+            : `${p1Name} & ${p2Name}`;
     const title = matchedCard.title[currentLang] || matchedCard.title.en || matchedCard.title.de;
     const prefix = I18N[currentLang]?.waWinnerText || "Gemeinsame Wahl:";
     const shareUrl = "https://agreesy.com";
-    const shareText = `🎉 ${prefix} ${title}! (${p1Name} & ${p2Name})\n30s-Entscheidung auf Agreesy: ${shareUrl}`;
+    const shareText = `🎉 ${prefix} ${title}! (${partiesLabel})\n30s-Entscheidung auf Agreesy: ${shareUrl}`;
 
     if (navigator.share) {
         navigator.share({
             title: `Agreesy Match: ${title}`,
-            text: `🎉 ${prefix} ${title}! (${p1Name} & ${p2Name})`,
+            text: `🎉 ${prefix} ${title}! (${partiesLabel})`,
             url: shareUrl
         }).catch(() => {
             window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
@@ -2047,7 +2344,6 @@ function simulatePartnerRightHere() {
     const url = document.getElementById('share-url-input').value;
     window.location.hash = url.split('#')[1];
     checkIncomingChallenge();
-    showScreen('screen-home');
 }
 
 function handleHeroCardClick() {
@@ -2101,7 +2397,15 @@ function updateHeroRoundCardUI() {
     } else {
         if (badgeEl) badgeEl.innerText = t.badge;
         if (titleEl) titleEl.innerHTML = t.heroTitle;
-        if (subEl) subEl.innerText = t.heroSub;
+        if (subEl) {
+            if (targetPlayerCount === 1) {
+                subEl.innerText = t.heroSubSolo || t.heroSub;
+            } else if (targetPlayerCount >= 3) {
+                subEl.innerText = (t.heroSubGroup || t.heroSub).replace('{count}', targetPlayerCount);
+            } else {
+                subEl.innerText = t.heroSub;
+            }
+        }
         if (ctaEl) ctaEl.innerText = t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten';
         if (ringEl) ringEl.setAttribute('stroke-dashoffset', '175');
         if (imgEl) imgEl.src = 'options_gallery/images/spaghetti_3d.png';
@@ -2116,6 +2420,7 @@ function resetToHome() {
     if (!wasInGame) {
         partnerLikes = null;
         partnerRoundCardIds = null;
+        completedPlayers = [];
         currentDeckId = null;
         activeRoundCards = [];
         window.history.replaceState(null, null, window.location.pathname);
