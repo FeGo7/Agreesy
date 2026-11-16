@@ -750,11 +750,18 @@ function setLang(lang) {
     setText('t-new-round-btn', t.noMatchNewRoundBtn);
 
     // Chores & Legal Modals
-    setText('t-chores-deal-text', t.choresDealText);
-    const choresDealLink = document.getElementById('chores-deal-link');
-    if (choresDealLink && typeof getRegionalStoreConfig === 'function') {
-        choresDealLink.href = getRegionalStoreConfig(lang).choresUrl;
+    if (typeof getRegionalStoreConfig === 'function') {
+        const storeCfg = getRegionalStoreConfig(lang);
+        setText('t-chores-deal-text', `${t.choresDealText} (${storeCfg.amazonDomain}) *`);
+        const choresDealLink = document.getElementById('chores-deal-link');
+        if (choresDealLink) {
+            choresDealLink.href = storeCfg.choresUrl;
+        }
+    } else {
+        setText('t-chores-deal-text', t.choresDealText);
     }
+    setText('t-winner-affiliate-note', t.affiliateFootnote);
+    setText('t-chores-affiliate-note', t.affiliateFootnote);
     setText('legal-modal-close-btn', t.modalClose);
 
     // 3 Primary Hero Scenarios + Cal AI Macro & Feed Metadata
@@ -1082,11 +1089,11 @@ function addCustomOptionInput() {
 
 function findStage2MediaPickByFormattedTitle(formatted) {
     if (typeof MEDIA_STAGE2_PICKS === 'undefined') return null;
-    for (const type of ['movie', 'series']) {
+    for (const type of ['movie', 'series', 'gaming', 'vacation', 'gifts']) {
         const genres = MEDIA_STAGE2_PICKS[type] || {};
         for (const gKey of Object.keys(genres)) {
             const found = (genres[gKey] || []).find(item => `${item.title} (${item.year})` === formatted);
-            if (found) return found;
+            if (found) return { ...found, stage2Type: type };
         }
     }
     return null;
@@ -1094,16 +1101,18 @@ function findStage2MediaPickByFormattedTitle(formatted) {
 
 function registerCustomDeckInMemory(rawTitle, mode, optionsArray) {
     const cleanTitle = (rawTitle && rawTitle.trim()) ? rawTitle.trim() : "Eigene Abstimmung";
-    let hasStage2Match = false;
+    let matchedStage2Type = null;
     const cards = optionsArray.map((optText, idx) => {
         const mediaItem = findStage2MediaPickByFormattedTitle(optText);
-        if (mediaItem) hasStage2Match = true;
+        if (mediaItem && !matchedStage2Type) matchedStage2Type = mediaItem.stage2Type;
         const descStr = mediaItem ? mediaItem.vibe : (mode === 'chores' ? "Aufgabe zuteilen" : "Option zur Abstimmung");
         const tagStr = mediaItem ? `${mediaItem.year} · ${cleanTitle}` : cleanTitle;
         return {
             id: idx,
             emoji: mediaItem ? (mediaItem.emoji || "🎬") : "✨",
             bg: "",
+            targetType: mediaItem ? (mediaItem.targetType || (mediaItem.stage2Type === 'gaming' ? 'amazon' : 'prime')) : null,
+            searchCleanTitle: mediaItem ? mediaItem.title : optText,
             tag: { de: tagStr, en: tagStr, es: tagStr, fr: tagStr, it: tagStr },
             title: { de: optText, en: optText, es: optText, fr: optText, it: optText },
             desc: {
@@ -1124,9 +1133,16 @@ function registerCustomDeckInMemory(rawTitle, mode, optionsArray) {
         };
     });
 
+    let deckCategory = 'all';
+    if (matchedStage2Type === 'movie' || matchedStage2Type === 'series' || matchedStage2Type === 'gaming') {
+        deckCategory = 'entertainment';
+    } else if (matchedStage2Type === 'vacation' || matchedStage2Type === 'gifts') {
+        deckCategory = 'trips';
+    }
+
     DECKS['custom'] = {
         id: 'custom',
-        category: hasStage2Match ? 'entertainment' : 'all',
+        category: deckCategory,
         mode: mode === 'chores' ? 'chores' : 'match',
         customMeta: {
             t: cleanTitle,
@@ -1828,10 +1844,14 @@ function getRegionalStoreConfig(lang) {
     const configs = {
         de: {
             amazonHost: 'www.amazon.de',
+            amazonDomain: 'amazon.de',
+            foodDomain: 'lieferando.de',
             foodUrl: (q) => `https://www.lieferando.de/lieferservice/essen/${q}`,
             foodSuffix: 'zutaten+kochbuch',
             snackQuery: 'kino+snack+box+popcorn',
             gygHost: 'www.getyourguide.de',
+            gygDomain: 'getyourguide.de',
+            bookingDomain: 'booking.com',
             activitySuffix: 'paar+date+spiel',
             bookingLang: 'de',
             tripsSuffix: 'reise+geschenk',
@@ -1839,10 +1859,14 @@ function getRegionalStoreConfig(lang) {
         },
         en: {
             amazonHost: isUk ? 'www.amazon.co.uk' : 'www.amazon.com',
+            amazonDomain: isUk ? 'amazon.co.uk' : 'amazon.com',
+            foodDomain: 'ubereats.com',
             foodUrl: (q) => `https://www.ubereats.com/${isUk ? 'gb/' : ''}search?q=${q}`,
             foodSuffix: 'ingredients+cookbook',
             snackQuery: 'movie+night+snack+box+popcorn',
             gygHost: 'www.getyourguide.com',
+            gygDomain: 'getyourguide.com',
+            bookingDomain: 'booking.com',
             activitySuffix: 'couple+date+night+game',
             bookingLang: 'en-gb',
             tripsSuffix: 'travel+accessories+gift',
@@ -1850,10 +1874,14 @@ function getRegionalStoreConfig(lang) {
         },
         es: {
             amazonHost: 'www.amazon.es',
+            amazonDomain: 'amazon.es',
+            foodDomain: 'just-eat.es',
             foodUrl: () => `https://www.just-eat.es/`,
             foodSuffix: 'ingredientes+libro+cocina',
             snackQuery: 'caja+snacks+cine+palomitas',
             gygHost: 'www.getyourguide.es',
+            gygDomain: 'getyourguide.es',
+            bookingDomain: 'booking.com',
             activitySuffix: 'juego+parejas+cita',
             bookingLang: 'es',
             tripsSuffix: 'accesorios+viaje+regalo',
@@ -1861,10 +1889,14 @@ function getRegionalStoreConfig(lang) {
         },
         fr: {
             amazonHost: 'www.amazon.fr',
+            amazonDomain: 'amazon.fr',
+            foodDomain: 'ubereats.com',
             foodUrl: (q) => `https://www.ubereats.com/fr/search?q=${q}`,
             foodSuffix: 'ingredients+livre+cuisine',
             snackQuery: 'coffret+snacks+cinema+popcorn',
             gygHost: 'www.getyourguide.fr',
+            gygDomain: 'getyourguide.fr',
+            bookingDomain: 'booking.com',
             activitySuffix: 'jeu+couple+soiree',
             bookingLang: 'fr',
             tripsSuffix: 'accessoires+voyage+cadeau',
@@ -1872,10 +1904,14 @@ function getRegionalStoreConfig(lang) {
         },
         it: {
             amazonHost: 'www.amazon.it',
+            amazonDomain: 'amazon.it',
+            foodDomain: 'justeat.it',
             foodUrl: () => `https://www.justeat.it/`,
             foodSuffix: 'ingredienti+libro+cucina',
             snackQuery: 'box+snack+cinema+popcorn',
             gygHost: 'www.getyourguide.it',
+            gygDomain: 'getyourguide.it',
+            bookingDomain: 'booking.com',
             activitySuffix: 'gioco+coppia+serata',
             bookingLang: 'it',
             tripsSuffix: 'accessori+viaggio+regalo',
@@ -1885,6 +1921,11 @@ function getRegionalStoreConfig(lang) {
     const cfg = configs[lang] || configs.de;
     cfg.tag = tag;
     return cfg;
+}
+
+function formatWithDomainTag(labelStr, domainStr) {
+    const clean = (labelStr || '').replace(/\s*\(Amazon\)/gi, '');
+    return `${clean} (${domainStr}) *`;
 }
 
 function updateWinnerAffiliateLinks(card) {
@@ -1903,46 +1944,72 @@ function updateWinnerAffiliateLinks(card) {
     if (actionBtn && actionText) {
         const cat = deck ? deck.category : 'all';
         const titleStr = card.title[currentLang] || card.title.de || 'Idee';
-        const query = encodeURIComponent(titleStr);
+        const cleanQueryStr = card.searchCleanTitle || titleStr;
+        const query = encodeURIComponent(cleanQueryStr);
         const store = getRegionalStoreConfig(currentLang);
         const t = I18N[currentLang] || I18N.de;
 
-        if (cat === 'food') {
+        // Check if this is a Round 2 card with an explicit targetType ('booking', 'gyg', 'amazon', 'prime')
+        if (card.targetType === 'booking') {
+            actionBtn.href = `https://www.booking.com/searchresults.${store.bookingLang}.html?ss=${query}`;
+            actionText.innerText = `${titleStr} (${store.bookingDomain}) *`;
+            if (secondaryBtn && secondaryText) {
+                secondaryBtn.href = `https://${store.gygHost}/s/?q=${query}`;
+                secondaryText.innerText = formatWithDomainTag(t.winnerActivities || 'Erlebnisse & Touren vor Ort', store.gygDomain);
+                secondaryBtn.classList.remove('hidden');
+            }
+        } else if (card.targetType === 'gyg') {
+            actionBtn.href = `https://${store.gygHost}/s/?q=${query}`;
+            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerActivities || 'Tickets & Erlebnisse'}`, store.gygDomain);
+            if (secondaryBtn && secondaryText) {
+                secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
+                secondaryText.innerText = formatWithDomainTag(t.winnerActivitySecondary || 'Passende Geschenk-Boxen', store.amazonDomain);
+                secondaryBtn.classList.remove('hidden');
+            }
+        } else if (card.targetType === 'amazon' || currentDeckId === 'gaming' || (currentDeckId === 'gifts' && [3, 4, 5, 7, 8].includes(card.id))) {
+            actionBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
+            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOpenAction || 'Jetzt ansehen'}`, store.amazonDomain);
+            if (secondaryBtn && secondaryText) {
+                secondaryBtn.href = `https://${store.amazonHost}/s?k=${store.snackQuery}&tag=${store.tag}`;
+                secondaryText.innerText = formatWithDomainTag(t.winnerSnackBox || 'Passende Snackbox bestellen', store.amazonDomain);
+                secondaryBtn.classList.remove('hidden');
+            }
+        } else if (cat === 'food') {
             actionBtn.href = store.foodUrl(query);
-            actionText.innerText = `${titleStr} – ${t.winnerOrderFood || 'bei Lieferando bestellen'}`;
+            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOrderFood || 'bestellen'}`, store.foodDomain);
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}+${store.foodSuffix}&tag=${store.tag}`;
-                const secPattern = t.winnerFoodSecondary || 'Zutaten & Koch-Sets für {title} (Amazon)';
-                secondaryText.innerText = secPattern.replace('{title}', titleStr);
+                const secPattern = (t.winnerFoodSecondary || 'Zutaten & Koch-Sets für {title}').replace('{title}', titleStr);
+                secondaryText.innerText = formatWithDomainTag(secPattern, store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
         } else if (cat === 'entertainment') {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&i=instant-video&tag=${store.tag}`;
-            actionText.innerText = `${titleStr} – ${t.winnerStreamPrime || 'auf Prime Video streamen'}`;
+            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerStreamPrime || 'auf Prime Video streamen'}`, store.amazonDomain);
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${store.snackQuery}&tag=${store.tag}`;
-                secondaryText.innerText = t.winnerSnackBox || 'Passende Heimkino-Snackbox bestellen';
+                secondaryText.innerText = formatWithDomainTag(t.winnerSnackBox || 'Passende Heimkino-Snackbox bestellen', store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
         } else if (cat === 'activity') {
             actionBtn.href = `https://${store.gygHost}/s/?q=${query}`;
-            actionText.innerText = `${titleStr} – ${t.winnerActivities || 'Erlebnisse & Tickets ansehen'}`;
+            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerActivities || 'Erlebnisse & Tickets'}`, store.gygDomain);
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}+${store.activitySuffix}&tag=${store.tag}`;
-                secondaryText.innerText = t.winnerActivitySecondary || 'Passendes Zubehör & Date-Boxen (Amazon)';
+                secondaryText.innerText = formatWithDomainTag(t.winnerActivitySecondary || 'Passendes Zubehör & Date-Boxen', store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
         } else if (cat === 'trips') {
             actionBtn.href = `https://www.booking.com/searchresults.${store.bookingLang}.html?ss=${query}`;
-            actionText.innerText = `${titleStr} – Booking.com`;
+            actionText.innerText = `${titleStr} (${store.bookingDomain}) *`;
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}+${store.tripsSuffix}&tag=${store.tag}`;
-                secondaryText.innerText = t.winnerTripsSecondary || 'Reise-Gadgets & Geschenk-Sets (Amazon)';
+                secondaryText.innerText = formatWithDomainTag(t.winnerTripsSecondary || 'Reise-Gadgets & Geschenk-Sets', store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
         } else {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
-            actionText.innerText = `${titleStr} – ${t.winnerOpenAction || 'Direkt online entdecken'}`;
+            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOpenAction || 'Direkt online entdecken'}`, store.amazonDomain);
             if (secondaryBtn) {
                 secondaryBtn.classList.add('hidden');
             }
@@ -1961,11 +2028,43 @@ function getStage2MediaContext(card) {
         mediaType = 'movie';
     } else if (currentDeckId === 'series') {
         mediaType = 'series';
+    } else if (currentDeckId === 'gaming') {
+        mediaType = 'gaming';
+    } else if (currentDeckId === 'vacation') {
+        mediaType = 'vacation';
+    } else if (currentDeckId === 'gifts') {
+        mediaType = 'gifts';
     }
     if (!mediaType || !MEDIA_STAGE2_PICKS[mediaType]) return null;
     const pool = MEDIA_STAGE2_PICKS[mediaType][card.id];
     if (!Array.isArray(pool) || pool.length === 0) return null;
     return { mediaType, pool };
+}
+
+function getStage2ItemTargetLinkAndDomain(item, mediaType, store) {
+    const tType = item.targetType || (mediaType === 'gaming' ? 'amazon' : (mediaType === 'vacation' ? 'booking' : 'prime'));
+    if (tType === 'booking') {
+        return {
+            url: `https://www.booking.com/searchresults.${store.bookingLang}.html?ss=${encodeURIComponent(item.title)}`,
+            domain: `${store.bookingDomain} *`
+        };
+    }
+    if (tType === 'gyg') {
+        return {
+            url: `https://${store.gygHost}/s/?q=${encodeURIComponent(item.title)}`,
+            domain: `${store.gygDomain} *`
+        };
+    }
+    if (tType === 'amazon') {
+        return {
+            url: `https://${store.amazonHost}/s?k=${encodeURIComponent(item.title)}&tag=${store.tag}`,
+            domain: `${store.amazonDomain} *`
+        };
+    }
+    return {
+        url: `https://${store.amazonHost}/s?k=${encodeURIComponent(item.title + ' ' + item.year)}&i=instant-video&tag=${store.tag}`,
+        domain: `${store.amazonDomain} *`
+    };
 }
 
 function renderStage2MediaPicks(card) {
@@ -1985,17 +2084,25 @@ function renderStage2MediaPicks(card) {
     boxEl.classList.remove('hidden');
     const t = I18N[currentLang] || I18N.de;
     const store = getRegionalStoreConfig(currentLang);
-    const isSeries = (ctx.mediaType === 'series');
 
-    if (headerEl) {
-        headerEl.innerText = isSeries ? (t.stage2SeriesHeader || '3 aktuelle Serien-Tipps (2024–2026)') : (t.stage2MoviesHeader || '3 aktuelle Film-Tipps (2024–2026)');
-    }
-    if (shuffleBtnEl) {
-        shuffleBtnEl.innerText = t.stage2ShuffleBtn || '🎲 Andere 3';
-    }
-    if (startBtnEl) {
-        startBtnEl.innerText = isSeries ? (t.stage2StartSeriesBtn || '📺 Runde 2: Aus 8 passenden Serien swipen →') : (t.stage2StartMoviesBtn || '🎬 Runde 2: Aus 8 passenden Filmen swipen →');
-    }
+    const headerMap = {
+        movie: t.stage2MoviesHeader || '3 aktuelle Film-Tipps (2024–2026)',
+        series: t.stage2SeriesHeader || '3 aktuelle Serien-Tipps (2024–2026)',
+        gaming: t.stage2GamingHeader || '3 beliebte Spiele-Tipps (Bestseller)',
+        vacation: t.stage2VacationHeader || '3 konkrete Reiseziele passend zur Wahl',
+        gifts: t.stage2GiftsHeader || '3 konkrete Geschenk-Ideen & Bestseller'
+    };
+    const startBtnMap = {
+        movie: t.stage2StartMoviesBtn || '🎬 Runde 2: Aus 8 passenden Filmen swipen →',
+        series: t.stage2StartSeriesBtn || '📺 Runde 2: Aus 8 passenden Serien swipen →',
+        gaming: t.stage2StartGamingBtn || '🎲 Runde 2: Aus 8 konkreten Spielen swipen →',
+        vacation: t.stage2StartVacationBtn || '✈️ Runde 2: Aus 8 konkreten Reisezielen swipen →',
+        gifts: t.stage2StartGiftsBtn || '🎁 Runde 2: Aus 6 konkreten Geschenken swipen →'
+    };
+
+    if (headerEl) headerEl.innerText = headerMap[ctx.mediaType] || headerMap.movie;
+    if (shuffleBtnEl) shuffleBtnEl.innerText = t.stage2ShuffleBtn || '🎲 Andere 3';
+    if (startBtnEl) startBtnEl.innerText = startBtnMap[ctx.mediaType] || startBtnMap.movie;
 
     const seenIds = new Set(getSeenMediaList().map(item => item.id));
     let unseenPool = ctx.pool.filter(item => !seenIds.has(item.id));
@@ -2009,23 +2116,27 @@ function renderStage2MediaPicks(card) {
         picked.push(unseenPool[(stage2ShuffleOffset + i) % unseenPool.length]);
     }
 
+    const isWatchType = (ctx.mediaType === 'movie' || ctx.mediaType === 'series');
+    const skipBtnLabel = isWatchType ? `👁️ ${t.stage2SeenBtn || 'Schon gesehen'}` : `🔄 ${t.stage2SkipItemBtn || 'Tauschen'}`;
+
     listEl.innerHTML = picked.map(item => {
-        const streamUrl = `https://${store.amazonHost}/s?k=${encodeURIComponent(item.title + ' ' + item.year)}&i=instant-video&tag=${store.tag}`;
+        const targetInfo = getStage2ItemTargetLinkAndDomain(item, ctx.mediaType, store);
         const safeTitle = item.title.replace(/'/g, "\\'");
         return `
             <div class="surface-raised rounded-[14px] p-2.5 flex items-center justify-between gap-2.5">
-                <a href="${streamUrl}" target="_blank" rel="noopener" class="flex items-center gap-2.5 min-w-0 flex-1 group">
+                <a href="${targetInfo.url}" target="_blank" rel="noopener" class="flex items-center gap-2.5 min-w-0 flex-1 group">
                     <span class="text-lg shrink-0">${item.emoji || '🎬'}</span>
                     <div class="min-w-0 flex-1">
-                        <div class="flex items-center gap-1.5">
+                        <div class="flex items-center gap-1.5 flex-wrap">
                             <span class="font-bold text-[13px] text-primary-role truncate group-hover:underline">${item.title}</span>
                             <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md surface text-secondary-role shrink-0">${item.year}</span>
+                            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md surface text-muted-role shrink-0">↗ ${targetInfo.domain}</span>
                         </div>
-                        <div class="text-[11.5px] text-secondary-role truncate">${item.vibe}</div>
+                        <div class="text-[11.5px] text-secondary-role truncate mt-0.5">${item.vibe}</div>
                     </div>
                 </a>
-                <button type="button" onclick="markMediaPickSeen('${item.id}', '${safeTitle}')" class="px-2 py-1 rounded-full surface text-[10.5px] font-semibold text-secondary-role hover:text-primary-role shrink-0 transition-colors" title="${t.stage2SeenBtn || 'Schon gesehen'}">
-                    👁️ ${t.stage2SeenBtn || 'Schon gesehen'}
+                <button type="button" onclick="markMediaPickSeen('${item.id}', '${safeTitle}')" class="px-2 py-1 rounded-full surface text-[10.5px] font-semibold text-secondary-role hover:text-primary-role shrink-0 transition-colors" title="${skipBtnLabel}">
+                    ${skipBtnLabel}
                 </button>
             </div>
         `;
@@ -2065,13 +2176,14 @@ function startStage2MediaRound() {
     const optionsArray = pool.map(item => `${item.title} (${item.year})`);
     registerCustomDeckInMemory(genreTitle, 'match', optionsArray);
 
-    // Enrich the generated custom deck cards with emojis, descriptions, and entertainment category so Winner links route to Prime Video
     if (DECKS['custom']) {
-        DECKS['custom'].category = 'entertainment';
+        DECKS['custom'].category = (ctx.mediaType === 'vacation' || ctx.mediaType === 'gifts') ? 'trips' : 'entertainment';
         DECKS['custom'].cards = pool.map((item, idx) => ({
             id: idx,
             emoji: item.emoji || '🎬',
             bg: '',
+            targetType: item.targetType || (ctx.mediaType === 'gaming' ? 'amazon' : (ctx.mediaType === 'vacation' ? 'booking' : 'prime')),
+            searchCleanTitle: item.title,
             tag: {
                 de: `${item.year} · ${genreTitle}`,
                 en: `${item.year} · ${genreTitle}`,
@@ -2098,6 +2210,7 @@ function startStage2MediaRound() {
 
     partnerLikes = null;
     partnerRoundCardIds = null;
+    completedPlayers = [];
     window.history.replaceState(null, null, window.location.pathname);
     startGame('custom');
 }

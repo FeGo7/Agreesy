@@ -305,5 +305,324 @@ const MEDIA_STAGE2_PICKS = {
             { id: 's11_7', title: 'Rivals', year: '2024', emoji: '🍾', vibe: 'Skandalös & Unterhaltsam · Machtkämpfe und Affären der britischen TV-Elite' },
             { id: 's11_8', title: 'The Franchise', year: '2024', emoji: '🎥', vibe: 'Messerscharfe Satire · Das absurde Chaos hinter den Kulissen eines Blockbuster-Drehs' }
         ]
+    },
+
+    gaming: {
+        // 0: Fun-Racer oder Sport-Duell (Mario Kart / FIFA)
+        0: [
+            { id: 'g0_1', title: 'Mario Kart 8 Deluxe', year: 'Top-Hit', emoji: '🏎️', vibe: 'Der ultimative Couch-Klassiker · Splitscreen-Rennen & Bananenschalen-Duelle' },
+            { id: 'g0_2', title: 'EA Sports FC 26', year: 'Sport-Hit', emoji: '⚽', vibe: '1-gegen-1 oder zusammen im Koop auf dem virtuellen Rasen' },
+            { id: 'g0_3', title: 'Nintendo Switch Sports', year: 'Motion', emoji: '🎳', vibe: 'Tennis, Bowling, Badminton & Golf direkt im Wohnzimmer' },
+            { id: 'g0_4', title: 'Rocket League', year: 'Action', emoji: '🚀', vibe: 'Autoball-Adrenalin · Schnelle 5-Minuten-Matches im Splitscreen' },
+            { id: 'g0_5', title: 'TopSpin 2K25', year: 'Sport', emoji: '🎾', vibe: 'Packende Tennis-Matches zu zweit auf den großen Grand-Slam-Courts' },
+            { id: 'g0_6', title: 'Tony Hawk\'s Pro Skater 1 + 2', year: 'Kult', emoji: '🛹', vibe: 'Highscore-Jagd zu zweit mit legendärem Soundtrack' },
+            { id: 'g0_7', title: 'Gran Turismo 7 / Forza Motorsport', year: 'Racing', emoji: '🏁', vibe: 'Kopf-an-Kopf-Rennen auf den berühmtesten Rennstrecken' },
+            { id: 'g0_8', title: 'Crash Team Racing Nitro-Fueled', year: 'Fun-Racer', emoji: '💣', vibe: 'Rasantes Kart-Duell mit Power-Ups und Drift-Action' }
+        ],
+        // 1: Couch-Koop zusammen meistern
+        1: [
+            { id: 'g1_1', title: 'It Takes Two', year: 'Game of the Year', emoji: '🤝', vibe: 'Das beste Koop-Spiel aller Zeiten · Kreatives Abenteuer speziell für 2 Spieler' },
+            { id: 'g1_2', title: 'Split Fiction', year: 'Koop-Hit', emoji: '✨', vibe: 'Vom „It Takes Two“-Studio · Sci-Fi- & Fantasy-Welten gemeinsam im Splitscreen erleben' },
+            { id: 'g1_3', title: 'Overcooked! All You Can Eat', year: 'Chaos-Koop', emoji: '👨‍🍳', vibe: 'Hektischer Küchen-Spaß · Wer schneidet die Tomaten, wer löscht den Brand?' },
+            { id: 'g1_4', title: 'Super Mario Bros. Wonder', year: 'Jump & Run', emoji: '🍄', vibe: 'Buntes 2D-Meisterwerk voller Überraschungen für die Couch' },
+            { id: 'g1_5', title: 'Unravel Two', year: 'Cozy-Koop', emoji: '🧶', vibe: 'Zwei durch ein Garnband verbundene Figuren lösen gemeinsam Rätsel' },
+            { id: 'g1_6', title: 'A Way Out', year: 'Action-Koop', emoji: '🚓', vibe: 'Filmreifer Gefängnisausbruch · Nur zu zweit im Splitscreen spielbar' },
+            { id: 'g1_7', title: 'Moving Out 2', year: 'Party-Koop', emoji: '📦', vibe: 'Chaotisches Umzugs-Team · Sofas durch Fenster werfen auf Zeit' },
+            { id: 'g1_8', title: 'Baldur\'s Gate 3', year: 'Fantasy-Epos', emoji: '🐉', vibe: 'Gemeinsames Rollenspiel-Abenteuer mit völliger Entscheidungsfreiheit' }
+        ],
+        // 2: Schnelles Karten- oder Würfelspiel
+        2: [
+            { id: 'g2_1', title: 'Skyjo', year: 'Bestseller #1', emoji: '🃏', vibe: 'In 1 Minute erklärt, extrem hohes Suchtpotenzial für 2 bis 8 Spieler' },
+            { id: 'g2_2', title: 'Qwixx – Das Würfelspiel', year: 'Würfel-Hit', emoji: '🎲', vibe: 'Keine Wartezeit · Bei jedem Wurf können alle gleichzeitig ankreuzen' },
+            { id: 'g2_3', title: 'Cabo', year: 'Geheimtipp', emoji: '🦩', vibe: 'Cleveres Gedächtnis- & Bluff-Kartenspiel – ideal zu zweit' },
+            { id: 'g2_4', title: 'The Gang (Kooperatives Poker)', year: 'Trend-Spiel', emoji: '🏦', vibe: 'Zusammen statt gegeneinander · Ohne zu reden die Pokerhände sortieren' },
+            { id: 'g2_5', title: '5-Minute Dungeon', year: 'Echtzeit', emoji: '⏱️', vibe: 'Kooperatives Karten-Chaos · In exakt 5 Minuten gemeinsam den Boss besiegen' },
+            { id: 'g2_6', title: 'Exploding Kittens (oder 2-Spieler-Edition)', year: 'Party-Klassiker', emoji: '🐱', vibe: 'Russisches Roulette mit explodierenden Katzen und fiesen Aktionskarten' },
+            { id: 'g2_7', title: 'Kniffel Extreme / Ganz schön clever', year: 'Würfel-Klassiker', emoji: '📝', vibe: 'Der spannende Kettenreaktions-Würfelblock für gemütliche Abende' },
+            { id: 'g2_8', title: 'Flip 7 / Trio', year: 'Schnellstart', emoji: '7️⃣', vibe: 'Nervenkitzel pur · Noch eine Karte aufdecken oder Punkte sichern?' }
+        ],
+        // 3: Quiz-, Schätz- oder Musik-Raten (Hitster)
+        3: [
+            { id: 'g3_1', title: 'Hitster – Das Musik-Partyspiel', year: 'Bestseller #1', emoji: '🎵', vibe: 'Songs per Spotify scannen und chronologisch in die eigene Zeitleiste legen' },
+            { id: 'g3_2', title: 'Smart 10', year: 'Quiz-Hit', emoji: '🧠', vibe: '1 Frage, 10 Antwortmöglichkeiten · Wer zockt zu hoch und verliert seine Punkte?' },
+            { id: 'g3_3', title: 'Hitster Summer Party / Guilty Pleasures', year: 'Musik-Edition', emoji: '🕺', vibe: 'Ohrwurm-Garantie mit den größten Party- und Kult-Hits' },
+            { id: 'g3_4', title: 'Kneipenquiz – Das Original', year: 'Koop-Quiz', emoji: '🍻', vibe: 'Gemeinsam als Team gegen das Spiel rätseln und kombinieren' },
+            { id: 'g3_5', title: 'Top 10', year: 'Partyspiel', emoji: '🔟', vibe: 'Urkomische Einschätzungs-Aufgaben auf einer Skala von 1 bis 10' },
+            { id: 'g3_6', title: 'Wer weiß denn sowas? – Das Spiel', year: 'TV-Quiz', emoji: '❓', vibe: 'Kuriose Alltagsfragen, bei denen man wunderbar um die Ecke denken muss' },
+            { id: 'g3_7', title: 'Bezzerwizzer Kompakt', year: 'Duell-Quiz', emoji: '💡', vibe: 'Kategorien klauen und beim Gegner punkten' },
+            { id: 'g3_8', title: 'Aus der Reihe: Das Schätzspiel', year: 'Schätz-Duell', emoji: '📏', vibe: 'Niemand muss die exakte Zahl kennen – gutes Bauchgefühl gewinnt' }
+        ],
+        // 4: Strategie-Brettspiel (Catan, Carcassonne, Zug um Zug)
+        4: [
+            { id: 'g4_1', title: '7 Wonders Duel', year: 'Top für 2', emoji: '🏛️', vibe: 'Speziell für 2 Personen entwickelt · Weltwunder bauen & strategisch siegen' },
+            { id: 'g4_2', title: 'Dorfromantik – Das Brettspiel', year: 'Spiel des Jahres', emoji: '🏡', vibe: 'Entspanntes, kooperatives Plättchenlegen mit freischaltbaren Boxen' },
+            { id: 'g4_3', title: 'Zug um Zug: Europa', year: 'Klassiker', emoji: '🚂', vibe: 'Eisenbahnstrecken quer durch Europa bauen und Aufträge erfüllen' },
+            { id: 'g4_4', title: 'Cascadia', year: 'Spiel des Jahres', emoji: '🐻', vibe: 'Wunderschönes Natur-Legespiel mit Bären,achsen, Hirschen und Füchsen' },
+            { id: 'g4_5', title: 'Catan – Das Duell (Für 2 Spieler)', year: 'Aufbauspiel', emoji: '🌾', vibe: 'Das berühmte Siedler-Prinzip maßgeschneidert für zwei Personen' },
+            { id: 'g4_6', title: 'Azul', year: 'Taktik-Hit', emoji: '💠', vibe: 'Edle Mosaiksteine sammeln und Muster legen – leicht gelernt, taktisch tief' },
+            { id: 'g4_7', title: 'Carcassonne', year: 'Legespiel', emoji: '🏰', vibe: 'Landschaften, Städte und Klöster legen – ideal und schnell zu zweit' },
+            { id: 'g4_8', title: 'Flügelschlag (Wingspan)', year: 'Kennerspiel', emoji: '🦅', vibe: 'Wunderschön illustriertes Engine-Building-Spiel' }
+        ],
+        // 5: Exit-Game / Krimi-Akte am Wohnzimmertisch lösen
+        5: [
+            { id: 'g5_1', title: 'Hidden Games Tatort – Krimi-Akte', year: 'Echte Fallakte', emoji: '📁', vibe: 'Echte Verhörprotokolle, Fotos, Alibis prüfen & den Täter überführen' },
+            { id: 'g5_2', title: 'EXIT – Das Spiel (Kosmos Einsteiger)', year: 'Escape-Hit', emoji: '🔐', vibe: 'Rätsel knacken, Schlösser öffnen und den Raum am Tisch entschlüsseln' },
+            { id: 'g5_3', title: 'MicroMacro: Crime City', year: 'Spiel des Jahres', emoji: '🔍', vibe: 'Auf einem riesigen Wimmelbild-Stadtplan mit der Lupe Kriminalfälle rekonstruieren' },
+            { id: 'g5_4', title: 'Masters of Crime – Krimi-Fallakte', year: 'True-Crime-Flair', emoji: '🕵️', vibe: 'Mit Google Maps, E-Mails und Beweisen einen komplexen Fall lösen' },
+            { id: 'g5_5', title: 'Sherlock – Die Kartenspiel-Krimireihe', year: '30-Min Krimi', emoji: '🎩', vibe: 'Kompakter Kriminalfall im Taschenformat – Hinweise teilen oder ausschließen' },
+            { id: 'g5_6', title: 'Escape Room – Das Spiel (2-Spieler-Edition)', year: 'Mit Chrono-Decoder', emoji: '⏳', vibe: '60 Minuten Countdown mit echtem Schlüssel-Decoder' },
+            { id: 'g5_7', title: 'Detective Stories – Fall 1: Das Feuer in Adlerstein', year: 'Ermittler-Box', emoji: '🔥', vibe: 'Realistische Beweismittel und digitale Spuren auswerten' },
+            { id: 'g5_8', title: 'Adventure Games – Die Monochrome AG', year: 'Story-Rätsel', emoji: '🏢', vibe: 'Wie ein Point-and-Click-Adventure zum gemeinsamen Erkunden am Tisch' }
+        ],
+        // 6: Mario Party, Jackbox oder Smartphone-Partyspiel
+        6: [
+            { id: 'g6_1', title: 'Super Mario Party Jamboree', year: 'Party-König', emoji: '🎉', vibe: 'Über 110 Minispiele und spannende Spielbretter für den perfekten Abend' },
+            { id: 'g6_2', title: 'The Jackbox Party Pack', year: 'Smartphone-Controller', emoji: '📱', vibe: 'Jeder nutzt sein eigenes Handy als Controller für witzige Zeichen- & Wortduelle' },
+            { id: 'g6_3', title: 'Just Dance 2026 Edition', year: 'Musik & Action', emoji: '💃', vibe: 'Handy in die Hand und zu aktuellen Charts im Wohnzimmer antreten' },
+            { id: 'g6_4', title: 'Keep Talking and Nobody Explodes', year: 'Kommunikations-Test', emoji: '💣', vibe: 'Einer sieht die Bombe, der andere hat das Handbuch – Nervenkitzel pur!' },
+            { id: 'g6_5', title: 'WarioWare: Move It!', year: '5-Sekunden-Chaos', emoji: '🤪', vibe: 'Über 200 völlig abgedrehte Mikro-Spiele im Sekundentakt' },
+            { id: 'g6_6', title: 'Boomerang Fu', year: 'Couch-Action', emoji: '🪃', vibe: 'Niedliches Essen bekämpft sich in rasanten 1-Minuten-Arenen' },
+            { id: 'g6_7', title: 'Ultimate Chicken Horse', year: 'Hindernis-Bau', emoji: '🐴', vibe: 'Gemeinsam Fallen in das Level bauen und trotzdem das Ziel erreichen' },
+            { id: 'g6_8', title: 'Gang Beasts / Party Animals', year: 'Lachgarantie', emoji: '🐶', vibe: 'Wackelige Gelee-Figuren schubsen sich von aberwitzigen Bühnen' }
+        ],
+        // 7: Story-Game zusammen entscheiden
+        7: [
+            { id: 'g7_1', title: 'Until Dawn (PS5 / PC Remake)', year: 'Interaktiver Film', emoji: '🏔️', vibe: 'Jede Entscheidung zählt · Wer überlebt die Nacht auf der verschneiten Berghütte?' },
+            { id: 'g7_2', title: 'Life is Strange: Double Exposure', year: 'Mystery-Story', emoji: '🦋', vibe: 'Parallele Zeitlinien und ein packender Mordfall mit emotionalen Entscheidungen' },
+            { id: 'g7_3', title: 'The Quarry', year: 'Couch-Modus', emoji: '🏕️', vibe: 'Somcamp-Thriller mit eigenem Couch-Koop-Modus (jeder steuert seine Figuren)' },
+            { id: 'g7_4', title: 'Detroit: Become Human', year: 'Sci-Fi-Thriller', emoji: '🤖', vibe: 'Hunderte Story-Verzweigungen – jede Szene verändert den Ausgang' },
+            { id: 'g7_5', title: 'The Dark Pictures Anthology: House of Ashes', year: 'Movie-Night-Modus', emoji: '🔦', vibe: 'Controller-Weitergabe-Modus speziell für Paare & Gruppen' },
+            { id: 'g7_6', title: 'As Dusk Falls', year: 'Mit Handy abstimmen', emoji: '🌵', vibe: 'Packendes Geiseldrama, bei dem ihr per Smartphone über jede Entscheidung abstimmt' },
+            { id: 'g7_7', title: 'Heavy Rain / Beyond: Two Souls', year: 'Krimi-Drama', emoji: '🌧️', vibe: 'Spannender interaktiver Thriller auf den Spuren des Origami-Killers' },
+            { id: 'g7_8', title: 'Dispatch / Lost Records: Bloom & Rage', year: 'Story-Neuheit', emoji: '📼', vibe: 'Von den „Life is Strange“-Machern – Geheimnisse eines unvergesslichen Sommers' }
+        ],
+        // 8: Entweder-Oder / 36 Fragen / Paar-Kartenspiel
+        8: [
+            { id: 'g8_1', title: 'Erzählt euch mehr – Paare-Edition', year: 'Bestseller', emoji: '💬', vibe: 'Tiefgründige, witzige und überraschende Gesprächskarten für den Abend zu zweit' },
+            { id: 'g8_2', title: 'We\'re Not Really Strangers (Couples Edition)', year: 'Kult-Spiel', emoji: '❤️', vibe: '3 Level voller ehrlicher Fragen, die man sich im Alltag sonst nie stellt' },
+            { id: 'g8_3', title: 'Tiefergehend – Das Gesprächsspiel für Paare', year: 'Date-Night', emoji: '🍷', vibe: 'Perfekt bei einem Glas Wein auf der Couch oder beim Essen' },
+            { id: 'g8_4', title: 'Ohne Filter – Das ehrliche Fragenspiel', year: 'Unterhaltung', emoji: '🔥', vibe: 'Spannende Entweder-Oder-Dilemmas und unerwartete Geschichten' },
+            { id: 'g8_5', title: 'Vertellis Beziehungs-Edition', year: 'Klassiker', emoji: '✨', vibe: 'Rückblicke, gemeinsame Träume und schöne Momente Revue passieren lassen' },
+            { id: 'g8_6', title: '52 Dates für Paare (Freirubbel-Karten)', year: 'Ideen-Box', emoji: '🪙', vibe: 'Karte ziehen, freirubbeln und das Date direkt umsetzen' },
+            { id: 'g8_7', title: 'Klartext für Paare', year: 'Humor & Tiefe', emoji: '🗣️', vibe: 'Über 100 Gesprächsimpulse ohne Kitsch' },
+            { id: 'g8_8', title: 'Schlagfertig / Wer würde eher? – Paar-Duell', year: 'Lustig', emoji: '😂', vibe: 'Wer von euch beiden würde eher...? Ehrlich und urkomisch' }
+        ],
+        // 9: Puzzle, Lego-Set oder Wort-Duell (Scrabble / Wordle)
+        9: [
+            { id: 'g9_1', title: 'LEGO Botanicals Blumenstrauß / Rosenstrauß', year: 'Deko-Bestseller', emoji: '💐', vibe: 'Entspannt zu zweit bauen (mit 2 Anleitungsheften) – verwelkt nie!' },
+            { id: 'g9_2', title: 'Codenames Duett (Für 2 Spieler)', year: 'Wort-Koop', emoji: '🕵️‍♂️', vibe: 'Gemeinsam durch clevere 1-Wort-Hinweise alle Geheimagenten finden' },
+            { id: 'g9_3', title: 'Ravensburger Escape Puzzle (750 Teile)', year: 'Puzzle + Rätsel', emoji: '🧩', vibe: 'Erst puzzeln, dann die versteckten Rätsel im Motiv lösen' },
+            { id: 'g9_4', title: 'Scrabble Original / Buchstaben-Duell', year: 'Wort-Klassiker', emoji: '🔤', vibe: 'Der zeitlose Klassiker um die besten Wörter und Dreifachen Wortwert' },
+            { id: 'g9_5', title: 'LEGO Icons Bonsai-Baum oder Orchidee', year: 'Zen-Bauprojekt', emoji: '🪴', vibe: 'Perfekt zum Abschalten mit Musik oder einem Podcast im Hintergrund' },
+            { id: 'g9_6', title: 'Bananagrams', year: 'Schnelles Wortspiel', emoji: '🍌', vibe: 'Wie Scrabble ohne Spielbrett – alle bauen gleichzeitig im Wettlauf' },
+            { id: 'g9_7', title: 'Ubongo – Das Duell (Für 2)', year: 'Lege-Rätsel', emoji: '📐', vibe: 'Wer puzzelt seine Formen schneller auf das Aufgabenfeld?' },
+            { id: 'g9_8', title: 'Rummikub Original', year: 'Zahlen-Klassiker', emoji: '🔢', vibe: 'Zahlenreihen umbauen, anlegen und als Erster alle Steine loswerden' }
+        ]
+    },
+
+    vacation: {
+        // 0: Strandurlaub, Meer & Pool-Liege
+        0: [
+            { id: 'v0_1', title: 'Mallorca – Traumbuchten & Beach-Hotels', year: 'Balearen', emoji: '🏖️', vibe: 'Türkisfarbene Calas, kurze Flugzeit & entspannte Strandpromenaden', targetType: 'booking' },
+            { id: 'v0_2', title: 'Kreta – Sonne, Tavernen & Lagunen', year: 'Griechenland', emoji: '🇬🇷', vibe: 'Elafonissi, Balos-Lagune & griechische Gastfreundschaft direkt am Meer', targetType: 'booking' },
+            { id: 'v0_3', title: 'Algarve – Felsbuchten & Goldstrände', year: 'Portugal', emoji: '🇵🇹', vibe: 'Spektakuläre Klippen, Atlantik-Sonnenuntergänge & frischer Fisch', targetType: 'booking' },
+            { id: 'v0_4', title: 'Sardinien – Karibik-Feeling im Mittelmeer', year: 'Italien', emoji: '🇮🇹', vibe: 'Glasklares Wasser an der Costa Smeralda & La Maddalena', targetType: 'booking' },
+            { id: 'v0_5', title: 'Costa Brava & Tossa de Mar', year: 'Spanien', emoji: '🇪🇸', vibe: 'Malerische kleine Buchten, Pinienwälder und Tapas am Meer', targetType: 'booking' },
+            { id: 'v0_6', title: 'Rhodos & Lindos – Sonneninsel', year: 'Griechenland', emoji: '☀️', vibe: 'Über 300 Sonnentage, weiße Dörfer und moderne Adults-Only Beach-Resorts', targetType: 'booking' },
+            { id: 'v0_7', title: 'Teneriffa / Gran Canaria – Ewiger Frühling', year: 'Kanaren', emoji: '🌴', vibe: 'Auch im Herbst & Winter angenehm warm mit Pool & Atlantikstrand', targetType: 'booking' },
+            { id: 'v0_8', title: 'Split & Makarska Riviera', year: 'Kroatien', emoji: '🇭🇷', vibe: 'Glasklare Adria, Pinien am Strand und historische Altstädte', targetType: 'booking' }
+        ],
+        // 1: Städtetrip Europa
+        1: [
+            { id: 'v1_1', title: 'Lissabon', year: 'Portugal', emoji: '🚋', vibe: 'Gelbe Straßenbahn, Aussichtspunkte (Miradouros), Pastéis de Belém & Rooftop-Bars', targetType: 'booking' },
+            { id: 'v1_2', title: 'Barcelona', year: 'Spanien', emoji: '🥘', vibe: 'Städtetrip + Stadtstrand · Sagrada Família, Gotisches Viertel & Tapas', targetType: 'booking' },
+            { id: 'v1_3', title: 'Rom', year: 'Italien', emoji: '🏛️', vibe: 'La Dolce Vita · Kolosseum, Trastevere-Gassen, Espresso & beste Carbonara', targetType: 'booking' },
+            { id: 'v1_4', title: 'Kopenhagen', year: 'Dänemark', emoji: '🚲', vibe: 'Nyhavn, skandinavisches Design, beste Bäckereien & entspannter Hygge-Vibe', targetType: 'booking' },
+            { id: 'v1_5', title: 'Amsterdam', year: 'Niederlande', emoji: '🌷', vibe: 'Grachtenfahrt, kleine Cafés in den „9 Straatjes“, Museen & Wochenend-Flair', targetType: 'booking' },
+            { id: 'v1_6', title: 'Wien', year: 'Österreich', emoji: '☕', vibe: 'Kaffeehauskultur, Prater, Naschmarkt & imperiale Architektur', targetType: 'booking' },
+            { id: 'v1_7', title: 'Prag', year: 'Tschechien', emoji: '🌉', vibe: 'Karlsbrücke im Morgenlicht, wunderschöne Altstadt & top Preis-Leistungs-Verhältnis', targetType: 'booking' },
+            { id: 'v1_8', title: 'Florenz', year: 'Italien', emoji: '🍷', vibe: 'Renaissance-Perle · Ponte Vecchio, Piazzale Michelangelo & toskanischer Wein', targetType: 'booking' }
+        ],
+        // 2: Berghütte, Wandern & Bergsee
+        2: [
+            { id: 'v2_1', title: 'Südtirol & Dolomiten (Pragser Wildsee)', year: 'Italien', emoji: '🏔️', vibe: '300 Sonnentage, spektakuläre Gipfel, Kaiserschmarrn auf der Alm & Bergseen', targetType: 'booking' },
+            { id: 'v2_2', title: 'Zillertal & Achensee', year: 'Tirol', emoji: '🥾', vibe: 'Türkisblauer Bergsee, Gondelfahrten & urige Hütten mit Panoramaterrasse', targetType: 'booking' },
+            { id: 'v2_3', title: 'Allgäu (Oberstdorf & Füssen)', year: 'Bayern', emoji: '🐄', vibe: 'Alpen-Panorama, klare Gebirgsbäche, Schlösser & gemütliche Chalets', targetType: 'booking' },
+            { id: 'v2_4', title: 'Berchtesgadener Land & Königssee', year: 'Bayern', emoji: '🛶', vibe: 'Bootsfahrt nach St. Bartholomä, Watzmann-Blick & malerischer Obersee', targetType: 'booking' },
+            { id: 'v2_5', title: 'Salzkammergut (Wolfgangsee & Hallstatt)', year: 'Österreich', emoji: '🏞️', vibe: 'Glasklare Badeseen direkt vor imposanter Bergkulisse', targetType: 'booking' },
+            { id: 'v2_6', title: 'Gardasee Nord (Riva del Garda & Monte Baldo)', year: 'Italien', emoji: '🍋', vibe: 'Alpengipfel treffen auf Palmen, Olivenhaine und italienisches Gelato', targetType: 'booking' },
+            { id: 'v2_7', title: 'Tegernsee & Schliersee', year: 'Oberbayern', emoji: '🥨', vibe: 'Kurze Anreise, See-Spaziergang, Wallbergbahn & Bräustüberl', targetType: 'booking' },
+            { id: 'v2_8', title: 'Zermatt & Matterhorn', year: 'Schweiz', emoji: '🇨🇭', vibe: 'Autofreies Bergdorf mit Blick auf den berühmtesten Gipfel der Alpen', targetType: 'booking' }
+        ],
+        // 3: Roadtrip entlang der Küste
+        3: [
+            { id: 'v3_1', title: 'Amalfiküste (Positano, Amalfi & Ravello)', year: 'Italien', emoji: '🍋', vibe: 'Spektakuläre Küstenstraße, pastellfarbene Dörfer & Zitronengärten über dem Meer', targetType: 'booking' },
+            { id: 'v3_2', title: 'Algarve & Portugals Atlantikküste', year: 'Portugal', emoji: '🚐', vibe: 'Von Porto über Lissabon bis zu den Klippen von Lagos', targetType: 'booking' },
+            { id: 'v3_3', title: 'Côte d\'Azur (Nizza, Antibes & Menton)', year: 'Frankreich', emoji: '🌴', vibe: 'Panoramastraßen (Corniches), türkises Wasser & südfranzösisches Savoir-vivre', targetType: 'booking' },
+            { id: 'v3_4', title: 'Istrien (Rovinj, Pula & Opatija)', year: 'Kroatien', emoji: '🌊', vibe: 'Venezianische Hafenstädtchen, Trüffel-Region & Küstenstraßen an der Adria', targetType: 'booking' },
+            { id: 'v3_5', title: 'Andalusien (Málaga, Ronda, Cádiz & Sevilla)', year: 'Spanien', emoji: '💃', vibe: 'Weiße Dörfer, Atlantikstrände und maurische Paläste', targetType: 'booking' },
+            { id: 'v3_6', title: 'Cinque Terre & Ligurische Küste', year: 'Italien', emoji: '🎨', vibe: 'Fünf bunte Küstendörfer an steilen Weinbergen mit Meerblick', targetType: 'booking' },
+            { id: 'v3_7', title: 'Mallorca Westküste (Valldemossa, Deià & Sóller)', year: 'Balearen', emoji: '🍊', vibe: 'Traumhafte Serpentinen durch die Serra de Tramuntana', targetType: 'booking' },
+            { id: 'v3_8', title: 'Schottische Highlands & Isle of Skye', year: 'Schottland', emoji: '🏰', vibe: 'Dramatische Küsten, Burgen, Lochs und grüne Täler', targetType: 'booking' }
+        ],
+        // 4: Wellness- & Spa-Hotel mit Infinity-Pool
+        4: [
+            { id: 'v4_1', title: 'Südtirol (Meran & Passeiertal) – Panorama-Spa', year: 'Top-Wellness', emoji: '🧖‍♀️', vibe: 'Beheizte Infinity-Pools mit freiem Blick auf die verschneiten Berggipfel', targetType: 'booking' },
+            { id: 'v4_2', title: 'Tirol & Salzburger Land – Alpen-Wellness', year: 'Österreich', emoji: '🏔️', vibe: 'Große Saunawelten, Naturbadeteiche und exzellente Halbpension', targetType: 'booking' },
+            { id: 'v4_3', title: 'Schwarzwald (Baiersbronn & Titisee)', year: 'Deutschland', emoji: '🌲', vibe: 'Wald-Spa, Panorama-Sauna und preisgekrönte regionale Küche', targetType: 'booking' },
+            { id: 'v4_4', title: 'Bayerischer Wald – Adults-Only Wellnesshotels', year: 'Bayern', emoji: '✨', vibe: 'Ruhe pur, Dachterrassen-Sky-Pool und riesige Ruheoasen für Paare', targetType: 'booking' },
+            { id: 'v4_5', title: 'Ostsee (Timmendorfer Strand / Rügen / Usedom)', year: 'Küste', emoji: '🌊', vibe: 'Strandspaziergang an der frischen Seeluft & danach ab in die warme Sauna', targetType: 'booking' },
+            { id: 'v4_6', title: 'Mosel & Vulkaneifel – Wein- & Romantik-Spa', year: 'Rheinland-Pfalz', emoji: '🍷', vibe: 'Wellnesshotels inmitten von Weinbergen und ruhigen Flusstälern', targetType: 'booking' },
+            { id: 'v4_7', title: 'Bodensee (Überlingen & Konstanz)', year: 'See-Wellness', emoji: '🦢', vibe: 'Seetherme mit Blick über das Wasser bis zu den Schweizer Alpen', targetType: 'booking' },
+            { id: 'v4_8', title: 'Harz – Boutique-Wellness & Natur', year: 'Mittelgebirge', emoji: '🦌', vibe: 'Moderne Design-Spa-Hotels für eine schnelle Auszeit am Wochenende', targetType: 'booking' }
+        ],
+        // 5: Eigenes Ferienhaus / Finca (mit Pool, Kamin oder Garten)
+        5: [
+            { id: 'v5_1', title: 'Mallorca – Naturstein-Finca mit eigenem Pool', year: 'Spanien', emoji: '🏡', vibe: 'Absolute Privatsphäre zwischen Oliven- und Mandelbäumen', targetType: 'booking' },
+            { id: 'v5_2', title: 'Toskana – Landhaus (Agriturismo) in den Hügeln', year: 'Italien', emoji: '🌻', vibe: 'Zypressenalleen, Pool mit Weitblick und Wein direkt vom Weingut', targetType: 'booking' },
+            { id: 'v5_3', title: 'Dänische Nordseeküste (Blåvand / Søndervig)', year: 'Dänemark', emoji: '🔥', vibe: 'Gemütliches Hygge-Holzhaus in den Dünen mit Kaminofen & eigener Sauna', targetType: 'booking' },
+            { id: 'v5_4', title: 'Zeeland & Holländische Küste', year: 'Niederlande', emoji: '🏖️', vibe: 'Modernes Strandhaus oder Tiny House nahe den endlosen Sandstränden', targetType: 'booking' },
+            { id: 'v5_5', title: 'Istrien – Moderne Pool-Villa', year: 'Kroatien', emoji: '🏊', vibe: 'Eigenes Haus mit Außengrill, Pool und Blick aufs Meer', targetType: 'booking' },
+            { id: 'v5_6', title: 'Provence & Luberon – Französisches Landhaus', year: 'Frankreich', emoji: '💜', vibe: 'Lavendelfelder, Wochenmärkte und Frühstück auf der eigenen Terrasse', targetType: 'booking' },
+            { id: 'v5_7', title: 'Österreichische Alpen – Privates Holz-Chalet', year: 'Österreich', emoji: '🪵', vibe: 'Eigene Berghütte mit Kaminfeuer und Hot-Tub auf der Holzterrasse', targetType: 'booking' },
+            { id: 'v5_8', title: 'Ostsee & Mecklenburgische Seenplatte', year: 'Deutschland', emoji: '⛵', vibe: 'Reetdachhaus oder Hausboot direkt am glitzernden Wasser', targetType: 'booking' }
+        ],
+        // 6: Insel-Urlaub (Mallorca, Griechenland, Kanaren oder Azoren)
+        6: [
+            { id: 'v6_1', title: 'Mallorca (Balearen)', year: 'Spanien', emoji: '🏝️', vibe: 'Perfekte Mischung aus Traumbuchten, Bergdörfern und Palma-Flair', targetType: 'booking' },
+            { id: 'v6_2', title: 'Kreta (Griechenland)', year: 'Griechenland', emoji: '🫒', vibe: 'Vielfältigste Insel Griechenlands mit Traumstränden, Schluchten & Hafenstädten', targetType: 'booking' },
+            { id: 'v6_3', title: 'Teneriffa (Kanaren)', year: 'Spanien', emoji: '🌋', vibe: 'Vulkan Teide, grüne Lorbeerwälder im Norden und Sonne im Süden', targetType: 'booking' },
+            { id: 'v6_4', title: 'Madeira – Die grüne Blumeninsel', year: 'Portugal', emoji: '🌺', vibe: 'Spektakuläre Steilküsten, Levada-Wanderungen und natürliche Lava-Meerwasserpools', targetType: 'booking' },
+            { id: 'v6_5', title: 'Sardinien', year: 'Italien', emoji: '⛵', vibe: 'Weißer Puderzucker-Sand, türkises Wasser und italienische Küche', targetType: 'booking' },
+            { id: 'v6_6', title: 'Korfu', year: 'Griechenland', emoji: '🌿', vibe: 'Grüne Zypressen-Insel mit venezianischer Altstadt und malerischen Buchten', targetType: 'booking' },
+            { id: 'v6_7', title: 'Lanzarote (Kanaren)', year: 'Spanien', emoji: '🖤', vibe: 'Einzigartige Vulkanlandschaft, weiße Architektur & goldene Papagayo-Strände', targetType: 'booking' },
+            { id: 'v6_8', title: 'Azoren (São Miguel)', year: 'Portugal', emoji: '🐋', vibe: 'Heiße Quellen, grüne Kraterseen und Natur pur mitten im Atlantik', targetType: 'booking' }
+        ],
+        // 7: Skandinavien, Schottland oder Natur-Abenteuer im Norden
+        7: [
+            { id: 'v7_1', title: 'Norwegen – Westfjorde & Bergen', year: 'Norwegen', emoji: '🇳🇴', vibe: 'Gigantische Wasserfälle, tiefe Fjorde und bunte Holzhäuser am Hafen', targetType: 'booking' },
+            { id: 'v7_2', title: 'Stockholm & Schärengarten', year: 'Schweden', emoji: '🇸🇪', vibe: '14 Inseln, Gamla Stan, Zimtschnecken (Fika) & Bootsfahrten durch die Schären', targetType: 'booking' },
+            { id: 'v7_3', title: 'Edinburgh & Schottische Highlands', year: 'Schottland', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', vibe: 'Mittelalterliche Gassen, gemütliche Pubs, Schlösser und wilde Natur', targetType: 'booking' },
+            { id: 'v7_4', title: 'Island – Golden Circle & Südküste', year: 'Island', emoji: '🇮🇸', vibe: 'Geysire, heiße Thermalbäder, schwarze Strände und Wasserfälle', targetType: 'booking' },
+            { id: 'v7_5', title: 'Kopenhagen & Nord-Seeland', year: 'Dänemark', emoji: '🇩🇰', vibe: 'Design, Kulinarik, Schlösser am Meer und entspannte Lebensart', targetType: 'booking' },
+            { id: 'v7_6', title: 'Finnische Seenplatte & Helsinki', year: 'Finnland', emoji: '🇫🇮', vibe: 'Tausende glitzernde Seen, Blockhaussauna und nordische Ruhe', targetType: 'booking' },
+            { id: 'v7_7', title: 'Irland – Dublin, Galway & Cliffs of Moher', year: 'Irland', emoji: '☘️', vibe: 'Grüne Küstenklippen, Live-Musik im Pub und herzliche Menschen', targetType: 'booking' },
+            { id: 'v7_8', title: 'Lofoten-Inseln', year: 'Norwegen', emoji: '🏔️', vibe: 'Steile Berge direkt aus dem Arktischen Meer & rote Fischerhütten (Rorbuer)', targetType: 'booking' }
+        ],
+        // 8: Genuss-Reise (Toskana, Südtirol, Provence oder San Sebastián)
+        8: [
+            { id: 'v8_1', title: 'Toskana & Chianti-Weinregion', year: 'Italien', emoji: '🍷', vibe: 'Weingüter, mittelalterliche Hügelstädte (Siena, San Gimignano) & Trüffel-Pasta', targetType: 'booking' },
+            { id: 'v8_2', title: 'Südtirol (Bozen, Meran & Kalterer See)', year: 'Italien', emoji: '🍇', vibe: 'Alpen-Mediterran-Mix · Törggelen, Spitzenweine und Knödel bis Risotto', targetType: 'booking' },
+            { id: 'v8_3', title: 'San Sebastián (Donostia) & Baskenland', year: 'Spanien', emoji: '🍢', vibe: 'Welthauptstadt der Pintxos (Tapas-Bars) direkt an einer wunderschönen Meeresbucht', targetType: 'booking' },
+            { id: 'v8_4', title: 'Provence (Aix-en-Provence, Gordes & Roussillon)', year: 'Frankreich', emoji: '🥖', vibe: 'Roséwein, provenzalische Wochenmärkte, Olivenhaine & Bergdörfer', targetType: 'booking' },
+            { id: 'v8_5', title: 'Piemont (Alba & Langhe)', year: 'Italien', emoji: '🌰', vibe: 'Heimat des Barolo-Weins, Haselnüsse, Tajarin-Pasta & sanfte Weinberge', targetType: 'booking' },
+            { id: 'v8_6', title: 'Porto & Douro-Tal', year: 'Portugal', emoji: '🇵🇹', vibe: 'Historische Altstadt am Fluss, Portweinkeller & terrassierte Weinberge', targetType: 'booking' },
+            { id: 'v8_7', title: 'Elsass (Colmar & Elsässer Weinstraße)', year: 'Frankreich', emoji: '🥧', vibe: 'Fachwerkromantik, Flammkuchen, Riesling und französische Patisserien', targetType: 'booking' },
+            { id: 'v8_8', title: 'Bologna & Emilia-Romagna', year: 'Italien', emoji: '🍝', vibe: 'Italiens Bauch · Original Tagliatelle al Ragù, Parmigiano & Aceto Balsamico', targetType: 'booking' }
+        ],
+        // 9: Winter-Trip: Skifahren, Rodeln oder verschneite Chalet-Auszeit
+        9: [
+            { id: 'v9_1', title: 'Zillertal / Mayrhofen / Sölden', year: 'Tirol', emoji: '🎿', vibe: 'Schneesichere Pisten, moderne Gondeln & gemütliche Hütten', targetType: 'booking' },
+            { id: 'v9_2', title: 'Gröden (Val Gardena) & Seiser Alm', year: 'Südtirol', emoji: '❄️', vibe: 'Winterwandern, Rodeln und Skifahren unter den Dolomiten-Felsen mit Südtiroler Küche', targetType: 'booking' },
+            { id: 'v9_3', title: 'Kitzbühel & Kirchberg', year: 'Tirol', emoji: '🏔️', vibe: 'Charmante Alpenstadt, Top-Hotels, Winterspaziergänge & Hüttenzauber', targetType: 'booking' },
+            { id: 'v9_4', title: 'Oberstdorf & Kleinwalsertal', year: 'Allgäu', emoji: '🛷', vibe: 'Verschneite Täler, Pferdeschlittenfahrten, Rodelbahnen und Wellness', targetType: 'booking' },
+            { id: 'v9_5', title: 'Zell am See & Kaprun', year: 'Salzburger Land', emoji: '🏔️', vibe: 'Kombination aus verschneitem Bergsee, Gletscher und Thermen-Spa', targetType: 'booking' },
+            { id: 'v9_6', title: 'Garmisch-Partenkirchen & Zugspitze', year: 'Bayern', emoji: '🚠', vibe: 'Eibsee im Winterkleid, Partnachklamm und Deutschlands höchster Gipfel', targetType: 'booking' },
+            { id: 'v9_7', title: 'Zermatt im Winter', year: 'Schweiz', emoji: '🧀', vibe: 'Schweizer Käsefondue im verschneiten Bergdorf vor dem Matterhorn', targetType: 'booking' },
+            { id: 'v9_8', title: 'Rovaniemi & Finnisches Lappland', year: 'Finnland', emoji: '🦌', vibe: 'Einmal-im-Leben-Reise · Glas-Iglus, Nordlichter & Rentierschlitten', targetType: 'booking' }
+        ]
+    },
+
+    gifts: {
+        // 0: Konzert-, Comedy- oder Event-Tickets
+        0: [
+            { id: 'gf0_1', title: 'Candlelight Konzert (Klassik & Filmmusik bei Kerzenschein)', year: 'Live-Event', emoji: '🕯️', vibe: 'Gänsehaut-Atmosphäre in tausenden Kerzen (z. B. Hans Zimmer, Coldplay, Queen)', targetType: 'gyg' },
+            { id: 'gf0_2', title: 'Stand-Up Comedy Live-Show / Comedy-Club', year: 'Lachen zu zweit', emoji: '🎤', vibe: '2 Stunden Bauchmuskelkater vor Lachen mit Drinks im Club', targetType: 'gyg' },
+            { id: 'gf0_3', title: 'Varieté- & Akrobatik-Show (z. B. GOP / Palazzo)', year: 'Show & Dinner', emoji: '🎪', vibe: 'Weltklasse-Artistik, Musik und optionales 3-Gänge-Menü', targetType: 'gyg' },
+            { id: 'gf0_4', title: 'Großes Musical-Highlight (Hamburg / Stuttgart / Köln)', year: 'Bühnen-Show', emoji: '🎭', vibe: 'König der Löwen, Moulin Rouge, MJ oder Tarzan live erleben', targetType: 'gyg' },
+            { id: 'gf0_5', title: 'Immersive Kunst- & Licht-Ausstellung', year: 'Visual Event', emoji: '✨', vibe: '360-Grad Projektionen, Klangwelten und beeindruckende Installationen', targetType: 'gyg' },
+            { id: 'gf0_6', title: 'Krimi-Dinner oder Zauber-Show Live', year: 'Interaktiv', emoji: '🎩', vibe: 'Spannender Abend zwischen Gänsehaut, Rätsel und gutem Essen', targetType: 'gyg' }
+        ],
+        // 1: Besonderes Dinner, Tasting oder Kochkurs
+        1: [
+            { id: 'gf1_1', title: 'Italienischer Pasta- & Pizza-Kochkurs', year: 'Kulinarik-Event', emoji: '🍝', vibe: 'Zusammen frische Pasta rollen, Wein trinken und gemeinsam schlemmen', targetType: 'gyg' },
+            { id: 'gf1_2', title: 'Sushi-Meisterkurs für Einsteiger', year: 'Food-Workshop', emoji: '🍣', vibe: 'Maki, Inside-Out & Nigiri professionell selbst rollen lernen', targetType: 'gyg' },
+            { id: 'gf1_3', title: 'Wein- & Käse-Tasting Abend', year: 'Verkostung', emoji: '🍷', vibe: 'Ausgewählte Weine und gereifte Käsesorten entspannt kennenlernen', targetType: 'gyg' },
+            { id: 'gf1_4', title: 'Cocktail-Mixkurs / Gin-Tasting', year: 'Bar-Erlebnis', emoji: '🍸', vibe: 'Shaken wie die Profis – eigene Lieblingscocktails mixen & probieren', targetType: 'gyg' },
+            { id: 'gf1_5', title: 'Barista- & Latte-Art-Kurs', year: 'Kaffee-Liebhaber', emoji: '☕', vibe: 'Perfekter Espresso-Bezug und cremiger Milchschaum an der Siebträgermaschine', targetType: 'gyg' },
+            { id: 'gf1_6', title: 'Kulinarische Stadtführung (Food-Tour)', year: 'Entdecker-Date', emoji: '🌮', vibe: '5–6 versteckte kulinarische Geheimtipps in einem Viertel durchprobieren', targetType: 'gyg' }
+        ],
+        // 2: Überraschungs-Kurztrip (1–2 Nächte)
+        2: [
+            { id: 'gf2_1', title: 'Boutique-Hotel Städtetrip (1–2 Nächte mit Frühstück)', year: 'Kurztrip', emoji: '🧳', vibe: 'Stylisches Design-Hotel mitten im Szeneviertel für ein Wochenende', targetType: 'booking' },
+            { id: 'gf2_2', title: 'Wellness- & Spa-Hotel Auszeit (2 Nächte)', year: 'Entspannung', emoji: '🧖‍♀️', vibe: 'Bademantel an, Infinity-Pool, Sauna und langes Schlemmer-Frühstück', targetType: 'booking' },
+            { id: 'gf2_3', title: 'Tiny House oder Baumhaus in der Natur', year: 'Besonders übernachten', emoji: '🌲', vibe: 'Mitten im Grünen aufwachen mit Panoramafenster und Terrasse', targetType: 'booking' },
+            { id: 'gf2_4', title: 'Romantik- & Schlosshotel mit Candle-Light-Dinner', year: 'Klassiker', emoji: '🏰', vibe: 'Übernachten in historischen Mauern mit Schlosspark', targetType: 'booking' },
+            { id: 'gf2_5', title: 'Berg-Chalet oder Almhütte für zwei', year: 'Berge', emoji: '🏔️', vibe: 'Frische Bergluft, Holz-Architektur und Hütten-Gemütlichkeit', targetType: 'booking' },
+            { id: 'gf2_6', title: 'Strandhotel am Meer (Nordsee / Ostsee / Holland)', year: 'Meeresbrise', emoji: '🌊', vibe: 'Meeresrauschen, Dünenspaziergang und Fischbrötchen am Hafen', targetType: 'booking' }
+        ],
+        // 3: Cooles Gadget (Tech, Kaffee oder Küche)
+        3: [
+            { id: 'gf3_1', title: 'Ninja Foodi Dual Zone Heißluftfritteuse (Airfryer)', year: 'Küchen-Bestseller', emoji: '🍟', vibe: 'Zwei Fächer gleichzeitig knusprig garen – spart extrem viel Zeit im Alltag', targetType: 'amazon' },
+            { id: 'gf3_2', title: 'Ninja Creami Eismaschine & Frozen-Drink-Maker', year: 'Viral-Hit', emoji: '🍨', vibe: 'Aus fast allem auf Knopfdruck cremiges Eis, Sorbet oder Protein-Eis zaubern', targetType: 'amazon' },
+            { id: 'gf3_3', title: 'Tragbare Akku-Espressomaschine (für Auto & Reisen)', year: 'Kaffee-Gadget', emoji: '☕', vibe: 'Frischer Espresso mit echter Crema beim Roadtrip, im Park oder am See', targetType: 'amazon' },
+            { id: 'gf3_4', title: '3-in-1 MagSafe / Qi2 Nachttisch-Ladestation', year: 'Tech-Upgrade', emoji: '⚡', vibe: 'Handy, Uhr & Kopfhörer ordentlich an einem Platz laden ohne Kabelsalat', targetType: 'amazon' },
+            { id: 'gf3_5', title: 'Noise-Cancelling Over-Ear Kopfhörer (Sony / Bose / Soundcore)', year: 'Audio-Hit', emoji: '🎧', vibe: 'Ruhe auf Knopfdruck für Reisen, Homeoffice und Musikgenuss', targetType: 'amazon' },
+            { id: 'gf3_6', title: 'Mini-Heimkino-Beamer (Full-HD für Schlafzimmer & Decke)', year: 'Couch-Upgrade', emoji: '📽️', vibe: 'Kino-Leinwand direkt an die Zimmerwand oder Schlafzimmerdecke projizieren', targetType: 'amazon' }
+        ],
+        // 4: Massage-, Day-Spa- oder Wellness-Gutschein
+        4: [
+            { id: 'gf4_1', title: 'Wellness- & Thermen-GutscheinBox für 2', year: 'Auszeit', emoji: '🧖‍♀️', vibe: 'Freie Auswahl aus hunderten Thermen, Saunawelten und Day-Spas', targetType: 'amazon' },
+            { id: 'gf4_2', title: 'Rituals Luxury Home-Spa Geschenkset (Große Box)', year: 'Wohlfühl-Box', emoji: '🕯️', vibe: 'Duschschaum, Duftkerze, Peeling & Körpercreme für den Spa-Abend zuhause', targetType: 'amazon' },
+            { id: 'gf4_3', title: 'Shiatsu Nacken- & Schultermassagegerät mit Wärmefunktion', year: 'Entspannung', emoji: '💆‍♀️', vibe: 'Jeden Abend 15 Minuten Tiefenmassage direkt auf der eigenen Couch', targetType: 'amazon' },
+            { id: 'gf4_4', title: 'Paar-Massageöl- & Wellness-Geschenkbox', year: 'Zuhause-Spa', emoji: '🌿', vibe: 'Hochwertige natürliche Aromaöle für entspannte Abende zu zweit', targetType: 'amazon' },
+            { id: 'gf4_5', title: 'Kuschel-Bademantel oder XXL-Wärmedecke', year: 'Cozy-Faktor', emoji: '🛋️', vibe: 'Hotel-Spa-Gefühl für kalte Abende im Wohnzimmer', targetType: 'amazon' },
+            { id: 'gf4_6', title: 'Aroma-Diffuser mit ätherischen Duftölen', year: 'Raumklima', emoji: '💧', vibe: 'Sanftes Kaminlicht-Ambiente und entspannender Duft nach Lavendel oder Zeder', targetType: 'amazon' }
+        ],
+        // 5: Feinkost- & Genuss-Box
+        5: [
+            { id: 'gf5_1', title: 'Italienische Feinkost- & Pasta-Geschenkbox', year: 'La Dolce Vita', emoji: '🍝', vibe: 'Manufaktur-Pasta, Trüffel-Pesto, Olivenöl & Cantuccini für das perfekte Dinner', targetType: 'amazon' },
+            { id: 'gf5_2', title: 'Ankerkraut Gourmet-Gewürz-Geschenkset im Korkenglas', year: 'Koch-Freude', emoji: '🧂', vibe: 'Die beliebtesten Gewürzmischungen zum gemeinsamen Kochen und Grillen', targetType: 'amazon' },
+            { id: 'gf5_3', title: 'Specialty Coffee / Barista Kaffee-Probierbox', year: 'Kaffee-Genuss', emoji: '☕', vibe: 'Verschiedene Röstungen aus kleinen Kaffeeröstereien zum Durchprobieren', targetType: 'amazon' },
+            { id: 'gf5_4', title: 'Belgische Pralinen- & Schokoladen-Tasting-Kollektion', year: 'Süßer Luxus', emoji: '🍫', vibe: 'Handverlesene Trüffel und Pralinen zum gemeinsamen Verkosten', targetType: 'amazon' },
+            { id: 'gf5_5', title: 'Gin- & Botanicals-Tasting-Box (oder Cocktail-Set)', year: 'Home-Bar', emoji: '🍸', vibe: 'Verschiedene Miniaturen und ausgewählte Gewürze für den Bar-Abend zuhause', targetType: 'amazon' },
+            { id: 'gf5_6', title: 'Scharfe Saucen (Hot Sauce) Tasting-Challenge Box', year: 'Feurig', emoji: '🌶️', vibe: 'Von mild-fruchtig bis feurig-scharf – euer eigenes „Hot Ones“-Tasting am Esstisch', targetType: 'amazon' }
+        ],
+        // 6: Kreativ-Workshop
+        6: [
+            { id: 'gf6_1', title: 'Töpferkurs / Keramik-Bemalen für zwei', year: 'Kreativ-Date', emoji: '🏺', vibe: 'Eigene Lieblingstassen oder Schüsseln gestalten und brennen lassen', targetType: 'gyg' },
+            { id: 'gf6_2', title: 'ArtNight – Mal-Erlebnis mit Drinks', year: 'Kunst & Spaß', emoji: '🎨', vibe: 'Schritt für Schritt ein eigenes Kunstwerk auf Leinwand malen (auch ohne Vorkenntnisse)', targetType: 'gyg' },
+            { id: 'gf6_3', title: 'Parfüm-Workshop – Eigenen Signatur-Duft kreieren', year: 'Besonders', emoji: '🌸', vibe: 'Aus edlen Essenzen einen völlig individuellen Flakon zusammenstellen', targetType: 'gyg' },
+            { id: 'gf6_4', title: 'Schokoladen- & Pralinen-Workshop', year: 'Genuss-Handwerk', emoji: '🍫', vibe: 'Eigene Tafelschokolade und Pralinen gießen, verzieren und mitnehmen', targetType: 'gyg' },
+            { id: 'gf6_5', title: 'Töpfer-Set für Zuhause (Lufttrocknender Ton + Farben)', year: 'Home-Date-Box', emoji: '🖌️', vibe: 'Komplettes DIY-Pottery-Kit für einen kreativen Abend am eigenen Tisch', targetType: 'amazon' },
+            { id: 'gf6_6', title: 'Kerzen-Gieß-Set oder Cocktail-Infusion DIY-Box', year: 'Selbermachen', emoji: '🕯️', vibe: 'Alles in einer Box für ein 2-stündiges Projekt zu zweit', targetType: 'amazon' }
+        ],
+        // 7: Besonderes Brettspiel, Lego-Set oder Buch-Bestseller
+        7: [
+            { id: 'gf7_1', title: 'LEGO Botanicals Blumenstrauß / Rosenstrauß', year: 'Bestseller #1', emoji: '💐', vibe: 'Das beliebteste Geschenk-Set – gemeinsam bauen und als Deko in die Vase stellen', targetType: 'amazon' },
+            { id: 'gf7_2', title: 'LEGO Icons Orchidee oder Bonsai-Baum', year: 'Design-Set', emoji: '🪴', vibe: 'Sieht täuschend echt aus und macht beim gemeinsamen Zusammenbauen riesig Spaß', targetType: 'amazon' },
+            { id: 'gf7_3', title: '7 Wonders Duel / Codenames Duett (Top-Spiele für 2)', year: 'Spiele-Hit', emoji: '🎲', vibe: 'Die am besten bewerteten Spiele speziell für 2 Personen', targetType: 'amazon' },
+            { id: 'gf7_4', title: '52 kleine & große Eskapaden (Ausflugsbuch für eure Region)', year: 'Inspirations-Buch', emoji: '📖', vibe: '52 fertige Wochenend-Mikroabenteuer direkt vor der Haustür', targetType: 'amazon' },
+            { id: 'gf7_5', title: 'Dorfromantik – Das Brettspiel (Spiel des Jahres)', year: 'Koop-Brettspiel', emoji: '🏡', vibe: 'Gemeinsam Kampagnen-Boxen freischalten und entspannt Landschaften bauen', targetType: 'amazon' },
+            { id: 'gf7_6', title: 'Hidden Games Krimi-Akte + EXIT-Spiel Doppelpack', year: 'Rätsel-Abend', emoji: '🕵️', vibe: 'Zwei komplette Ermittler-Abende zum Verschenken', targetType: 'amazon' }
+        ],
+        // 8: Fotobuch, Erinnerung oder Polaroid-/Instax-Kamera
+        8: [
+            { id: 'gf8_1', title: 'Fujifilm Instax Mini 12 Sofortbildkamera + Film-Pack', year: 'Bestseller', emoji: '📸', vibe: 'Schnappschüsse sofort als echtes Foto in der Hand halten (für Kühlschrank & Gästebuch)', targetType: 'amazon' },
+            { id: 'gf8_2', title: 'Digitaler WLAN-Bilderrahmen (Frameo)', year: 'Smart-Erinnerung', emoji: '🖼️', vibe: 'Neue Urlaubs- und Alltagsfotos direkt vom Smartphone auf den Rahmen schicken', targetType: 'amazon' },
+            { id: 'gf8_3', title: 'Kodak Mini Shot / Canon Zoemini Handy-Fotodrucker', year: 'Sofortdruck', emoji: '🖨️', vibe: 'Lieblingsfotos vom Handy in 30 Sekunden auf selbstklebendem Fotopapier ausdrucken', targetType: 'amazon' },
+            { id: 'gf8_4', title: 'Unser Abenteuerbuch (Paar-Erinnerungsalbum zum Eintragen)', year: 'Persönlich', emoji: '📔', vibe: 'Gemeinsame Reisen, Insider-Witze und Fotos an einem Ort festhalten', targetType: 'amazon' },
+            { id: 'gf8_5', title: 'Weltkarte / Europa-Karte zum Freirubbeln', year: 'Wand-Deko', emoji: '🗺️', vibe: 'Jedes gemeinsam bereiste Land mit einer Münze golden freirubbeln', targetType: 'amazon' },
+            { id: 'gf8_6', title: '52 Dates zum Freirubbeln – Das Paar-Abenteuerbuch', year: 'Erlebnis-Buch', emoji: '💑', vibe: 'Jede Woche eine neue Überraschungsidee freirubbeln und ein Foto einkleben', targetType: 'amazon' }
+        ],
+        // 9: Action-Erlebnis
+        9: [
+            { id: 'gf9_1', title: 'Indoor-Skydiving (Bodyflying im Windkanal)', year: 'Adrenalin', emoji: '🪂', vibe: 'Das Gefühl des freien Falls völlig sicher im vertikalen Windkanal erleben', targetType: 'gyg' },
+            { id: 'gf9_2', title: 'Live Escape Room Abenteuer (60 Minuten)', year: 'Team-Mission', emoji: '🔐', vibe: 'In einem echten Kulissen-Raum Geheimtüren und Zahlenschlösser knacken', targetType: 'gyg' },
+            { id: 'gf9_3', title: 'Flugsimulator (Einmal selbst im Cockpit landen)', year: 'Highlight', emoji: '✈️', vibe: 'Mit echtem Instruktor einen Passagierjet starten und landen', targetType: 'gyg' },
+            { id: 'gf9_4', title: 'Quad-Tour oder Buggy-Offroad-Erlebnis', year: 'Outdoor-Action', emoji: '🛞', vibe: 'Geführte Tour über Schotterpisten, Waldwege und Panorama-Strecken', targetType: 'gyg' },
+            { id: 'gf9_5', title: 'Kletterwald, Zipline-Park oder House-Running', year: 'Höhenflug', emoji: '🧗', vibe: 'Gemeinsam über Hängebrücken und Seilrutschen durch die Baumwipfel', targetType: 'gyg' },
+            { id: 'gf9_6', title: 'Kartbahn-Rennen oder VR-Arena Erlebnis', year: 'Duell', emoji: '🏎️', vibe: 'Rundenzeiten jagen oder gemeinsam durch eine Virtual-Reality-Welt laufen', targetType: 'gyg' }
+        ]
     }
 };
