@@ -50,6 +50,22 @@
             background-color: #F07153;
             transform: translateY(-1px);
         }
+        .swipe-widget {
+            background: linear-gradient(145deg, rgba(46, 51, 64, 0.96), rgba(31, 35, 45, 0.98));
+            border: 1px solid rgba(240, 113, 83, 0.35);
+            box-shadow: 0 12px 32px -6px rgba(224, 90, 58, 0.22);
+        }
+        .mode-pill {
+            background-color: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.2s ease;
+        }
+        .mode-pill:hover {
+            background-color: rgba(240, 113, 83, 0.18);
+            border-color: rgba(240, 113, 83, 0.5);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
     </style>
 
     <!-- Schema.org WebApplication + FAQPage JSON-LD for Google & AI Search (GEO) -->
@@ -133,17 +149,38 @@
             </p>
         </div>
 
-        <!-- Direct Action Card -->
-        <div class="surface rounded-2xl p-6 mb-8 text-center">
-            <h2 class="text-lg font-semibold mb-2">¿Qué película ver esta noche en pareja? Decisor en 30s – Agreesy</h2>
-            <p class="text-xs text-[#A9B1C1] mb-5">Pasar más tiempo buscando una película que viéndola es historia. Votad 8 géneros y vibraciones de streaming en vuestros teléfonos y empezad a verla ya.</p>
-            <a href="/?lang=es&deck=movie" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-coral text-sm font-semibold shadow-lg shadow-[#E05A3A]/20">
-                <span>Elegir película →</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <!-- Prominent Instant-Swipe Widget Block -->
+        <section class="swipe-widget rounded-2xl p-5 sm:p-6 mb-8">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-[11px] font-mono font-semibold tracking-wider text-[#F48265]">EMPEZAR AHORA · 30 SEGUNDOS</span>
+                <span class="text-lg">🎬</span>
+            </div>
+            <div class="space-y-2 mb-4">
+                <div class="px-3 py-2 rounded-xl bg-[#242832]/90 border border-white/10 text-xs font-medium text-[#E8ECF2] flex items-center justify-between">
+                    <span>🗝️ Thriller con giro inesperado</span>
+                    <span class="text-[#F48265] font-mono text-[10px]">SWIPE →</span>
+                </div>
+                <div class="px-3 py-2 rounded-xl bg-[#242832]/90 border border-white/10 text-xs font-medium text-[#E8ECF2] flex items-center justify-between">
+                    <span>🕶️ Comedia para desconectar</span>
+                    <span class="text-[#F48265] font-mono text-[10px]">SWIPE →</span>
+                </div>
+                <div class="px-3 py-2 rounded-xl bg-[#242832]/90 border border-white/10 text-xs font-medium text-[#E8ECF2] flex items-center justify-between">
+                    <span>🏜️ Ciencia ficción o acción</span>
+                    <span class="text-[#F48265] font-mono text-[10px]">SWIPE →</span>
+                </div>
+            </div>
+            <p class="text-xs text-[#A9B1C1] mb-3">Elige vuestro modo y empieza sin registro:</p>
+            <div class="grid grid-cols-3 gap-2 mb-3">
+                <a href="/?deck=streaming&amp;lang=es&amp;mode=solo" class="mode-pill rounded-xl py-2.5 px-2 text-center text-xs font-semibold text-[#E8ECF2]">👤 Solo</a>
+                <a href="/?deck=streaming&amp;lang=es&amp;mode=duo" class="mode-pill rounded-xl py-2.5 px-2 text-center text-xs font-semibold text-[#E8ECF2]">👥 En pareja</a>
+                <a href="/?deck=streaming&amp;lang=es&amp;mode=group" class="mode-pill rounded-xl py-2.5 px-2 text-center text-xs font-semibold text-[#E8ECF2]">👨‍👩‍👧‍👦 Grupo</a>
+            </div>
+            <a href="/?deck=streaming&amp;lang=es" class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl btn-coral font-semibold text-sm shadow-lg shadow-[#E05A3A]/25">
+                <span>Elegir película</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <div class="text-[11px] text-[#A9B1C1] mt-3">100% Free · Zero Signup · Instant WhatsApp Link</div>
-        </div>
-
+            <p class="text-[11px] text-[#80899A] mt-2.5 font-mono text-center">Sin descargar app · Sin registro · 100% gratis</p>
+        </section>
         <!-- 3 Feature USPs -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
             <div class="surface rounded-xl p-4">
@@ -193,5 +230,7 @@
             <a href="/?lang=es#datenschutz" class="hover:text-white transition">Privacidad</a>
         </div>
     </footer>
+    <!-- Takeads / Mitgo Automated Link Monetization Engine -->
+    <script src="https://convertlink.com/script/7d9d34a8-6ff9-4e7b-831c-daf70d3f451c/bundle.js" async></script>
 </body>
 </html>

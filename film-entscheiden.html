@@ -49,6 +49,22 @@
             background-color: #F07153;
             transform: translateY(-1px);
         }
+        .swipe-widget {
+            background: linear-gradient(145deg, rgba(46, 51, 64, 0.96), rgba(31, 35, 45, 0.98));
+            border: 1px solid rgba(240, 113, 83, 0.35);
+            box-shadow: 0 12px 32px -6px rgba(224, 90, 58, 0.22);
+        }
+        .mode-pill {
+            background-color: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.2s ease;
+        }
+        .mode-pill:hover {
+            background-color: rgba(240, 113, 83, 0.18);
+            border-color: rgba(240, 113, 83, 0.5);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+        }
     </style>
 
     <!-- Schema.org WebApplication + FAQPage JSON-LD -->
@@ -120,12 +136,42 @@
                 Beendet das endlose 45-Minuten-Scrollen durch Netflix, Prime Video und WOW. Wischt zusammen durch 8 Film-Stimmungen. Am Ende zählt nur, worauf ihr beide heute Lust habt.
             </p>
 
-            <a href="/?deck=streaming" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl btn-coral font-semibold text-sm shadow-lg shadow-[#E05A3A]/25">
+            
+        </div>
+
+
+        <!-- Prominent Instant-Swipe Widget Block -->
+        <section class="swipe-widget rounded-2xl p-5 sm:p-6 mb-8">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-[11px] font-mono font-semibold tracking-wider text-[#F48265]">DIREKT LOSSWIPEN · 30 SEKUNDEN</span>
+                <span class="text-lg">🎬</span>
+            </div>
+            <div class="space-y-2 mb-4">
+                <div class="px-3 py-2 rounded-xl bg-[#242832]/90 border border-white/10 text-xs font-medium text-[#E8ECF2] flex items-center justify-between">
+                    <span>🗝️ Mindfuck-Thriller mit Plot-Twist</span>
+                    <span class="text-[#F48265] font-mono text-[10px]">SWIPE →</span>
+                </div>
+                <div class="px-3 py-2 rounded-xl bg-[#242832]/90 border border-white/10 text-xs font-medium text-[#E8ECF2] flex items-center justify-between">
+                    <span>🕶️ Gute-Laune-Komödie</span>
+                    <span class="text-[#F48265] font-mono text-[10px]">SWIPE →</span>
+                </div>
+                <div class="px-3 py-2 rounded-xl bg-[#242832]/90 border border-white/10 text-xs font-medium text-[#E8ECF2] flex items-center justify-between">
+                    <span>🏜️ Sci-Fi oder Action-Blockbuster</span>
+                    <span class="text-[#F48265] font-mono text-[10px]">SWIPE →</span>
+                </div>
+            </div>
+            <p class="text-xs text-[#A9B1C1] mb-3">Wähle deinen Modus & starte sofort ohne Anmeldung:</p>
+            <div class="grid grid-cols-3 gap-2 mb-3">
+                <a href="/?deck=streaming&amp;lang=de&amp;mode=solo" class="mode-pill rounded-xl py-2.5 px-2 text-center text-xs font-semibold text-[#E8ECF2]">👤 Alleine</a>
+                <a href="/?deck=streaming&amp;lang=de&amp;mode=duo" class="mode-pill rounded-xl py-2.5 px-2 text-center text-xs font-semibold text-[#E8ECF2]">👥 Zu zweit</a>
+                <a href="/?deck=streaming&amp;lang=de&amp;mode=group" class="mode-pill rounded-xl py-2.5 px-2 text-center text-xs font-semibold text-[#E8ECF2]">👨‍👩‍👧‍👦 Gruppe</a>
+            </div>
+            <a href="/?deck=streaming&amp;lang=de" class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl btn-coral font-semibold text-sm shadow-lg shadow-[#E05A3A]/25">
                 <span>Film-Entscheider starten (Kostenlos)</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <p class="text-xs text-[#80899A] mt-2 font-mono">Keine App-Installation · Keine Registrierung · 100% lokal</p>
-        </div>
+            <p class="text-[11px] text-[#80899A] mt-2.5 font-mono text-center">Keine App-Installation · Keine Registrierung · 100% kostenlos</p>
+        </section>
 
         <!-- How It Works -->
         <section class="surface rounded-2xl p-6 mb-8">
@@ -178,5 +224,7 @@
             <a href="/?lang=de#datenschutz" class="hover:text-white transition">Datenschutz</a>
         </div>
     </footer>
+    <!-- Takeads / Mitgo Automated Link Monetization Engine -->
+    <script src="https://convertlink.com/script/7d9d34a8-6ff9-4e7b-831c-daf70d3f451c/bundle.js" async></script>
 </body>
 </html>
