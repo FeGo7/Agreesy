@@ -7126,6 +7126,301 @@ const DECKS = {
                 "actionUrl": "https://www.amazon.de/s?k=Wonka+Film&i=instant-video&tag=f05b1-21"
             }
         ]
+    },
+    "boardgames": {
+        "id": "boardgames",
+        "category": "entertainment",
+        "mode": "match",
+        "icon": "🎲",
+        "gradient": "from-amber-500 to-indigo-600",
+        "title": {
+            "de": "Spieleabend & Brettspiele",
+            "en": "Board Game Night",
+            "es": "Noche de Juegos de Mesa",
+            "fr": "Soirée Jeux de Société",
+            "it": "Serata Giochi da Tavolo"
+        },
+        "sub": {
+            "de": "8 Spiel-Typen + 48 echte Brettspiel-Hits",
+            "en": "8 game vibes + 48 top board game picks",
+            "es": "8 estilos + 48 juegos de mesa top",
+            "fr": "8 styles + 48 jeux de société incontournables",
+            "it": "8 stili + 48 giochi da tavolo top"
+        },
+        "cards": [
+            {
+                "id": 0,
+                "emoji": "🏆",
+                "bg": "from-amber-600 to-orange-700",
+                "tag": {
+                    "de": "Strategie & Aufbau",
+                    "en": "Strategy & Building",
+                    "es": "Estrategia y Construcción",
+                    "fr": "Stratégie & Construction",
+                    "it": "Strategia & Costruzione"
+                },
+                "title": {
+                    "de": "Strategie- & Aufbau-Klassiker",
+                    "en": "Classic Strategy & Building",
+                    "es": "Clásicos de Estrategia",
+                    "fr": "Classiques de Stratégie",
+                    "it": "Classici di Strategia"
+                },
+                "desc": {
+                    "de": "Städte, Routen oder Natur-Welten aufbauen – taktisch, aber entspannt.",
+                    "en": "Build routes, worlds or engines – smart tactics without heavy stress.",
+                    "es": "Construye rutas o mundos con táctica inteligente y diversión.",
+                    "fr": "Construisez des routes ou des mondes avec tactique et plaisir.",
+                    "it": "Costruisci rotte o mondi con tattica intelligente e divertimento."
+                },
+                "actionLabel": {
+                    "de": "Top Strategie-Brettspiele ansehen",
+                    "en": "Browse Top Strategy Board Games",
+                    "es": "Ver mejores juegos de estrategia",
+                    "fr": "Voir les meilleurs jeux de stratégie",
+                    "it": "Vedi i migliori giochi di strategia"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Strategie+Brettspiele+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 1,
+                "emoji": "🤝",
+                "bg": "from-emerald-600 to-teal-700",
+                "tag": {
+                    "de": "Gemeinsam gewinnen",
+                    "en": "Win Together",
+                    "es": "Ganar en Equipo",
+                    "fr": "Gagner Ensemble",
+                    "it": "Vincere Insieme"
+                },
+                "title": {
+                    "de": "Koop-Abenteuer (Alle gegen das Spiel)",
+                    "en": "Co-op Adventure (Team vs. Game)",
+                    "es": "Aventura Cooperativa (Todos juntos)",
+                    "fr": "Aventure Coopérative (Tous ensemble)",
+                    "it": "Avventura Cooperativa (Tutti insieme)"
+                },
+                "desc": {
+                    "de": "Kein Streit um den Sieg – ihr tüftelt zusammen gegen das Brett.",
+                    "en": "Zero rivalry – team up to beat the board together.",
+                    "es": "Cero rivalidad: pensad juntos para vencer al tablero.",
+                    "fr": "Zéro rivalité : coopérez pour battre le plateau ensemble.",
+                    "it": "Zero rivalità: collaborate per battere il gioco insieme."
+                },
+                "actionLabel": {
+                    "de": "Beste Koop-Brettspiele ansehen",
+                    "en": "Browse Top Co-op Board Games",
+                    "es": "Ver mejores juegos cooperativos",
+                    "fr": "Voir les meilleurs jeux coopératifs",
+                    "it": "Vedi i migliori giochi cooperativi"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Kooperative+Brettspiele+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 2,
+                "emoji": "😂",
+                "bg": "from-pink-600 to-rose-600",
+                "tag": {
+                    "de": "Lachen & Stimmung",
+                    "en": "Laughs & Energy",
+                    "es": "Risas y Fiesta",
+                    "fr": "Rires & Ambiance",
+                    "it": "Risate & Festa"
+                },
+                "title": {
+                    "de": "Party-, Lach- & Musik-Spiele",
+                    "en": "Party, Laughs & Music Games",
+                    "es": "Juegos de Fiesta y Música",
+                    "fr": "Jeux d'Ambiance & Musique",
+                    "it": "Giochi di Festa e Musica"
+                },
+                "desc": {
+                    "de": "In 2 Minuten erklärt, perfekt für Drinks, Freunde und Lachkrämpfe.",
+                    "en": "Explained in 2 minutes – built for drinks, friends and nonstop laughs.",
+                    "es": "Explicados en 2 minutos, perfectos para risas con amigos.",
+                    "fr": "Expliqués en 2 minutes, parfaits pour rire entre amis.",
+                    "it": "Spiegati in 2 minuti, perfetti per serate di risate."
+                },
+                "actionLabel": {
+                    "de": "Beliebteste Partyspiele ansehen",
+                    "en": "Browse Top Party Games",
+                    "es": "Ver mejores juegos de fiesta",
+                    "fr": "Voir les meilleurs jeux d'ambiance",
+                    "it": "Vedi i migliori party game"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Partyspiele+Erwachsene+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 3,
+                "emoji": "⚔️",
+                "bg": "from-indigo-600 to-violet-700",
+                "tag": {
+                    "de": "Perfekt zu zweit",
+                    "en": "Made for 2 Players",
+                    "es": "Perfecto para 2",
+                    "fr": "Parfait à deux",
+                    "it": "Perfetto in due"
+                },
+                "title": {
+                    "de": "Taktische 2-Spieler-Duelle",
+                    "en": "Head-to-Head 2-Player Duels",
+                    "es": "Duelos Tácticos para 2",
+                    "fr": "Duels Tactiques à 2 Joueurs",
+                    "it": "Duelli Tattici per 2 Giocatori"
+                },
+                "desc": {
+                    "de": "Speziell für Paare & Duos designt – spannend bis zum letzten Zug.",
+                    "en": "Designed specifically for 2 players – tense until the final move.",
+                    "es": "Diseñados para dos personas, emocionantes hasta el último turno.",
+                    "fr": "Conçus exprès pour deux – palpitants jusqu'au dernier tour.",
+                    "it": "Pensati apposta per due: avvincenti fino all'ultima mossa."
+                },
+                "actionLabel": {
+                    "de": "Top 2-Spieler-Spiele ansehen",
+                    "en": "Browse Top 2-Player Games",
+                    "es": "Ver mejores juegos para 2",
+                    "fr": "Voir les meilleurs jeux à 2",
+                    "it": "Vedi i migliori giochi per 2"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Brettspiele+fuer+2+Personen+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 4,
+                "emoji": "🕵️",
+                "bg": "from-slate-700 to-zinc-900",
+                "tag": {
+                    "de": "Krimi & Rätsel",
+                    "en": "Crime & Escape",
+                    "es": "Misterio y Escape",
+                    "fr": "Enquête & Escape",
+                    "it": "Giallo & Escape"
+                },
+                "title": {
+                    "de": "Krimi-, Escape- & Rätsel-Abende",
+                    "en": "Crime, Escape Room & Mystery",
+                    "es": "Juegos de Misterio y Escape Room",
+                    "fr": "Jeux d'Enquête & Escape Room",
+                    "it": "Giochi Investigativi & Escape Room"
+                },
+                "desc": {
+                    "de": "Indizien kombinieren, Codes knacken und gemeinsam Fälle lösen.",
+                    "en": "Connect clues, crack codes and solve a full case at your table.",
+                    "es": "Combina pistas, descifra códigos y resuelve el caso juntos.",
+                    "fr": "Croisez les indices, cassez les codes et résolvez l'enquête.",
+                    "it": "Collega gli indizi, decifra i codici e risolvi il caso insieme."
+                },
+                "actionLabel": {
+                    "de": "Escape- & Krimispiele ansehen",
+                    "en": "Browse Escape & Mystery Games",
+                    "es": "Ver juegos de escape y misterio",
+                    "fr": "Voir les jeux d'enquête et escape",
+                    "it": "Vedi giochi investigativi ed escape"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=EXIT+Krimispiel+Brettspiel&tag=f05b1-21"
+            },
+            {
+                "id": 5,
+                "emoji": "🃏",
+                "bg": "from-sky-600 to-blue-700",
+                "tag": {
+                    "de": "15 Min · Sofort startklar",
+                    "en": "15 Min · Instant Fun",
+                    "es": "15 min · Rápido",
+                    "fr": "15 min · Rapide",
+                    "it": "15 min · Veloce"
+                },
+                "title": {
+                    "de": "Schnelle Karten- & Würfel-Hits",
+                    "en": "Fast Card & Dice Hits",
+                    "es": "Juegos Rápidos de Cartas y Dados",
+                    "fr": "Jeux Rapides de Cartes & Dés",
+                    "it": "Giochi Veloci di Carte e Dadi"
+                },
+                "desc": {
+                    "de": "Wenig Regeln, hoher Suchtfaktor – aus einer Runde werden immer fünf.",
+                    "en": "Light rules, huge replay value – one round always turns into five.",
+                    "es": "Pocas reglas, altísimo vicio: una partida siempre lleva a cinco.",
+                    "fr": "Règles simples, super addictif : une partie en appelle cinq.",
+                    "it": "Poche regole, massima dipendenza: una partita tira l'altra."
+                },
+                "actionLabel": {
+                    "de": "Beste Kartenspiele ansehen",
+                    "en": "Browse Top Card & Dice Games",
+                    "es": "Ver mejores juegos de cartas",
+                    "fr": "Voir les meilleurs jeux de cartes",
+                    "it": "Vedi i migliori giochi di carte"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Kartenspiele+Erwachsene+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 6,
+                "emoji": "🎭",
+                "bg": "from-purple-600 to-fuchsia-800",
+                "tag": {
+                    "de": "Bluff & Pokerface",
+                    "en": "Bluff & Deduction",
+                    "es": "Farol y Deducción",
+                    "fr": "Bluff & Déduction",
+                    "it": "Bluff & Deduzione"
+                },
+                "title": {
+                    "de": "Bluff, Täuschung & Social Deduction",
+                    "en": "Bluffing & Social Deduction",
+                    "es": "Bluff y Roles Ocultos",
+                    "fr": "Bluff & Rôles Cachés",
+                    "it": "Bluff e Ruoli Nascosti"
+                },
+                "desc": {
+                    "de": "Wem kannst du trauen? Lügen, Entlarven und geheime Rollen.",
+                    "en": "Who is lying? Secret roles, bold bluffs and dramatic reveals.",
+                    "es": "¿Quién miente? Roles secretos, faroles y giros épicos.",
+                    "fr": "Qui ment ? Rôles secrets, bluffs audacieux et révélations.",
+                    "it": "Chi sta mentendo? Ruoli segreti, bluff e colpi di scena."
+                },
+                "actionLabel": {
+                    "de": "Top Bluff-Spiele ansehen",
+                    "en": "Browse Top Bluffing Games",
+                    "es": "Ver juegos de roles ocultos",
+                    "fr": "Voir les jeux de bluff",
+                    "it": "Vedi giochi di bluff"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Social+Deduction+Bluff+Kartenspiel&tag=f05b1-21"
+            },
+            {
+                "id": 7,
+                "emoji": "🧠",
+                "bg": "from-cyan-600 to-teal-700",
+                "tag": {
+                    "de": "Wissen & Wörter",
+                    "en": "Quiz & Words",
+                    "es": "Quiz y Palabras",
+                    "fr": "Quiz & Mots",
+                    "it": "Quiz & Parole"
+                },
+                "title": {
+                    "de": "Quiz-, Wort- & Wissens-Duelle",
+                    "en": "Quiz, Word & Trivia Duels",
+                    "es": "Duelos de Quiz y Palabras",
+                    "fr": "Duels de Quiz & Mots",
+                    "it": "Sfide di Quiz e Parole"
+                },
+                "desc": {
+                    "de": "Clevere Fragen, Wortspiele und Aha-Momente für schlaue Köpfe.",
+                    "en": "Clever trivia, wordplay and aha moments for curious minds.",
+                    "es": "Preguntas ingeniosas y juegos de palabras para mentes rápidas.",
+                    "fr": "Questions malignes et jeux de mots pour esprits curieux.",
+                    "it": "Domande brillanti e giochi di parole per menti curiose."
+                },
+                "actionLabel": {
+                    "de": "Beste Quiz- & Wortspiele ansehen",
+                    "en": "Browse Top Quiz & Word Games",
+                    "es": "Ver juegos de quiz y palabras",
+                    "fr": "Voir les jeux de quiz et mots",
+                    "it": "Vedi giochi di quiz e parole"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Quizspiel+Wortspiel+Erwachsene+Bestseller&tag=f05b1-21"
+            }
+        ]
     }
 };
 

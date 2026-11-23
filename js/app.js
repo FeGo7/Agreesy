@@ -641,12 +641,24 @@ function checkDirectDeckParam() {
         return; // Partner-Herausforderung hat Vorrang
     }
     let targetDeck = null;
+    let targetMode = null;
     if (search) {
         const params = new URLSearchParams(search);
         targetDeck = params.get('deck');
+        targetMode = params.get('mode');
     }
     if (!targetDeck && hash && hash.startsWith('#deck=')) {
         targetDeck = hash.replace('#deck=', '');
+    }
+    if (targetMode) {
+        const m = targetMode.toLowerCase();
+        if (m === 'solo' || m === '1') setPlayerCount(1);
+        else if (m === 'duo' || m === '2') setPlayerCount(2);
+        else if (m === 'group') setPlayerCount(4);
+        else {
+            const n = parseInt(m, 10);
+            if (!isNaN(n) && n >= 1 && n <= 6) setPlayerCount(n);
+        }
     }
     if (targetDeck && DECKS[targetDeck]) {
         localStorage.setItem('agreesy_profile_initialized', 'true');
@@ -1089,7 +1101,7 @@ function addCustomOptionInput() {
 
 function findStage2MediaPickByFormattedTitle(formatted) {
     if (typeof MEDIA_STAGE2_PICKS === 'undefined') return null;
-    for (const type of ['movie', 'series', 'gaming', 'vacation', 'gifts']) {
+    for (const type of ['movie', 'series', 'gaming', 'boardgames', 'vacation', 'gifts']) {
         const genres = MEDIA_STAGE2_PICKS[type] || {};
         for (const gKey of Object.keys(genres)) {
             const found = (genres[gKey] || []).find(item => `${item.title} (${item.year})` === formatted);
@@ -1111,7 +1123,7 @@ function registerCustomDeckInMemory(rawTitle, mode, optionsArray) {
             id: idx,
             emoji: mediaItem ? (mediaItem.emoji || "🎬") : "✨",
             bg: "",
-            targetType: mediaItem ? (mediaItem.targetType || (mediaItem.stage2Type === 'gaming' ? 'amazon' : 'prime')) : null,
+            targetType: mediaItem ? (mediaItem.targetType || ((mediaItem.stage2Type === 'gaming' || mediaItem.stage2Type === 'boardgames') ? 'amazon' : 'prime')) : null,
             searchCleanTitle: mediaItem ? mediaItem.title : optText,
             tag: { de: tagStr, en: tagStr, es: tagStr, fr: tagStr, it: tagStr },
             title: { de: optText, en: optText, es: optText, fr: optText, it: optText },
@@ -1134,7 +1146,7 @@ function registerCustomDeckInMemory(rawTitle, mode, optionsArray) {
     });
 
     let deckCategory = 'all';
-    if (matchedStage2Type === 'movie' || matchedStage2Type === 'series' || matchedStage2Type === 'gaming') {
+    if (matchedStage2Type === 'movie' || matchedStage2Type === 'series' || matchedStage2Type === 'gaming' || matchedStage2Type === 'boardgames') {
         deckCategory = 'entertainment';
     } else if (matchedStage2Type === 'vacation' || matchedStage2Type === 'gifts') {
         deckCategory = 'trips';
@@ -1966,7 +1978,7 @@ function updateWinnerAffiliateLinks(card) {
                 secondaryText.innerText = formatWithDomainTag(t.winnerActivitySecondary || 'Passende Geschenk-Boxen', store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
-        } else if (card.targetType === 'amazon' || currentDeckId === 'gaming' || (currentDeckId === 'gifts' && [3, 4, 5, 7, 8].includes(card.id))) {
+        } else if (card.targetType === 'amazon' || currentDeckId === 'gaming' || currentDeckId === 'boardgames' || (currentDeckId === 'gifts' && [3, 4, 5, 7, 8].includes(card.id))) {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
             actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOpenAction || 'Jetzt ansehen'}`, store.amazonDomain);
             if (secondaryBtn && secondaryText) {
@@ -2030,6 +2042,8 @@ function getStage2MediaContext(card) {
         mediaType = 'series';
     } else if (currentDeckId === 'gaming') {
         mediaType = 'gaming';
+    } else if (currentDeckId === 'boardgames') {
+        mediaType = 'boardgames';
     } else if (currentDeckId === 'vacation') {
         mediaType = 'vacation';
     } else if (currentDeckId === 'gifts') {
@@ -2042,7 +2056,7 @@ function getStage2MediaContext(card) {
 }
 
 function getStage2ItemTargetLinkAndDomain(item, mediaType, store) {
-    const tType = item.targetType || (mediaType === 'gaming' ? 'amazon' : (mediaType === 'vacation' ? 'booking' : 'prime'));
+    const tType = item.targetType || ((mediaType === 'gaming' || mediaType === 'boardgames') ? 'amazon' : (mediaType === 'vacation' ? 'booking' : 'prime'));
     if (tType === 'booking') {
         return {
             url: `https://www.booking.com/searchresults.${store.bookingLang}.html?ss=${encodeURIComponent(item.title)}`,
@@ -2089,6 +2103,7 @@ function renderStage2MediaPicks(card) {
         movie: t.stage2MoviesHeader || '3 aktuelle Film-Tipps (2024–2026)',
         series: t.stage2SeriesHeader || '3 aktuelle Serien-Tipps (2024–2026)',
         gaming: t.stage2GamingHeader || '3 beliebte Spiele-Tipps (Bestseller)',
+        boardgames: t.stage2BoardgamesHeader || '3 konkrete Brettspiel-Bestseller',
         vacation: t.stage2VacationHeader || '3 konkrete Reiseziele passend zur Wahl',
         gifts: t.stage2GiftsHeader || '3 konkrete Geschenk-Ideen & Bestseller'
     };
@@ -2096,6 +2111,7 @@ function renderStage2MediaPicks(card) {
         movie: t.stage2StartMoviesBtn || '🎬 Runde 2: Aus 8 passenden Filmen swipen →',
         series: t.stage2StartSeriesBtn || '📺 Runde 2: Aus 8 passenden Serien swipen →',
         gaming: t.stage2StartGamingBtn || '🎲 Runde 2: Aus 8 konkreten Spielen swipen →',
+        boardgames: t.stage2StartBoardgamesBtn || '🎲 Runde 2: Aus 6 konkreten Brettspielen swipen →',
         vacation: t.stage2StartVacationBtn || '✈️ Runde 2: Aus 8 konkreten Reisezielen swipen →',
         gifts: t.stage2StartGiftsBtn || '🎁 Runde 2: Aus 6 konkreten Geschenken swipen →'
     };
@@ -2182,7 +2198,7 @@ function startStage2MediaRound() {
             id: idx,
             emoji: item.emoji || '🎬',
             bg: '',
-            targetType: item.targetType || (ctx.mediaType === 'gaming' ? 'amazon' : (ctx.mediaType === 'vacation' ? 'booking' : 'prime')),
+            targetType: item.targetType || ((ctx.mediaType === 'gaming' || ctx.mediaType === 'boardgames') ? 'amazon' : (ctx.mediaType === 'vacation' ? 'booking' : 'prime')),
             searchCleanTitle: item.title,
             tag: {
                 de: `${item.year} · ${genreTitle}`,

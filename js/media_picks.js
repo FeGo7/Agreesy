@@ -624,5 +624,79 @@ const MEDIA_STAGE2_PICKS = {
             { id: 'gf9_5', title: 'Kletterwald, Zipline-Park oder House-Running', year: 'Höhenflug', emoji: '🧗', vibe: 'Gemeinsam über Hängebrücken und Seilrutschen durch die Baumwipfel', targetType: 'gyg' },
             { id: 'gf9_6', title: 'Kartbahn-Rennen oder VR-Arena Erlebnis', year: 'Duell', emoji: '🏎️', vibe: 'Rundenzeiten jagen oder gemeinsam durch eine Virtual-Reality-Welt laufen', targetType: 'gyg' }
         ]
+    },
+    boardgames: {
+        // 0: Strategie- & Aufbau-Klassiker
+        0: [
+            { id: 'bg0_1', title: 'Zug um Zug (Ticket to Ride)', year: '2–5 Spieler · 45 Min', emoji: '🚂', vibe: 'Moderner Klassiker · Eisenbahnstrecken quer durch Europa oder Amerika bauen', targetType: 'amazon' },
+            { id: 'bg0_2', title: 'Flügelschlag (Wingspan)', year: '1–5 Spieler · 60 Min', emoji: '🦜', vibe: 'Kennerspiel des Jahres · Wunderschöne Vogelkarten & cleveres Engine-Building', targetType: 'amazon' },
+            { id: 'bg0_3', title: 'Cascadia', year: '1–4 Spieler · 40 Min', emoji: '🐻', vibe: 'Spiel des Jahres · Entspanntes Legespiel rund um Wildtiere & Landschaften', targetType: 'amazon' },
+            { id: 'bg0_4', title: 'Azul', year: '2–4 Spieler · 35 Min', emoji: '🔷', vibe: 'Design-Hit · Taktisches Fliesenlegen mit wunderschönen Spielsteinen', targetType: 'amazon' },
+            { id: 'bg0_5', title: 'CATAN – Das Spiel', year: '3–4 Spieler · 75 Min', emoji: '🏝️', vibe: 'All-Time-Legende · Rohstoffe handeln, Straßen bauen, Insel besiedeln', targetType: 'amazon' },
+            { id: 'bg0_6', title: 'Carcassonne', year: '2–5 Spieler · 35 Min', emoji: '🏰', vibe: 'Zeitloser Favorit · Plättchen für Plättchen Städte, Wiesen & Straßen errichten', targetType: 'amazon' }
+        ],
+        // 1: Koop-Abenteuer (Alle gegen das Spiel)
+        1: [
+            { id: 'bg1_1', title: 'Dorfromantik – Das Brettspiel', year: '1–6 Spieler · 45 Min', emoji: '🏡', vibe: 'Spiel des Jahres · Gemeinsam friedliche Landschaften legen & Boxen freischalten', targetType: 'amazon' },
+            { id: 'bg1_2', title: 'Sky Team', year: '2 Spieler · 15 Min', emoji: '✈️', vibe: 'Spiel des Jahres · Als Pilot & Co-Pilot gemeinsam ein Flugzeug sicher landen', targetType: 'amazon' },
+            { id: 'bg1_3', title: 'Pandemic (Pandemie)', year: '2–4 Spieler · 45 Min', emoji: '🧪', vibe: 'Koop-Klassiker · Als Spezialisten-Team gemeinsam die Welt retten', targetType: 'amazon' },
+            { id: 'bg1_4', title: 'Die Crew – Mission Tiefsee', year: '2–5 Spieler · 20 Min', emoji: '🌊', vibe: 'Kennerspiel-Hit · Kooperatives Stichspiel ohne miteinander zu sprechen', targetType: 'amazon' },
+            { id: 'bg1_5', title: 'Paleo', year: '2–4 Spieler · 60 Min', emoji: '🦣', vibe: 'Steinzeit-Abenteuer · Gemeinsam Gefahren meistern und Höhlenmalerei vollenden', targetType: 'amazon' },
+            { id: 'bg1_6', title: 'Bomb Busters', year: '2–5 Spieler · 30 Min', emoji: '💣', vibe: 'Spannungs-Hit · Gemeinsam durch clevere Logik die richtigen Kabel durchtrennen', targetType: 'amazon' }
+        ],
+        // 2: Party-, Lach- & Musik-Spiele
+        2: [
+            { id: 'bg2_1', title: 'HITSTER – Das Musik-Partyspiel', year: '2–10 Spieler · 30 Min', emoji: '🎵', vibe: 'Bestseller #1 · Spotify-Hits anhören & richtig in die Zeitlinie einordnen', targetType: 'amazon' },
+            { id: 'bg2_2', title: 'Codenames (oder Codenames Duett)', year: '2–8 Spieler · 15 Min', emoji: '🕵️', vibe: 'Wort-Geniestreich · Mit einem einzigen Hinweiswort mehrere Agenten verbinden', targetType: 'amazon' },
+            { id: 'bg2_3', title: 'Just One', year: '3–7 Spieler · 20 Min', emoji: '✍️', vibe: 'Spiel des Jahres · Kooperatives Wortratespiel mit genialen Missverständnissen', targetType: 'amazon' },
+            { id: 'bg2_4', title: 'Exploding Kittens', year: '2–5 Spieler · 15 Min', emoji: '🐱', vibe: 'Chaos-Hit · Strategisches Russisch Roulette mit verrückten Katzen-Karten', targetType: 'amazon' },
+            { id: 'bg2_5', title: 'Dixit', year: '3–8 Spieler · 30 Min', emoji: '🎨', vibe: 'Fantasievoll · Wunderschöne Bildkarten mit kreativen Hinweisen erraten', targetType: 'amazon' },
+            { id: 'bg2_6', title: 'Top Ten', year: '4–9 Spieler · 30 Min', emoji: '😂', vibe: 'Lachgarantie · Absurde Szenarien auf einer Skala von 1 bis 10 erraten', targetType: 'amazon' }
+        ],
+        // 3: Taktische 2-Spieler-Duelle
+        3: [
+            { id: 'bg3_1', title: '7 Wonders Duel', year: '2 Spieler · 30 Min', emoji: '🏛️', vibe: 'Bestes 2er-Spiel · Zivilisation, Weltwunder & drei mögliche Siegwege', targetType: 'amazon' },
+            { id: 'bg3_2', title: 'Splendor Duel', year: '2 Spieler · 30 Min', emoji: '💎', vibe: 'Edelstein-Duell · Taktisch, schnell gelernt und extrem hoher Wiederspielwert', targetType: 'amazon' },
+            { id: 'bg3_3', title: 'Patchwork', year: '2 Spieler · 30 Min', emoji: '🧵', vibe: 'Tetris auf dem Tisch · Mit Stoff-Flicken die beste Decke zusammenpuzzeln', targetType: 'amazon' },
+            { id: 'bg3_4', title: 'Jaipur', year: '2 Spieler · 25 Min', emoji: '🐪', vibe: 'Handels-Duell · Schnell, clever und ideal für gemütliche Abende zu zweit', targetType: 'amazon' },
+            { id: 'bg3_5', title: 'Schotten Totten', year: '2 Spieler · 20 Min', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', vibe: 'Karten-Taktik · Mit klugen 3er-Kombinationen Grenzsteine erobern', targetType: 'amazon' },
+            { id: 'bg3_6', title: 'Der Herr der Ringe: Duell um Mittelerde', year: '2 Spieler · 30 Min', emoji: '💍', vibe: 'Neuheit-Hit · 7-Wonders-Duel-Genialität im Mittelerde-Universum', targetType: 'amazon' }
+        ],
+        // 4: Krimi-, Escape- & Rätsel-Abende
+        4: [
+            { id: 'bg4_1', title: 'EXIT – Das Spiel (Kosmos)', year: '1–4 Spieler · 60 Min', emoji: '🔐', vibe: 'Escape-Room-Kult · Falten, Schneiden & Codes knacken direkt am Esstisch', targetType: 'amazon' },
+            { id: 'bg4_2', title: 'Hidden Games – Tatort Krimi-Akte', year: '1–6 Spieler · 90 Min', emoji: '📂', vibe: 'Realistischer Krimi · Echte Beweismittel, Fotos & WhatsApp-Sprachnachrichten prüfen', targetType: 'amazon' },
+            { id: 'bg4_3', title: 'MicroMacro: Crime City', year: '1–4 Spieler · 30 Min', emoji: '🔍', vibe: 'Spiel des Jahres · Mit der Lupe Verbrechen auf einem riesigen Wimmelbild aufklären', targetType: 'amazon' },
+            { id: 'bg4_4', title: 'Unlock! Escape Adventures', year: '1–6 Spieler · 60 Min', emoji: '📱', vibe: 'App-gestützt · 3 komplette Escape-Abenteuer ohne Material zu zerstören', targetType: 'amazon' },
+            { id: 'bg4_5', title: 'Scotland Yard', year: '2–6 Spieler · 45 Min', emoji: '🕵️‍♂️', vibe: 'Kult-Jagd · Gemeinsam Mister X quer durch London einkreisen', targetType: 'amazon' },
+            { id: 'bg4_6', title: 'Mysterium', year: '2–7 Spieler · 45 Min', emoji: '🔮', vibe: 'Atmosphärisch · Ein Geist gibt nur durch Traum-Bildkarten Hinweise auf den Täter', targetType: 'amazon' }
+        ],
+        // 5: Schnelle Karten- & Würfel-Hits (15 Min)
+        5: [
+            { id: 'bg5_1', title: 'SKYJO', year: '2–8 Spieler · 20 Min', emoji: '🃏', vibe: 'Mega-Bestseller · In 2 Minuten erklärt, macht die ganze Runde sofort süchtig', targetType: 'amazon' },
+            { id: 'bg5_2', title: 'Wizard – Das Stichspiel', year: '3–6 Spieler · 35 Min', emoji: '🧙', vibe: 'Karten-Kult · Stiche exakt vorhersagen – mit Zauberern & Narren', targetType: 'amazon' },
+            { id: 'bg5_3', title: 'Qwixx', year: '2–5 Spieler · 15 Min', emoji: '🎲', vibe: 'Würfel-Hit · Keine Wartezeit, weil alle bei jedem Wurf ankreuzen dürfen', targetType: 'amazon' },
+            { id: 'bg5_4', title: '6 nimmt!', year: '2–10 Spieler · 20 Min', emoji: '🐂', vibe: 'Klassiker · Alle legen gleichzeitig – wer die 6. Karte legt, kassiert Hornochsen', targetType: 'amazon' },
+            { id: 'bg5_5', title: 'CABO', year: '2–4 Spieler · 20 Min', emoji: '🦄', vibe: 'Gedächtnis & Taktik · Niedrigste Punktzahl sammeln und im perfekten Moment rufen', targetType: 'amazon' },
+            { id: 'bg5_6', title: 'Scout', year: '2–5 Spieler · 15 Min', emoji: '🎪', vibe: 'Cleveres Kartenspiel · Karten dürfen nicht umsortiert werden – genialer Twist', targetType: 'amazon' }
+        ],
+        // 6: Bluff, Täuschung & Social Deduction
+        6: [
+            { id: 'bg6_1', title: 'Die Werwölfe von Düsterwald', year: '6–18 Spieler · 30 Min', emoji: '🐺', vibe: 'Gruppen-Legende · Dorfbewohner vs. Werwölfe – pures Misstrauen & Diskussion', targetType: 'amazon' },
+            { id: 'bg6_2', title: 'Love Letter', year: '2–6 Spieler · 15 Min', emoji: '💌', vibe: 'Minimalistisches Genie · Nur 21 Karten voller Bluff, Logik und Überraschungen', targetType: 'amazon' },
+            { id: 'bg6_3', title: 'Skull King', year: '2–8 Spieler · 30 Min', emoji: '🏴‍☠️', vibe: 'Piraten-Stichspiel · Wild, gemein und mit genialen Risiko-Wetten', targetType: 'amazon' },
+            { id: 'bg6_4', title: 'Kakerlakenpoker', year: '2–6 Spieler · 20 Min', emoji: '🪳', vibe: 'Reines Bluffen · Wahrheit oder Lüge? Perfekt für schauspielerisches Talent', targetType: 'amazon' },
+            { id: 'bg6_5', title: 'Coup', year: '2–6 Spieler · 15 Min', emoji: '👑', vibe: 'Eiskaltes Pokerface · Jede Rolle behaupten, solange dich niemand herausfordert', targetType: 'amazon' },
+            { id: 'bg6_6', title: 'Secret Identity / Chameleon', year: '3–8 Spieler · 15 Min', emoji: '🦎', vibe: 'Hochspannung · Ein Spieler kennt das geheime Wort nicht und muss sich tarnen', targetType: 'amazon' }
+        ],
+        // 7: Quiz-, Wort- & Wissens-Duelle
+        7: [
+            { id: 'bg7_1', title: 'SMART10', year: '2–8 Spieler · 20 Min', emoji: '🔵', vibe: 'Bestseller-Quiz · Alle spielen gleichzeitig mit 10 Antwort-Markern in der Box', targetType: 'amazon' },
+            { id: 'bg7_2', title: 'Das Kneipenquiz', year: '3–6 Spieler · 30 Min', emoji: '🍺', vibe: 'Pub-Quiz für Zuhause · Gemeinsam als Team gegen das Spiel antreten', targetType: 'amazon' },
+            { id: 'bg7_3', title: 'Bananagrams', year: '1–8 Spieler · 15 Min', emoji: '🍌', vibe: 'Turboschnelles Scrabble · Ohne Spielbrett gleichzeitig eigene Kreuzworträtsel legen', targetType: 'amazon' },
+            { id: 'bg7_4', title: 'So Kleever!', year: '3–6 Spieler · 30 Min', emoji: '🍀', vibe: 'Wort-Assoziation · Geniale Begriffe finden, die jeweils zwei Wörter verbinden', targetType: 'amazon' },
+            { id: 'bg7_5', title: 'Trivial Pursuit (Classic / Master)', year: '2–6 Spieler · 60 Min', emoji: '🥧', vibe: 'Wissens-Klassiker · Wissens-Ecken aus 6 Kategorien erspielen', targetType: 'amazon' },
+            { id: 'bg7_6', title: 'Bezzerwizzer', year: '2–4 Spieler · 45 Min', emoji: '🎯', vibe: 'Taktisches Quiz · Kategorien klauen, Punkte verdoppeln & Besserwisser-Steine nutzen', targetType: 'amazon' }
+        ]
     }
 };

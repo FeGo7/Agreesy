@@ -343,4 +343,279 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://agreesy.com/gift-ideas-finder</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/gift-ideas-finder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/weihnachtsgeschenke-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-regalos-navidad"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-cadeaux-noel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-regalo-natale"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/weihnachtsgeschenke-finden</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/gift-ideas-finder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/weihnachtsgeschenke-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-regalos-navidad"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-cadeaux-noel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-regalo-natale"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/ideas-regalos-navidad</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/gift-ideas-finder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/weihnachtsgeschenke-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-regalos-navidad"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-cadeaux-noel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-regalo-natale"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/idees-cadeaux-noel</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/gift-ideas-finder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/weihnachtsgeschenke-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-regalos-navidad"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-cadeaux-noel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-regalo-natale"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/idee-regalo-natale</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/gift-ideas-finder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/weihnachtsgeschenke-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-regalos-navidad"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-cadeaux-noel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-regalo-natale"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/what-game-to-play</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/what-game-to-play"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/was-soll-ich-zocken"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/a-quel-jeu-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/a-cosa-giocare"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/was-soll-ich-zocken</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/what-game-to-play"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/was-soll-ich-zocken"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/a-quel-jeu-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/a-cosa-giocare"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/que-juego-jugar</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/what-game-to-play"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/was-soll-ich-zocken"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/a-quel-jeu-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/a-cosa-giocare"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/a-quel-jeu-jouer</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/what-game-to-play"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/was-soll-ich-zocken"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/a-quel-jeu-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/a-cosa-giocare"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/a-cosa-giocare</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/what-game-to-play"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/was-soll-ich-zocken"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/a-quel-jeu-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/a-cosa-giocare"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/where-to-travel</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/where-to-travel"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/wohin-in-den-urlaub"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/donde-viajar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/ou-partir-en-vacances"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/dove-andare-in-vacanza"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/wohin-in-den-urlaub</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/where-to-travel"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/wohin-in-den-urlaub"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/donde-viajar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/ou-partir-en-vacances"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/dove-andare-in-vacanza"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/donde-viajar</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/where-to-travel"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/wohin-in-den-urlaub"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/donde-viajar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/ou-partir-en-vacances"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/dove-andare-in-vacanza"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/ou-partir-en-vacances</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/where-to-travel"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/wohin-in-den-urlaub"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/donde-viajar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/ou-partir-en-vacances"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/dove-andare-in-vacanza"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/dove-andare-in-vacanza</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/where-to-travel"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/wohin-in-den-urlaub"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/donde-viajar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/ou-partir-en-vacances"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/dove-andare-in-vacanza"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/date-night-ideas</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/date-night-ideas"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/date-ideen-zu-zweit"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-citas-pareja"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-rendez-vous-couple"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-appuntamento-coppia"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/date-ideen-zu-zweit</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/date-night-ideas"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/date-ideen-zu-zweit"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-citas-pareja"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-rendez-vous-couple"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-appuntamento-coppia"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/ideas-citas-pareja</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/date-night-ideas"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/date-ideen-zu-zweit"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-citas-pareja"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-rendez-vous-couple"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-appuntamento-coppia"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/idees-rendez-vous-couple</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/date-night-ideas"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/date-ideen-zu-zweit"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-citas-pareja"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-rendez-vous-couple"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-appuntamento-coppia"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/idee-appuntamento-coppia</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/date-night-ideas"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/date-ideen-zu-zweit"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/ideas-citas-pareja"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/idees-rendez-vous-couple"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/idee-appuntamento-coppia"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/board-game-picker</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/board-game-picker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/brettspiele-entscheiden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-de-mesa-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/quel-jeu-de-societe-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/quale-gioco-da-tavolo"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/brettspiele-entscheiden</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/board-game-picker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/brettspiele-entscheiden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-de-mesa-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/quel-jeu-de-societe-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/quale-gioco-da-tavolo"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/que-juego-de-mesa-jugar</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/board-game-picker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/brettspiele-entscheiden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-de-mesa-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/quel-jeu-de-societe-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/quale-gioco-da-tavolo"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/quel-jeu-de-societe-jouer</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/board-game-picker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/brettspiele-entscheiden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-de-mesa-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/quel-jeu-de-societe-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/quale-gioco-da-tavolo"/>
+  </url>
+  <url>
+    <loc>https://agreesy.com/quale-gioco-da-tavolo</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agreesy.com/board-game-picker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://agreesy.com/brettspiele-entscheiden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://agreesy.com/que-juego-de-mesa-jugar"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://agreesy.com/quel-jeu-de-societe-jouer"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://agreesy.com/quale-gioco-da-tavolo"/>
+  </url>
 </urlset>
