@@ -698,5 +698,79 @@ const MEDIA_STAGE2_PICKS = {
             { id: 'bg7_5', title: 'Trivial Pursuit (Classic / Master)', year: '2–6 Spieler · 60 Min', emoji: '🥧', vibe: 'Wissens-Klassiker · Wissens-Ecken aus 6 Kategorien erspielen', targetType: 'amazon' },
             { id: 'bg7_6', title: 'Bezzerwizzer', year: '2–4 Spieler · 45 Min', emoji: '🎯', vibe: 'Taktisches Quiz · Kategorien klauen, Punkte verdoppeln & Besserwisser-Steine nutzen', targetType: 'amazon' }
         ]
+    },
+    groupgifts: {
+        // 0: Clevere Wichtelgeschenke (10–20 €)
+        0: [
+            { id: 'gg0_1', title: 'SKYJO Kartenspiel (Original)', year: 'ca. 15 € · Bestseller #1', emoji: '🃏', vibe: 'Kommt bei jedem an – egal ob Kollege, Freund oder Familie', targetType: 'amazon' },
+            { id: 'gg0_2', title: 'Elektrischer Milchaufschäumer (USB-C)', year: 'ca. 15 € · Kaffee-Hit', emoji: '☕', vibe: 'Cremiger Milchschaum fürs Büro & Zuhause in 15 Sekunden', targetType: 'amazon' },
+            { id: 'gg0_3', title: 'Wiederaufladbarer USB-Taschenwärmer (2er-Set)', year: 'ca. 18 € · Winter-Gadget', emoji: '🔥', vibe: 'Hält Hände auf dem Weihnachtsmarkt & Arbeitsweg stundenlang warm', targetType: 'amazon' },
+            { id: 'gg0_4', title: 'EXIT – Das Spiel (Kosmos Escape-Box)', year: 'ca. 15 € · Rätsel-Spaß', emoji: '🔐', vibe: 'Kompletter Escape-Room-Abend im handlichen Wichtel-Format', targetType: 'amazon' },
+            { id: 'gg0_5', title: 'Yankee Candle / Duftkerze im Glas (Winter-Edition)', year: 'ca. 18 € · Cozy-Klassiker', emoji: '🕯️', vibe: 'Stilvoll, neutral und sorgt sofort für Gemütlichkeit', targetType: 'amazon' },
+            { id: 'gg0_6', title: 'Ankerkraut Gewürz-Trio oder Glühwein-Gewürz-Set', year: 'ca. 16 € · Genuss', emoji: '🧂', vibe: 'Hochwertig verpackt im Korkenglas – wird garantiert aufgebraucht', targetType: 'amazon' }
+        ],
+        // 1: Feinkost-, Kaffee- & Genuss-Box (bis 50 €)
+        1: [
+            { id: 'gg1_1', title: 'Italienische Gourmet-Geschenkbox (Trüffel, Pasta, Öl)', year: 'ca. 35–45 € · Eltern-Hit', emoji: '🍝', vibe: 'Edles Abendessen zum Auspacken – perfekt für Mama & Papa', targetType: 'amazon' },
+            { id: 'gg1_2', title: 'Specialty Coffee Probierbox (4 Röstereien)', year: 'ca. 30 € · Barista-Set', emoji: '☕', vibe: 'Frisch geröstete Bohnen aus kleinen Manufakturen zum Verkosten', targetType: 'amazon' },
+            { id: 'gg1_3', title: 'Belgische Pralinen & Champagner-Trüffel Box', year: 'ca. 25–35 € · Edel', emoji: '🍫', vibe: 'Feinste Confiserie-Auswahl für entspannte Abende', targetType: 'amazon' },
+            { id: 'gg1_4', title: 'Gin-, Whisky- oder Rum-Tasting-Set (Miniaturen)', year: 'ca. 35–49 € · Tasting', emoji: '🥃', vibe: '5 edle Sorten + Tasting-Guide zum gemeinsamen Probieren', targetType: 'amazon' },
+            { id: 'gg1_5', title: 'Kusmi Tea / Bio-Tee-Advents- & Geschenkbox', year: 'ca. 30 € · Stilvoll', emoji: '🍵', vibe: 'Wunderschöne Dosen mit besonderen Winter- und Kräutermischungen', targetType: 'amazon' },
+            { id: 'gg1_6', title: 'Olivenöl- & Balsamico-Manufaktur-Set', year: 'ca. 35 € · Küche', emoji: '🫒', vibe: 'Kaltgepresstes Premium-Öl und gereifter Balsamico für Hobbyköche', targetType: 'amazon' }
+        ],
+        // 2: Wellness-, Thermen- oder Home-Spa-Auszeit
+        2: [
+            { id: 'gg2_1', title: 'Thermen- & Wellness-Gutscheinbox für 2', year: 'ca. 60–100 € · Eltern-Favorit', emoji: '🧖‍♀️', vibe: 'Ein ganzer Tag Sauna, Thermalbad & Auszeit für Mama & Papa', targetType: 'amazon' },
+            { id: 'gg2_2', title: 'Rituals Luxury Gift Set (L / XL Box)', year: 'ca. 45–65 € · Bestseller', emoji: '🌿', vibe: 'Wunderschön verpackte Luxus-Pflegebox ohne extra Geschenkpapier', targetType: 'amazon' },
+            { id: 'gg2_3', title: 'Shiatsu Nacken- & Rückenmassagegerät mit Wärme', year: 'ca. 45 € · Alltagsliebling', emoji: '💆‍♀️', vibe: 'Wird von Eltern fast jeden Abend auf der Couch genutzt', targetType: 'amazon' },
+            { id: 'gg2_4', title: 'Beurer / Medisana XXL-Wärmedecke (Kuschelfleece)', year: 'ca. 55 € · Winter-Hit', emoji: '🛋️', vibe: 'Sofortige Wohlfühlwärme für kalte Winterabende', targetType: 'amazon' },
+            { id: 'gg2_5', title: 'Aroma-Diffuser in Holzoptik + Bio-Duftöl-Set', year: 'ca. 35 € · Spa-Ambiente', emoji: '💧', vibe: 'Verwandelt das Wohnzimmer in eine entspannte Wellness-Lounge', targetType: 'amazon' },
+            { id: 'gg2_6', title: 'Fußsprudelbad mit Wärmefunktion & Massage', year: 'ca. 50 € · Entspannung', emoji: '🫧', vibe: 'Wellness-Ritual für müde Füße nach einem langen Tag', targetType: 'amazon' }
+        ],
+        // 3: Erlebnis-Dinner, Tasting oder Kochkurs
+        3: [
+            { id: 'gg3_1', title: 'Kochkurs (Sushi, Pasta, Thai oder Tapas)', year: 'Erlebnis · Zusammenlegen', emoji: '👨‍🍳', vibe: 'Gemeinsam kochen, lachen und neue Lieblingsrezepte lernen', targetType: 'gyg' },
+            { id: 'gg3_2', title: 'Wein-, Gin- oder Craft-Beer-Tasting vor Ort', year: 'Genuss-Abend', emoji: '🍷', vibe: 'Geführte Verkostung mit Sommelier & spannenden Geschichten', targetType: 'gyg' },
+            { id: 'gg3_3', title: 'Dinner-Kreuzfahrt oder Candle-Light-Dinner', year: 'Besonderer Abend', emoji: '🚢', vibe: 'Mehrgängiges Menü mit toller Aussicht – ideal für Eltern', targetType: 'gyg' },
+            { id: 'gg3_4', title: 'Krimi-Dinner oder Dinner in the Dark', year: 'Unvergesslich', emoji: '🕵️', vibe: 'Spannung, Theater und 4-Gänge-Menü in einem Erlebnis', targetType: 'gyg' },
+            { id: 'gg3_5', title: 'Barista-Kurs oder Schokoladen-Workshop', year: 'Kreativ-Genuss', emoji: '☕', vibe: 'Latte Art lernen oder eigene Pralinen gießen', targetType: 'gyg' },
+            { id: 'gg3_6', title: 'Live-Escape-Room Gutschein für die ganze Gruppe', year: 'Gruppen-Event', emoji: '🔐', vibe: 'Perfekt für Freunde & Familie, die gemeinsam rätseln wollen', targetType: 'gyg' }
+        ],
+        // 4: Smart-Home & Premium Küchen-Upgrade (ab 50 €+)
+        4: [
+            { id: 'gg4_1', title: 'Ninja Foodi Dual Zone Heißluftfritteuse (Airfryer)', year: 'ca. 150 € · Top-Gruppengeschenk', emoji: '🍟', vibe: 'Das meistgewünschte Küchen-Upgrade überhaupt – ideal zum Zusammenlegen', targetType: 'amazon' },
+            { id: 'gg4_2', title: 'Ninja Creami Eismaschine', year: 'ca. 180 € · Viral-Hit', emoji: '🍨', vibe: 'Macht aus Joghurt, Obst oder Kaffee auf Knopfdruck cremiges Eis', targetType: 'amazon' },
+            { id: 'gg4_3', title: 'Bialetti + Elektrische Kaffeemühle Barista-Set', year: 'ca. 75 € · Kaffee-Upgrade', emoji: '☕', vibe: 'Frisch gemahlener Espresso für echte Kaffeeliebhaber', targetType: 'amazon' },
+            { id: 'gg4_4', title: 'Sony / Bose / Soundcore ANC-Kopfhörer', year: 'ca. 80–250 € · Audio-Hit', emoji: '🎧', vibe: 'Aktive Geräuschunterdrückung für Reisen, Zug & Homeoffice', targetType: 'amazon' },
+            { id: 'gg4_5', title: 'Philips Hue Starter-Set (Smart-Home Licht)', year: 'ca. 90 € · Ambiente', emoji: '💡', vibe: 'Warmes Wohlfühllicht per App & Sprache im ganzen Wohnzimmer', targetType: 'amazon' },
+            { id: 'gg4_6', title: 'SodaStream Duo / Aarke Wassersprudler (Glas)', year: 'ca. 110 € · Alltag-Upgrade', emoji: '🫧', vibe: 'Schluss mit Kistenschleppen – zeitloses Design für jede Küche', targetType: 'amazon' }
+        ],
+        // 5: Persönliche Erinnerungen & Foto-Highlights
+        5: [
+            { id: 'gg5_1', title: 'Frameo Digitaler WLAN-Bilderrahmen (10,1 Zoll)', year: 'ca. 65 € · #1 für Eltern & Oma', emoji: '🖼️', vibe: 'Alle Geschwister & Enkel schicken per App live neue Fotos direkt ins Wohnzimmer', targetType: 'amazon' },
+            { id: 'gg5_2', title: 'Fujifilm Instax Mini 12 Sofortbildkamera + Film', year: 'ca. 85 € · Party-Hit', emoji: '📸', vibe: 'Perfekt für Urlaube, Geburtstage und die Magnetwand', targetType: 'amazon' },
+            { id: 'gg5_3', title: '„Mama / Papa, erzähl mal!“ Ausfüllbuch', year: 'ca. 20 € · Rührend', emoji: '📖', vibe: 'Lebensgeschichten und Erinnerungen der Eltern für immer festhalten', targetType: 'amazon' },
+            { id: 'gg5_4', title: 'Canon Zoemini / Kodak Handy-Fotodrucker', year: 'ca. 100 € · Sofortdruck', emoji: '🖨️', vibe: 'Handyfotos unterwegs sofort als echte Sticker-Fotos ausdrucken', targetType: 'amazon' },
+            { id: 'gg5_5', title: 'Weltkarte / Europa-Karte zum Freirubbeln (XXL)', year: 'ca. 25 € · Reise-Deko', emoji: '🗺️', vibe: 'Alle gemeinsamen Reisen stilvoll an der Wand sichtbar machen', targetType: 'amazon' },
+            { id: 'gg5_6', title: 'Familien- & Freunde-Fotobuch-Set mit Stiften', year: 'ca. 30 € · Persönlich', emoji: '📔', vibe: 'Jeder aus der Gruppe gestaltet 2 Seiten mit gemeinsamen Erinnerungen', targetType: 'amazon' }
+        ],
+        // 6: LEGO-Design-Set, Brettspiel oder Buch-Hit
+        6: [
+            { id: 'gg6_1', title: 'LEGO Botanicals Blumenstrauß / Orchidee', year: 'ca. 45 € · Bestseller #1', emoji: '💐', vibe: 'Welkt nie, sieht edel aus und macht riesig Spaß beim Bauen', targetType: 'amazon' },
+            { id: 'gg6_2', title: 'HITSTER – Das Musik-Partyspiel', year: 'ca. 25 € · Gruppen-Hit', emoji: '🎵', vibe: 'Wird garantiert noch am selben Abend mit allen zusammen gespielt', targetType: 'amazon' },
+            { id: 'gg6_3', title: 'Dorfromantik oder Zug um Zug (Brettspiel)', year: 'ca. 35 € · Familien-Hit', emoji: '🚂', vibe: 'Preisgekrönte Spiele, die Eltern und Freunde gleichermaßen lieben', targetType: 'amazon' },
+            { id: 'gg6_4', title: 'Hidden Games Krimi-Akte (Tatort-Spiel)', year: 'ca. 25 € · Rätsel-Abend', emoji: '🕵️', vibe: 'Gemeinsam einen realistischen Kriminalfall am Esstisch lösen', targetType: 'amazon' },
+            { id: 'gg6_5', title: '52 kleine & große Eskapaden (Reisebuch Region)', year: 'ca. 22 € · Ausflugs-Tipp', emoji: '📚', vibe: '52 fertige Wochenend-Ideen direkt vor der eigenen Haustür', targetType: 'amazon' },
+            { id: 'gg6_6', title: 'Ravensburger 3D-Puzzle oder Escape-Puzzle', year: 'ca. 20–30 € · Entspannend', emoji: '🧩', vibe: 'Schönes Winter-Projekt für gemütliche Nachmittage', targetType: 'amazon' }
+        ],
+        // 7: Wochenend-Kurztrip oder Hotel-Gutschein (Großes Gruppengeschenk)
+        7: [
+            { id: 'gg7_1', title: 'Wellness- & Spa-Hotel Wochenende (Südtirol / Allgäu)', year: 'ab 180 € · Eltern-Traum', emoji: '🏔️', vibe: '2 Nächte Berge, Halbpension & Infinity-Pool – perfekt für Geschwister', targetType: 'booking' },
+            { id: 'gg7_2', title: 'Städtetrip-Wochenende (Wien, Prag, Amsterdam)', year: 'ab 150 € · Kultur & Essen', emoji: '🏙️', vibe: 'Boutique-Hotel im Zentrum für ein unvergessliches langes Wochenende', targetType: 'booking' },
+            { id: 'gg7_3', title: 'Strandhotel an Nordsee, Ostsee oder Holland', year: 'ab 160 € · Meeresluft', emoji: '🌊', vibe: 'Strandspaziergänge, Sauna und frischer Fisch direkt am Meer', targetType: 'booking' },
+            { id: 'gg7_4', title: 'Weingut- & Schlosshotel (Mosel, Pfalz, Toskana)', year: 'ab 170 € · Genuss-Trip', emoji: '🍷', vibe: 'Übernachten zwischen Weinbergen inkl. Weinprobe', targetType: 'booking' },
+            { id: 'gg7_5', title: 'Cozy Baumhaus, Tiny House oder Berg-Chalet', year: 'ab 190 € · Besonders', emoji: '🌲', vibe: 'Mitten in der Natur mit Kamin oder Hot Tub unter den Sternen', targetType: 'booking' },
+            { id: 'gg7_6', title: 'Hotelgutschein-Box (Freie Zielwahl für 2 Nächte)', year: 'ab 150 € · Flexibel', emoji: '🎁', vibe: 'Die Beschenkten wählen Datum und Wunschhotel selbst aus', targetType: 'amazon' }
+        ]
     }
 };

@@ -7421,6 +7421,301 @@ const DECKS = {
                 "actionUrl": "https://www.amazon.de/s?k=Quizspiel+Wortspiel+Erwachsene+Bestseller&tag=f05b1-21"
             }
         ]
+    },
+    "groupgifts": {
+        "id": "groupgifts",
+        "category": "trips",
+        "mode": "match",
+        "icon": "🎀",
+        "gradient": "from-rose-500 to-amber-500",
+        "title": {
+            "de": "Gruppengeschenk & Wichteln",
+            "en": "Group Gifts & Secret Santa",
+            "es": "Regalos en Grupo y Amigo Invisible",
+            "fr": "Cadeau Commun & Secret Santa",
+            "it": "Regalo di Gruppo & Secret Santa"
+        },
+        "sub": {
+            "de": "Für Eltern, Freunde & Wichteln (48 Ideen)",
+            "en": "For parents, friends & Secret Santa (48 picks)",
+            "es": "Para padres, amigos y amigo invisible (48 ideas)",
+            "fr": "Pour parents, amis & Secret Santa (48 idées)",
+            "it": "Per genitori, amici e Secret Santa (48 idee)"
+        },
+        "cards": [
+            {
+                "id": 0,
+                "emoji": "🎅",
+                "bg": "from-red-600 to-rose-700",
+                "tag": {
+                    "de": "Unter 20 € · Wichtel-Hit",
+                    "en": "Under $20 · Secret Santa",
+                    "es": "Menos de 20 € · Amigo Invisible",
+                    "fr": "Moins de 20 € · Secret Santa",
+                    "it": "Sotto i 20 € · Secret Santa"
+                },
+                "title": {
+                    "de": "Clevere Wichtelgeschenke (10–20 €)",
+                    "en": "Clever Secret Santa Gifts ($10–$20)",
+                    "es": "Regalos de Amigo Invisible (10–20 €)",
+                    "fr": "Idées Secret Santa Malines (10–20 €)",
+                    "it": "Regali Secret Santa Furbi (10–20 €)"
+                },
+                "desc": {
+                    "de": "Nützlich, witzig oder gemütlich – passt im Büro, Freundeskreis & Familie.",
+                    "en": "Useful, funny or cozy – guaranteed hits for office, friends & family.",
+                    "es": "Útiles, divertidos o acogedores: acierto seguro en oficina o con amigos.",
+                    "fr": "Utiles, drôles ou cosy : parfaits au bureau, entre amis ou en famille.",
+                    "it": "Utili, divertenti o cozy: perfetti in ufficio, tra amici e in famiglia."
+                },
+                "actionLabel": {
+                    "de": "Wichtelgeschenke unter 20 € ansehen",
+                    "en": "Browse Secret Santa Gifts under $20",
+                    "es": "Ver regalos de amigo invisible",
+                    "fr": "Voir les cadeaux Secret Santa",
+                    "it": "Vedi regali Secret Santa"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Wichtelgeschenke+unter+20+Euro+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 1,
+                "emoji": "🍷",
+                "bg": "from-amber-600 to-red-700",
+                "tag": {
+                    "de": "Bis 50 € · Genuss",
+                    "en": "Under $50 · Gourmet",
+                    "es": "Hasta 50 € · Gourmet",
+                    "fr": "Jusqu'à 50 € · Gourmet",
+                    "it": "Fino a 50 € · Gourmet"
+                },
+                "title": {
+                    "de": "Feinkost-, Kaffee- & Genuss-Box",
+                    "en": "Gourmet Food, Coffee & Tasting Box",
+                    "es": "Caja Gourmet, Café y Degustación",
+                    "fr": "Coffret Gourmet, Café & Dégustation",
+                    "it": "Cofanetto Gourmet, Caffè & Degustazione"
+                },
+                "desc": {
+                    "de": "Perfekt für Eltern oder Freunde, die „eigentlich schon alles haben“.",
+                    "en": "Ideal for parents or friends who say they already have everything.",
+                    "es": "Perfecto para padres o amigos que ya tienen de todo.",
+                    "fr": "Idéal pour les parents ou amis qui ont déjà tout.",
+                    "it": "Perfetto per genitori o amici che hanno già tutto."
+                },
+                "actionLabel": {
+                    "de": "Edle Genuss-Geschenkboxen ansehen",
+                    "en": "Browse Gourmet Gift Boxes",
+                    "es": "Ver cajas regalo gourmet",
+                    "fr": "Voir les coffrets gourmets",
+                    "it": "Vedi cofanetti gourmet"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Feinkost+Geschenkbox+Eltern+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 2,
+                "emoji": "🧖‍♀️",
+                "bg": "from-teal-600 to-emerald-700",
+                "tag": {
+                    "de": "Beliebt für Eltern",
+                    "en": "Loved by Parents",
+                    "es": "Ideal para Padres",
+                    "fr": "Adoré des Parents",
+                    "it": "Amato dai Genitori"
+                },
+                "title": {
+                    "de": "Wellness-, Thermen- oder Home-Spa-Auszeit",
+                    "en": "Spa Day, Thermal Bath or Luxury Home-Spa",
+                    "es": "Día de Spa, Termas o Home-Spa",
+                    "fr": "Journée Spa, Thermes ou Home-Spa",
+                    "it": "Giornata Spa, Terme o Home-Spa"
+                },
+                "desc": {
+                    "de": "Entspannung pur – ideal zum Zusammenlegen unter Geschwistern.",
+                    "en": "Pure relaxation – a classic group gift from siblings or friends.",
+                    "es": "Relax total: un regalo conjunto clásico entre hermanos o amigos.",
+                    "fr": "Détente absolue : le cadeau commun parfait entre frères et sœurs.",
+                    "it": "Relax puro: il regalo di gruppo perfetto da fare insieme."
+                },
+                "actionLabel": {
+                    "de": "Wellness-Geschenke ansehen",
+                    "en": "Browse Wellness Gifts",
+                    "es": "Ver regalos de bienestar",
+                    "fr": "Voir les cadeaux bien-être",
+                    "it": "Vedi regali benessere"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Wellness+Geschenkbox+fuer+2+Eltern&tag=f05b1-21"
+            },
+            {
+                "id": 3,
+                "emoji": "🍽️",
+                "bg": "from-orange-600 to-rose-700",
+                "tag": {
+                    "de": "Zeit statt Zeug",
+                    "en": "Shared Experience",
+                    "es": "Experiencia Juntos",
+                    "fr": "Expérience à Partager",
+                    "it": "Esperienza Insieme"
+                },
+                "title": {
+                    "de": "Erlebnis-Dinner, Tasting oder Kochkurs",
+                    "en": "Fine Dining, Tasting or Cooking Class",
+                    "es": "Cena Especial, Cata o Clase de Cocina",
+                    "fr": "Dîner Insolite, Dégustation ou Cours",
+                    "it": "Cena Esperienziale, Degustazione o Corso"
+                },
+                "desc": {
+                    "de": "Gemeinsame Erinnerungen verschenken statt Staubfänger.",
+                    "en": "Gift unforgettable memories instead of clutter.",
+                    "es": "Regala recuerdos inolvidables en lugar de objetos.",
+                    "fr": "Offrez des souvenirs inoubliables plutôt que des objets.",
+                    "it": "Regala ricordi indimenticabili invece di oggetti inutili."
+                },
+                "actionLabel": {
+                    "de": "Erlebnis-Tickets entdecken",
+                    "en": "Explore Experience Tickets",
+                    "es": "Ver experiencias",
+                    "fr": "Voir les expériences",
+                    "it": "Scopri le esperienze"
+                },
+                "actionUrl": "https://www.getyourguide.de/s/?q=Kochkurs+Tasting+Dinner"
+            },
+            {
+                "id": 4,
+                "emoji": "🏠",
+                "bg": "from-slate-700 to-indigo-800",
+                "tag": {
+                    "de": "Zusammenlegen ab 50 €+",
+                    "en": "Pool Together $50+",
+                    "es": "Regalo Conjunto 50 €+",
+                    "fr": "Cagnotte 50 €+",
+                    "it": "Colletta 50 €+"
+                },
+                "title": {
+                    "de": "Smart-Home & Premium Küchen-Upgrade",
+                    "en": "Smart Home & Premium Kitchen Upgrade",
+                    "es": "Smart Home y Gadget Premium de Cocina",
+                    "fr": "Maison Connectée & Gadget Cuisine Premium",
+                    "it": "Smart Home & Upgrade Cucina Premium"
+                },
+                "desc": {
+                    "de": "Wenn mehrere zusammenlegen: Airfryer, Kaffeemühle, Kopfhörer & mehr.",
+                    "en": "When everyone chips in: Airfryer, espresso gear, headphones & more.",
+                    "es": "Si ponéis bote entre varios: Airfryer, café barista, auriculares y más.",
+                    "fr": "À plusieurs sur une cagnotte : Airfryer, café barista, casque audio.",
+                    "it": "Facendo colletta: friggitrice ad aria, caffè barista, cuffie top."
+                },
+                "actionLabel": {
+                    "de": "Premium-Gadgets ansehen",
+                    "en": "Browse Premium Gadgets",
+                    "es": "Ver gadgets premium",
+                    "fr": "Voir les gadgets premium",
+                    "it": "Vedi gadget premium"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Kuechen+Tech+Gadgets+Geschenk+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 5,
+                "emoji": "📸",
+                "bg": "from-violet-600 to-purple-800",
+                "tag": {
+                    "de": "Emotional & Persönlich",
+                    "en": "Heartfelt & Personal",
+                    "es": "Emotivo y Personal",
+                    "fr": "Émouvant & Personnel",
+                    "it": "Emozionante & Personale"
+                },
+                "title": {
+                    "de": "Persönliche Erinnerungen & Foto-Highlights",
+                    "en": "Personal Memories & Smart Photo Gifts",
+                    "es": "Recuerdos Personales y Marcos Digitales",
+                    "fr": "Souvenirs Personnels & Cadres Photo",
+                    "it": "Ricordi Personali & Cornici Digitali"
+                },
+                "desc": {
+                    "de": "WLAN-Bilderrahmen für Oma/Eltern, Sofortbildkamera oder Erinnerungsbuch.",
+                    "en": "WiFi photo frame for parents, instant camera or memory book.",
+                    "es": "Marco digital WiFi para padres, cámara instantánea o álbum.",
+                    "fr": "Cadre photo WiFi pour les parents, appareil instantané ou album.",
+                    "it": "Cornice WiFi per genitori, fotocamera istantanea o album ricordi."
+                },
+                "actionLabel": {
+                    "de": "Foto-Geschenke ansehen",
+                    "en": "Browse Photo Gifts",
+                    "es": "Ver regalos de fotos",
+                    "fr": "Voir les cadeaux photo",
+                    "it": "Vedi regali fotografici"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Frameo+WLAN+Bilderrahmen+Instax+Geschenk&tag=f05b1-21"
+            },
+            {
+                "id": 6,
+                "emoji": "🎲",
+                "bg": "from-sky-600 to-blue-700",
+                "tag": {
+                    "de": "Spaß für alle",
+                    "en": "Fun for Everyone",
+                    "es": "Diversión para Todos",
+                    "fr": "Plaisir Partagé",
+                    "it": "Divertimento per Tutti"
+                },
+                "title": {
+                    "de": "LEGO-Design-Set, Brettspiel oder Buch-Hit",
+                    "en": "LEGO Botanical Set, Board Game or Bestseller",
+                    "es": "Set LEGO, Juego de Mesa o Libro Top",
+                    "fr": "Set LEGO, Jeu de Société ou Best-seller",
+                    "it": "Set LEGO, Gioco da Tavolo o Bestseller"
+                },
+                "desc": {
+                    "de": "Dinge, die sofort ausgepackt und gemeinsam ausprobiert werden.",
+                    "en": "Gifts everyone wants to unbox and enjoy right away.",
+                    "es": "Regalos que apetece abrir y disfrutar en el mismo momento.",
+                    "fr": "Des cadeaux qu'on a envie d'ouvrir et de tester tout de suite.",
+                    "it": "Regali da scartare e provare subito insieme."
+                },
+                "actionLabel": {
+                    "de": "LEGO & Spiele-Bestseller ansehen",
+                    "en": "Browse LEGO & Game Bestsellers",
+                    "es": "Ver LEGO y juegos top",
+                    "fr": "Voir LEGO et jeux top",
+                    "it": "Vedi LEGO e giochi top"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=LEGO+Botanicals+Brettspiel+Geschenk&tag=f05b1-21"
+            },
+            {
+                "id": 7,
+                "emoji": "✈️",
+                "bg": "from-cyan-600 to-teal-800",
+                "tag": {
+                    "de": "Großes Gruppengeschenk",
+                    "en": "Big Group Gift",
+                    "es": "Gran Regalo en Grupo",
+                    "fr": "Grand Cadeau Commun",
+                    "it": "Grande Regalo di Gruppo"
+                },
+                "title": {
+                    "de": "Wochenend-Kurztrip oder Hotel-Gutschein",
+                    "en": "Weekend Getaway or Boutique Hotel Stay",
+                    "es": "Escapada de Fin de Semana u Hotel",
+                    "fr": "Week-end Évasion ou Hôtel de Charme",
+                    "it": "Fuga Weekend o Hotel di Charme"
+                },
+                "desc": {
+                    "de": "Der Wow-Moment für runde Geburtstage, Eltern oder Hochzeiten.",
+                    "en": "The ultimate wow gift for milestone birthdays, parents or weddings.",
+                    "es": "El gran regalo sorpresa para cumpleaños redondos o aniversarios.",
+                    "fr": "Le cadeau waouh pour un grand anniversaire ou un mariage.",
+                    "it": "Il regalo perfetto per compleanni importanti, genitori o nozze."
+                },
+                "actionLabel": {
+                    "de": "Kurztrip-Ideen prüfen",
+                    "en": "Check Weekend Getaways",
+                    "es": "Ver escapadas de fin de semana",
+                    "fr": "Voir les week-ends évasion",
+                    "it": "Vedi fughe weekend"
+                },
+                "actionUrl": "https://www.booking.com/searchresults.de.html?ss=Wellness+Hotel"
+            }
+        ]
     }
 };
 

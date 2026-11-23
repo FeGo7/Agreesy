@@ -1101,7 +1101,7 @@ function addCustomOptionInput() {
 
 function findStage2MediaPickByFormattedTitle(formatted) {
     if (typeof MEDIA_STAGE2_PICKS === 'undefined') return null;
-    for (const type of ['movie', 'series', 'gaming', 'boardgames', 'vacation', 'gifts']) {
+    for (const type of ['movie', 'series', 'gaming', 'boardgames', 'vacation', 'gifts', 'groupgifts']) {
         const genres = MEDIA_STAGE2_PICKS[type] || {};
         for (const gKey of Object.keys(genres)) {
             const found = (genres[gKey] || []).find(item => `${item.title} (${item.year})` === formatted);
@@ -1148,7 +1148,7 @@ function registerCustomDeckInMemory(rawTitle, mode, optionsArray) {
     let deckCategory = 'all';
     if (matchedStage2Type === 'movie' || matchedStage2Type === 'series' || matchedStage2Type === 'gaming' || matchedStage2Type === 'boardgames') {
         deckCategory = 'entertainment';
-    } else if (matchedStage2Type === 'vacation' || matchedStage2Type === 'gifts') {
+    } else if (matchedStage2Type === 'vacation' || matchedStage2Type === 'gifts' || matchedStage2Type === 'groupgifts') {
         deckCategory = 'trips';
     }
 
@@ -1978,7 +1978,7 @@ function updateWinnerAffiliateLinks(card) {
                 secondaryText.innerText = formatWithDomainTag(t.winnerActivitySecondary || 'Passende Geschenk-Boxen', store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
-        } else if (card.targetType === 'amazon' || currentDeckId === 'gaming' || currentDeckId === 'boardgames' || (currentDeckId === 'gifts' && [3, 4, 5, 7, 8].includes(card.id))) {
+        } else if (card.targetType === 'amazon' || currentDeckId === 'gaming' || currentDeckId === 'boardgames' || (currentDeckId === 'gifts' && [3, 4, 5, 7, 8].includes(card.id)) || (currentDeckId === 'groupgifts' && [0, 1, 2, 4, 5, 6].includes(card.id))) {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
             actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOpenAction || 'Jetzt ansehen'}`, store.amazonDomain);
             if (secondaryBtn && secondaryText) {
@@ -2048,6 +2048,8 @@ function getStage2MediaContext(card) {
         mediaType = 'vacation';
     } else if (currentDeckId === 'gifts') {
         mediaType = 'gifts';
+    } else if (currentDeckId === 'groupgifts') {
+        mediaType = 'groupgifts';
     }
     if (!mediaType || !MEDIA_STAGE2_PICKS[mediaType]) return null;
     const pool = MEDIA_STAGE2_PICKS[mediaType][card.id];
@@ -2105,7 +2107,8 @@ function renderStage2MediaPicks(card) {
         gaming: t.stage2GamingHeader || '3 beliebte Spiele-Tipps (Bestseller)',
         boardgames: t.stage2BoardgamesHeader || '3 konkrete Brettspiel-Bestseller',
         vacation: t.stage2VacationHeader || '3 konkrete Reiseziele passend zur Wahl',
-        gifts: t.stage2GiftsHeader || '3 konkrete Geschenk-Ideen & Bestseller'
+        gifts: t.stage2GiftsHeader || '3 konkrete Geschenk-Ideen & Bestseller',
+        groupgifts: t.stage2GroupgiftsHeader || '3 konkrete Geschenk-Bestseller zum Zusammenlegen'
     };
     const startBtnMap = {
         movie: t.stage2StartMoviesBtn || '🎬 Runde 2: Aus 8 passenden Filmen swipen →',
@@ -2113,7 +2116,8 @@ function renderStage2MediaPicks(card) {
         gaming: t.stage2StartGamingBtn || '🎲 Runde 2: Aus 8 konkreten Spielen swipen →',
         boardgames: t.stage2StartBoardgamesBtn || '🎲 Runde 2: Aus 6 konkreten Brettspielen swipen →',
         vacation: t.stage2StartVacationBtn || '✈️ Runde 2: Aus 8 konkreten Reisezielen swipen →',
-        gifts: t.stage2StartGiftsBtn || '🎁 Runde 2: Aus 6 konkreten Geschenken swipen →'
+        gifts: t.stage2StartGiftsBtn || '🎁 Runde 2: Aus 6 konkreten Geschenken swipen →',
+        groupgifts: t.stage2StartGroupgiftsBtn || '🎀 Runde 2: Aus 6 konkreten Geschenken swipen →'
     };
 
     if (headerEl) headerEl.innerText = headerMap[ctx.mediaType] || headerMap.movie;
@@ -2193,7 +2197,7 @@ function startStage2MediaRound() {
     registerCustomDeckInMemory(genreTitle, 'match', optionsArray);
 
     if (DECKS['custom']) {
-        DECKS['custom'].category = (ctx.mediaType === 'vacation' || ctx.mediaType === 'gifts') ? 'trips' : 'entertainment';
+        DECKS['custom'].category = (ctx.mediaType === 'vacation' || ctx.mediaType === 'gifts' || ctx.mediaType === 'groupgifts') ? 'trips' : 'entertainment';
         DECKS['custom'].cards = pool.map((item, idx) => ({
             id: idx,
             emoji: item.emoji || '🎬',
