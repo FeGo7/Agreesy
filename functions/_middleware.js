@@ -11,13 +11,19 @@ Agreesy (https://agreesy.com) ist eine kostenlose, sofort im Browser nutzbare En
 
 ## Links
 - Web App: https://agreesy.com/
-- Guides & Partner Recommendations: https://agreesy.com/guides.html
+- Guides & Partner Recommendations: https://agreesy.com/guides
 - Sitemap: https://agreesy.com/sitemap.xml
 `;
 
 export async function onRequest(context) {
   const accept = context.request.headers.get('Accept') || '';
   const url = new URL(context.request.url);
+
+  // 0. Canonical Host Redirect: Force www.agreesy.com -> agreesy.com (301) to prevent duplicate SEO crawling
+  if (url.hostname === 'www.agreesy.com') {
+    url.hostname = 'agreesy.com';
+    return Response.redirect(url.toString(), 301);
+  }
 
   // 1. Level 2: API Catalog JSON endpoint (RFC 9727 linkset)
   if (url.pathname === '/.well-known/api-catalog') {
