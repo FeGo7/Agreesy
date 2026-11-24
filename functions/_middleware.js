@@ -1,19 +1,75 @@
-// Cloudflare Pages Middleware: Free Markdown Negotiation for AI Agents (0,00 € instead of Cloudflare Pro Plan)
+// Cloudflare Pages Middleware: Canonical Redirect, Dynamic WhatsApp/Social OG Previews & Free Markdown Negotiation
 const MARKDOWN_DOC = `# Agreesy (https://agreesy.com)
 
-> Einigen ohne Diskussion – Shared decisions for couples, roommates, and friends in 30 seconds. Zero accounts, zero servers, 100% privacy-first via encrypted URL-hash state.
+> Einigen ohne Diskussion – Decide without debating. Free 30-second swipe decider for solo users, couples, roommates, and groups (1–6 players) in 5 languages (DE, EN, ES, FR, IT). Zero accounts, zero servers, 100% privacy-first via URL-hash sync.
 
-## Was ist Agreesy? / What is Agreesy?
-Agreesy (https://agreesy.com) ist eine kostenlose, sofort im Browser nutzbare Entscheidungs-App für Paare, WGs und Freunde (Deutsch, Englisch, Spanisch). Statt 30 Minuten darüber zu diskutieren, was heute gekocht/bestellt wird, welcher Film geschaut wird oder wer welche Aufgaben im Haushalt übernimmt, wischt jede Person verdeckt durch 8 Vorschläge:
-- **Konsens-Modus (Match):** Erste gemeinsame Zustimmung gewinnt sofort (z.B. Hunger & Essen, Film & Couch, Date Night, Wochenend-Ausflug).
-- **Aufteilungs-Modus (Fair Split / Anti-Match):** Freiwillige Aufgaben werden direkt zugewiesen, ungeliebte Restaufgaben werden per Zufalls-Zuteilung fair verteilt.
-- **Eigene Abstimmung (Custom Poll):** Eigene Restaurants, Filme oder Ideen eintragen und direkt als verschlüsselten Einladungslink per WhatsApp teilen.
+## Key Features
+- **1 to 6 Players (Solo, Duo, Group):** Solo 1v1 knockout duel, 2-player Sudden Death Match, or Group consensus voting (3–6 players) via one WhatsApp link.
+- **Super-Like & Veto Jokers:** 1x Super-Like (double weight, golden Super-Match) and 1x Veto per round.
+- **Surprise-Me Roulette with Exclusion Filter:** Cross out what you don't want today, spin the slot randomizer on the rest.
+- **Viral Match Share Card (PNG):** 1-tap 1080x1080 shareable image card for WhatsApp & Instagram Stories.
+- **Fair Split (Chores / Anti-Match):** Voluntarily claim chores; rejected tasks are fairly divided by roulette.
+- **15+ Decks & 300+ Concrete Stage-2 Picks:** Dinner, Vegan, Movies, Series, Holiday Movies, Board Games, Video Games, Date Night, Cocktails, Vacation, Gifts, Group Gifts & Secret Santa, Christmas Dinner, New Year's Eve, and Household Chores.
 
 ## Links
 - Web App: https://agreesy.com/
-- Guides & Partner Recommendations: https://agreesy.com/guides
+- Guides & Topic Hub: https://agreesy.com/guides
+- Extended AI Docs: https://agreesy.com/llms-full.txt
 - Sitemap: https://agreesy.com/sitemap.xml
 `;
+
+const DECK_OG_META = {
+  dinner: { e: '🍔', de: 'Abendessen-Entscheider', en: 'Dinner Decider', es: '¿Qué cenamos hoy?', fr: 'Choix du Dîner', it: 'Salva-Cena' },
+  streaming: { e: '🎬', de: 'Film-Entscheider', en: 'Movie Picker', es: '¿Qué película ver?', fr: 'Choix du Film', it: 'Quale film vedere?' },
+  movie: { e: '🎬', de: 'Film-Entscheider', en: 'Movie Picker', es: '¿Qué película ver?', fr: 'Choix du Film', it: 'Quale film vedere?' },
+  series: { e: '📺', de: 'Serien-Finder', en: 'TV Series Picker', es: 'Selector de Series', fr: 'Choix de Série', it: 'Quale serie vedere?' },
+  chores: { e: '🧹', de: 'Haushalts-Aufteilung', en: 'Household Chore Split', es: 'Reparto de Tareas', fr: 'Répartition des Tâches', it: 'Divisione Faccende' },
+  household: { e: '🧹', de: 'Haushalts-Aufteilung', en: 'Household Chore Split', es: 'Reparto de Tareas', fr: 'Répartition des Tâches', it: 'Divisione Faccende' },
+  date: { e: '💘', de: 'Date-Night Entscheider', en: 'Date Night Picker', es: 'Plan de Cita', fr: 'Idée Date Night', it: 'Serata in Coppia' },
+  cocktails: { e: '🍸', de: 'Cocktail-Finder', en: 'Cocktail Picker', es: 'Cócteles en Pareja', fr: 'Cocktails à Deux', it: 'Cocktail per Due' },
+  vegan: { e: '🥗', de: 'Veggie & Vegan Essen', en: 'Vegan Dinner Picker', es: 'Cena Vegana', fr: 'Dîner Végétarien', it: 'Cena Vegana' },
+  wintermovies: { e: '🎄', de: 'Weihnachtsfilme-Match', en: 'Holiday Movie Picker', es: 'Películas de Navidad', fr: 'Films de Noël', it: 'Film di Natale' },
+  gaming: { e: '🎮', de: 'Gaming-Entscheider', en: 'Video Game Picker', es: '¿A qué juego jugar?', fr: 'Choix Jeu Vidéo', it: 'A cosa giocare?' },
+  boardgames: { e: '🎲', de: 'Spieleabend & Brettspiele', en: 'Board Game Night', es: 'Juegos de Mesa', fr: 'Soirée Jeux de Société', it: 'Giochi da Tavolo' },
+  vacation: { e: '✈️', de: 'Urlaubs- & Reiseziel-Finder', en: 'Travel Destination Picker', es: '¿Dónde viajar?', fr: 'Choix de Destination', it: 'Meta di Viaggio' },
+  gifts: { e: '🎁', de: 'Geschenkideen-Finder', en: 'Gift Ideas Finder', es: 'Ideas de Regalos', fr: 'Idées Cadeaux', it: 'Idee Regalo' },
+  groupgifts: { e: '🎀', de: 'Gruppengeschenk & Wichteln', en: 'Group Gift & Secret Santa', es: 'Regalo en Grupo', fr: 'Cadeau Commun', it: 'Regalo di Gruppo' },
+  nye: { e: '🥂', de: 'Silvester-Planer', en: 'New Year\'s Eve Planner', es: 'Planes de Nochevieja', fr: 'Soirée du Nouvel An', it: 'Piani di Capodanno' },
+  christmasdinner: { e: '🎄', de: 'Weihnachtsessen-Planer', en: 'Christmas Dinner Picker', es: 'Cena de Navidad', fr: 'Repas de Noël', it: 'Cena di Natale' },
+  custom: { e: '✨', de: 'Eigene Abstimmung', en: 'Custom Group Poll', es: 'Votación Personalizada', fr: 'Sondage Personnalisé', it: 'Sondaggio Personalizzato' }
+};
+
+function buildDynamicOg(deckKey, fromRaw, langRaw) {
+  const meta = DECK_OG_META[deckKey];
+  if (!meta) return null;
+  const lang = ['de', 'en', 'es', 'fr', 'it'].includes(langRaw) ? langRaw : 'de';
+  const deckTitle = meta[lang] || meta.en;
+  const from = (fromRaw || '').replace(/[<>"]/g, '').trim().slice(0, 28);
+  const isChores = deckKey === 'chores' || deckKey === 'household';
+
+  const titles = {
+    de: from ? `${meta.e} ${from} lädt dich ein: ${deckTitle} – Agreesy` : `${meta.e} ${deckTitle} in 30 Sek. – Agreesy`,
+    en: from ? `${meta.e} ${from} invited you: ${deckTitle} – Agreesy` : `${meta.e} ${deckTitle} in 30s – Agreesy`,
+    es: from ? `${meta.e} ${from} te invita: ${deckTitle} – Agreesy` : `${meta.e} ${deckTitle} en 30s – Agreesy`,
+    fr: from ? `${meta.e} ${from} vous invite : ${deckTitle} – Agreesy` : `${meta.e} ${deckTitle} en 30s – Agreesy`,
+    it: from ? `${meta.e} ${from} ti invita: ${deckTitle} – Agreesy` : `${meta.e} ${deckTitle} in 30s – Agreesy`
+  };
+  const descs = isChores ? {
+    de: 'Wähle geheim, welche Aufgaben du freiwillig übernimmst – der Rest wird fair per Zufall aufgeteilt. Ohne App-Download!',
+    en: 'Claim chores you don\'t mind doing – leftover tasks are split fairly by roulette. Zero app install!',
+    es: 'Elige las tareas que no te importa hacer y repartid el resto a suertes sin discutir. ¡Sin descargar app!',
+    fr: 'Choisissez vos tâches volontaires – le reste est réparti équitablement au hasard. Sans téléchargement !',
+    it: 'Scegli i compiti volontari e dividete il resto in modo equo a sorte. Senza scaricare app!'
+  } : {
+    de: 'Tippe drauf & swipe 30 Sek. geheim mit. Das erste gemeinsame Match gewinnt sofort – kostenlos & ohne Anmeldung!',
+    en: 'Tap & swipe privately for 30 seconds. First mutual match wins instantly – free with zero signup!',
+    es: 'Toca y desliza en secreto durante 30 segundos. ¡El primer match común gana al instante y sin registro!',
+    fr: 'Touchez et swipez en secret pendant 30 secondes. Le premier match commun gagne aussitôt, sans inscription !',
+    it: 'Tocca e fai swipe in segreto per 30 secondi. Il primo match comune vince subito, gratis e senza registrazione!'
+  };
+
+  return { title: titles[lang], desc: descs[lang] };
+}
 
 export async function onRequest(context) {
   const accept = context.request.headers.get('Accept') || '';
@@ -146,11 +202,29 @@ export async function onRequest(context) {
     newHeaders.append('Link', '<https://agreesy.com/.well-known/oauth-protected-resource>; rel="oauth-protected-resource"');
     newHeaders.append('Link', '<https://agreesy.com/.well-known/oauth-authorization-server>; rel="oauth-authorization-server"');
 
-    return new Response(response.body, {
+    const outRes = new Response(response.body, {
       status: response.status,
       statusText: response.statusText,
       headers: newHeaders
     });
+
+    // 5. Dynamic WhatsApp / Telegram / iMessage OpenGraph Preview for shared links (?d=...&from=...&lang=...)
+    const deckParam = (url.searchParams.get('d') || url.searchParams.get('deck') || '').toLowerCase();
+    if (deckParam && typeof HTMLRewriter !== 'undefined') {
+      const og = buildDynamicOg(deckParam, url.searchParams.get('from'), url.searchParams.get('lang'));
+      if (og) {
+        return new HTMLRewriter()
+          .on('title', { element(el) { el.setInnerContent(og.title); } })
+          .on('meta[property="og:title"]', { element(el) { el.setAttribute('content', og.title); } })
+          .on('meta[name="twitter:title"]', { element(el) { el.setAttribute('content', og.title); } })
+          .on('meta[property="og:description"]', { element(el) { el.setAttribute('content', og.desc); } })
+          .on('meta[name="twitter:description"]', { element(el) { el.setAttribute('content', og.desc); } })
+          .on('meta[name="description"]', { element(el) { el.setAttribute('content', og.desc); } })
+          .transform(outRes);
+      }
+    }
+
+    return outRes;
   }
 
   return response;

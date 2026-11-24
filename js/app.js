@@ -1579,14 +1579,14 @@ function finishSwipingRound() {
                 tc: targetPlayerCount,
                 voters: allVoters.map(v => ({ n: v.name, l: v.likes }))
             };
-            shareUrl = `${baseUrl}#c=${encodeBase64Utf8(JSON.stringify(payload))}&from=${encodeURIComponent(myName)}`;
+            shareUrl = `${baseUrl}?d=custom&from=${encodeURIComponent(myName)}&lang=${currentLang}#c=${encodeBase64Utf8(JSON.stringify(payload))}&from=${encodeURIComponent(myName)}`;
         } else {
             const likesPipe = allVoters.map(v => v.likes.join(',')).join('|');
             const namesPipe = allVoters.map(v => encodeURIComponent(v.name)).join('|');
             const customCard999 = activeRoundCards.find(c => c.id === 999);
             const ideaEnc = customCard999 ? encodeURIComponent(customCard999.title.de || '') : '';
             const encodedPayload = btoa(`${currentDeckId}:${likesPipe}:${roundIds.join(',')}:${ideaEnc}:${targetPlayerCount}:${namesPipe}`);
-            shareUrl = `${baseUrl}#m=${encodedPayload}&from=${encodeURIComponent(myName)}`;
+            shareUrl = `${baseUrl}?d=${encodeURIComponent(currentDeckId)}&from=${encodeURIComponent(myName)}&lang=${currentLang}#m=${encodedPayload}&from=${encodeURIComponent(myName)}`;
         }
 
         document.getElementById('share-url-input').value = shareUrl;
