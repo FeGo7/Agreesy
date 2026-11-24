@@ -486,6 +486,24 @@
             </div>
         </section>
 
+        <!-- Saved Debate Time & Decision History (100% Local) -->
+        <details id="decision-stats-bar" class="w-full rounded-[18px] mb-4 row-card hidden">
+            <summary class="px-3.5 py-2.5 flex items-center justify-between gap-2 cursor-pointer list-none select-none">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-sm shrink-0">⏱️</span>
+                    <span id="decision-stats-summary" class="text-[12px] font-bold text-primary-role truncate">0 Entscheidungen · 0 Min. gespart</span>
+                </div>
+                <span class="text-[11px] font-semibold text-secondary-role shrink-0" id="t-history-toggle">Verlauf ▾</span>
+            </summary>
+            <div class="px-3.5 pb-3 pt-1 border-t border-[var(--border)]">
+                <div id="decision-history-list" class="space-y-1.5 max-h-44 overflow-y-auto mb-2.5"></div>
+                <div class="flex items-center justify-between text-[11px] text-muted-role">
+                    <span id="t-history-local-note">100% lokal auf deinem Gerät</span>
+                    <button type="button" onclick="clearDecisionHistory()" class="hover:text-primary-role underline underline-offset-2 transition-colors" id="t-history-clear-btn">Verlauf löschen</button>
+                </div>
+            </div>
+        </details>
+
         <!-- Section Header ("Direkt starten") -->
         <div class="w-full flex items-center justify-between px-0.5 mb-3">
             <h2 class="text-[17px] font-extrabold tracking-[-0.025em] text-primary-role" id="t-section-quickstart">Direkt starten</h2>
@@ -712,6 +730,14 @@
                 <span class="w-2 h-2 rounded-full bg-[var(--ring-green)]"></span>
             </div>
 
+            <!-- Surprise-Me Roulette Quick Bar -->
+            <div id="game-roulette-bar" class="w-full flex items-center justify-end">
+                <button type="button" onclick="openRouletteModal()" class="px-3 py-1.5 rounded-full surface text-[11.5px] font-bold text-secondary-role hover:text-primary-role inline-flex items-center gap-1.5 border border-[var(--border)] transition-colors">
+                    <span>🎰</span>
+                    <span id="t-roulette-open-btn">Überrasch mich! (Zufallsrad)</span>
+                </button>
+            </div>
+
             <!-- Hidden legacy convergence hooks so JS stays 100% error-free -->
             <div class="hidden">
                 <div id="sig-dot-left"></div>
@@ -785,6 +811,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Joker Bar: 1x Veto & 1x Super-Like per round -->
+        <div id="joker-bar" class="w-full grid grid-cols-2 gap-2.5 pb-2">
+            <button type="button" onclick="handleVeto()" id="btn-joker-veto" class="h-[38px] rounded-full surface-raised border border-rose-500/25 hover:border-rose-500/60 flex items-center justify-center gap-1.5 text-[12px] font-bold text-rose-500 dark:text-rose-400 transition-all">
+                <span>🚫</span>
+                <span id="t-joker-veto">Veto (1×)</span>
+            </button>
+            <button type="button" onclick="handleSuperLike()" id="btn-joker-super" class="h-[38px] rounded-full surface-raised border border-amber-500/30 hover:border-amber-500/70 flex items-center justify-center gap-1.5 text-[12px] font-bold text-amber-600 dark:text-amber-400 transition-all">
+                <span>🌟</span>
+                <span id="t-joker-super">Super-Like (1×)</span>
+            </button>
         </div>
 
         <!-- Cal AI Signature Bottom Button Pair: Outline Pill Left, Solid Monochrome Pill Right -->
@@ -987,6 +1025,11 @@
                 * Partner-Link: Beim Klick wechselst du zur jeweils genannten Webseite (z. B. amazon.de, lieferando.de, booking.com). Für dich entstehen keine Mehrkosten.
             </p>
 
+            <button type="button" onclick="shareMatchCardImage('match')" id="btn-share-match-card" class="w-full h-12 rounded-full surface-raised border border-[#E05A3A]/35 hover:border-[#E05A3A] text-primary-role font-bold text-[13.5px] flex items-center justify-center gap-2 transition-colors">
+                <span>📸</span>
+                <span id="t-share-card-btn">Match-Karte als Bild teilen</span>
+            </button>
+
             <button onclick="sendWinnerToPartner()" class="w-full h-12 rounded-full btn-secondary font-bold text-[13.5px] flex items-center justify-center gap-2">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
                 <span id="t-notify-partner">Ergebnis per WhatsApp teilen</span>
@@ -1067,6 +1110,10 @@
         </div>
 
         <div class="w-full space-y-2 pt-4">
+            <button type="button" onclick="shareMatchCardImage('chores')" class="w-full h-11 rounded-[10px] surface-raised border border-[#E05A3A]/35 hover:border-[#E05A3A] text-primary-role font-bold text-[13.5px] flex items-center justify-center gap-2 transition-colors">
+                <span>📸</span>
+                <span id="t-chores-share-card">Urteil als Bild teilen</span>
+            </button>
             <button onclick="shareChoresPlanViaWhatsApp()" class="w-full h-11 rounded-[10px] btn-primary font-medium text-[14px] flex items-center justify-center gap-2">
                 <span id="t-chores-share-wa">Aufteilung per WhatsApp teilen</span>
             </button>
@@ -1082,6 +1129,41 @@
             </button>
         </div>
     </main>
+
+    <!-- MODAL: SURPRISE-ME ROULETTE WITH EXCLUSION FILTER -->
+    <div id="roulette-modal" class="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3 sm:p-4">
+        <div class="w-full max-w-md rounded-[26px] surface p-5 shadow-2xl border border-[var(--border-strong)] max-h-[88vh] flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-1">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🎰</span>
+                    <h3 class="text-[18px] font-extrabold tracking-[-0.02em] text-primary-role" id="t-roulette-title">Überrasch mich!</h3>
+                </div>
+                <button type="button" onclick="closeRouletteModal()" class="w-8 h-8 rounded-full surface-raised flex items-center justify-center text-secondary-role hover:text-primary-role transition-colors" aria-label="Schließen">✕</button>
+            </div>
+            <p class="text-[12.5px] text-secondary-role mb-3.5" id="t-roulette-sub">
+                Streich raus, worauf du heute keinen Bock hast – den Rest entscheidet der Zufall!
+            </p>
+
+            <!-- Live Slot Spinner Display -->
+            <div id="roulette-slot-display" class="w-full rounded-[18px] surface-raised border border-[#E05A3A]/30 p-4 mb-3.5 text-center transition-all">
+                <div id="roulette-slot-emoji" class="text-4xl mb-1">🎲</div>
+                <div id="roulette-slot-text" class="text-[15px] font-extrabold text-primary-role truncate">Bereit zum Drehen</div>
+            </div>
+
+            <!-- Interactive Exclusion Chips -->
+            <div class="flex items-center justify-between text-[11px] font-bold text-secondary-role mb-2 px-0.5">
+                <span id="t-roulette-filter-label">Tippe zum Rausstreichen:</span>
+                <span id="roulette-active-count" class="tabular-nums text-primary-role">8 / 8</span>
+            </div>
+            <div id="roulette-items-list" class="flex flex-wrap gap-1.5 overflow-y-auto max-h-48 pb-1 mb-4"></div>
+
+            <!-- Spin Action Button -->
+            <button type="button" onclick="spinRoulette()" id="btn-roulette-spin" class="w-full h-12 rounded-full btn-primary font-bold text-[14.5px] flex items-center justify-center gap-2 shadow-lg">
+                <span>🎰</span>
+                <span id="t-roulette-spin-btn">Jetzt drehen!</span>
+            </button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="w-full flex items-center justify-between pt-4 pb-1 text-[12px] text-muted-role border-t border-[var(--border)] mt-4 z-10">
@@ -1266,17 +1348,17 @@
     </div>
 
     <!-- Modular Scripts mit Cache-Bust v38 -->
-    <script src="js/theme.js?v=41"></script>
-    <script src="js/i18n.js?v=41"></script>
-    <script src="js/fluent_map.js?v=41"></script>
-    <script src="js/decks.js?v=41"></script>
-    <script src="js/media_picks.js?v=41"></script>
-    <script src="js/logos.js?v=41"></script>
-    <script src="js/app.js?v=41"></script>
+    <script src="js/theme.js?v=42"></script>
+    <script src="js/i18n.js?v=42"></script>
+    <script src="js/fluent_map.js?v=42"></script>
+    <script src="js/decks.js?v=42"></script>
+    <script src="js/media_picks.js?v=42"></script>
+    <script src="js/logos.js?v=42"></script>
+    <script src="js/app.js?v=42"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=30')
+                navigator.serviceWorker.register('./sw.js?v=31')
                     .then(reg => {
                         reg.update();
                     })

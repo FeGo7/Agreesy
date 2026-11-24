@@ -491,6 +491,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // 6. PWA Installation Handler (OS-spezifisch)
     initPwaInstall();
+
+    // 7. Lokale Entscheidungs-Statistik & Verlauf rendern
+    if (typeof renderDecisionStats === 'function') {
+        renderDecisionStats();
+    }
 });
 
 function detectInitialLanguage() {
@@ -803,6 +808,18 @@ function setLang(lang) {
     setText('t-seasonal-xmasdinner', t.seasonalXmasdinner);
     setText('t-seasonal-xmasmovies', t.seasonalXmasmovies);
     setText('t-seasonal-nye', t.seasonalNye);
+    setText('t-roulette-open-btn', t.rouletteOpenBtn);
+    setText('t-roulette-title', t.rouletteTitle);
+    setText('t-roulette-sub', t.rouletteSub);
+    setText('t-roulette-filter-label', t.rouletteFilterLabel);
+    setText('t-roulette-spin-btn', t.rouletteSpinBtn);
+    setText('t-share-card-btn', t.shareCardBtn);
+    setText('t-chores-share-card', t.choresShareCardBtn);
+    setText('t-history-toggle', t.historyToggle);
+    setText('t-history-local-note', t.historyLocalNote);
+    setText('t-history-clear-btn', t.historyClearBtn);
+    if (typeof updateJokerUI === 'function') updateJokerUI();
+    if (typeof renderDecisionStats === 'function') renderDecisionStats();
 
     setText('t-meta-food-1', t.metaFood1);
     setText('t-meta-food-2', t.metaFood2);
@@ -1281,6 +1298,9 @@ function startGame(deckId) {
     }
     currentDeckId = deckId;
     const deck = DECKS[currentDeckId];
+    mySuperLikeId = null;
+    myVetoId = null;
+    if (typeof updateJokerUI === 'function') updateJokerUI();
     if (!deck) return;
 
     activeRoundCards = buildActiveRoundCards(deck);
@@ -1477,7 +1497,7 @@ function handleSwipe(isLike) {
         // SUDDEN DEATH CHECK (Im klassischen 2-Personen-Match-Modus!)
         if (deck.mode !== 'chores' && targetPlayerCount === 2 && partnerLikes !== null && partnerLikes.includes(card.id)) {
             clearInterval(timerInterval);
-            lastMatchMeta = { mode: 'duo' };
+            lastMatchMeta = { mode: 'duo', isSuperMatch: (mySuperLikeId === card.id) };
             setTimeout(() => {
                 triggerMatchScreen(card);
             }, 220);
@@ -1614,11 +1634,16 @@ function finishSwipingRound() {
     // FALL C: Letzter Spieler in einer Gruppe (3–6 Personen) ist fertig -> Gruppen-Stimmen auswerten!
     if (targetPlayerCount >= 3) {
         let bestCard = null;
+        let bestScore = -999;
         let maxVotes = 0;
 
         activeRoundCards.forEach(card => {
             const votes = allVoters.reduce((acc, voter) => acc + (voter.likes.includes(card.id) ? 1 : 0), 0);
-            if (votes > maxVotes) {
+            const superBonus = (mySuperLikeId === card.id) ? 2 : 0;
+            const vetoPenalty = (myVetoId === card.id) ? -10 : 0;
+            const score = votes + superBonus + vetoPenalty;
+            if (votes >= 2 && score > bestScore) {
+                bestScore = score;
                 maxVotes = votes;
                 bestCard = card;
             }
@@ -1629,7 +1654,8 @@ function finishSwipingRound() {
                 mode: 'group',
                 votes: maxVotes,
                 total: allVoters.length,
-                names: allVoters.map(v => v.name)
+                names: allVoters.map(v => v.name),
+                isSuperMatch: (mySuperLikeId === bestCard.id)
             };
             triggerMatchScreen(bestCard);
             return;
@@ -2261,11 +2287,30 @@ function revealMatchScreen(card) {
     }
 
     if (typeof confetti === 'function') {
+        const isSuper = !!(lastMatchMeta && lastMatchMeta.isSuperMatch);
         confetti({
-            particleCount: 70,
-            spread: 60,
+            particleCount: isSuper ? 120 : 70,
+            spread: isSuper ? 85 : 60,
+            colors: isSuper ? ['#F59E0B', '#FBBF24', '#F07153', '#FFFFFF'] : undefined,
             origin: { y: 0.6 }
         });
+    }
+
+    // Badge override for Super-Match or Roulette
+    const badgeEl = document.getElementById('t-match-badge');
+    const tMatch = I18N[currentLang] || I18N.de;
+    if (badgeEl) {
+        if (lastMatchMeta && lastMatchMeta.isSuperMatch) {
+            badgeEl.innerText = tMatch.superMatchBadge || '🌟 SUPER-MATCH!';
+        } else if (lastMatchMeta && lastMatchMeta.mode === 'roulette') {
+            badgeEl.innerText = tMatch.rouletteBadge || '🎰 Zufalls-Urteil';
+        }
+    }
+
+    // Record into local Decision History & Saved Debate Time
+    if (typeof recordDecisionHistory === 'function' && card) {
+        const cTitle = (card.title && (card.title[currentLang] || card.title.de)) || 'Match';
+        recordDecisionHistory(card.emoji || '✨', cTitle, currentDeckId, (lastMatchMeta && lastMatchMeta.mode) || 'match');
     }
 
     const winnerCardEl = document.getElementById('winner-card');
@@ -2382,6 +2427,10 @@ function pickRandomCardFallback() {
 function triggerChoresResultScreen() {
     const deck = DECKS[currentDeckId];
     if (!deck) return;
+    if (typeof recordDecisionHistory === 'function') {
+        const dTitle = (deck.title && (deck.title[currentLang] || deck.title.de)) || 'Haushalt';
+        recordDecisionHistory('⚖️', dTitle, currentDeckId, 'chores');
+    }
 
     const evaluatedCards = activeRoundCards.length > 0 ? activeRoundCards : deck.cards;
     const voluntary = [];
@@ -3111,4 +3160,491 @@ function switchPwaTab(tab) {
             }
         }
     });
+}
+
+/**************************************************************
+ * 12. SUPER-LIKE & VETO JOKERS (1x per round)
+ **************************************************************/
+let mySuperLikeId = null;
+let myVetoId = null;
+
+function updateJokerUI() {
+    const bar = document.getElementById('joker-bar');
+    const vetoBtn = document.getElementById('btn-joker-veto');
+    const superBtn = document.getElementById('btn-joker-super');
+    const vetoLbl = document.getElementById('t-joker-veto');
+    const superLbl = document.getElementById('t-joker-super');
+    const t = I18N[currentLang] || I18N.de;
+    const deck = DECKS[currentDeckId];
+
+    if (bar) {
+        if (deck && deck.mode === 'chores') {
+            bar.classList.add('hidden');
+        } else {
+            bar.classList.remove('hidden');
+        }
+    }
+    if (vetoBtn && vetoLbl) {
+        const used = myVetoId !== null;
+        vetoBtn.disabled = used;
+        vetoBtn.classList.toggle('opacity-45', used);
+        vetoBtn.classList.toggle('cursor-not-allowed', used);
+        vetoLbl.innerText = used ? (t.jokerVetoUsed || 'Veto genutzt ✓') : (t.jokerVeto || 'Veto (1×)');
+    }
+    if (superBtn && superLbl) {
+        const used = mySuperLikeId !== null;
+        superBtn.disabled = used;
+        superBtn.classList.toggle('opacity-45', used);
+        superBtn.classList.toggle('cursor-not-allowed', used);
+        superLbl.innerText = used ? (t.jokerSuperUsed || 'Super-Like ✓') : (t.jokerSuper || 'Super-Like (1×)');
+    }
+}
+
+function handleVeto() {
+    if (myVetoId !== null) return;
+    const card = activeRoundCards[currentCardIndex];
+    if (!card) return;
+    const t = I18N[currentLang] || I18N.de;
+    myVetoId = card.id;
+    updateJokerUI();
+    if ('vibrate' in navigator) {
+        try { navigator.vibrate([35, 30, 35]); } catch (e) {}
+    }
+    if (typeof showToast === 'function') {
+        showToast(t.jokerVetoToast || '🚫 Veto gesetzt! Diese Option ist raus.');
+    }
+    handleSwipe(false);
+}
+
+function handleSuperLike() {
+    if (mySuperLikeId !== null) return;
+    const card = activeRoundCards[currentCardIndex];
+    if (!card) return;
+    const t = I18N[currentLang] || I18N.de;
+    mySuperLikeId = card.id;
+    updateJokerUI();
+    if ('vibrate' in navigator) {
+        try { navigator.vibrate([25, 35, 65]); } catch (e) {}
+    }
+    if (typeof showToast === 'function') {
+        showToast(t.jokerSuperToast || '🌟 Super-Like gesetzt! Zählt doppelt.');
+    }
+    handleSwipe(true);
+}
+
+/**************************************************************
+ * 13. SURPRISE-ME ROULETTE WITH 1-TAP EXCLUSION FILTER
+ **************************************************************/
+let rouletteExcludedIds = new Set();
+let rouletteSpinning = false;
+
+function openRouletteModal() {
+    const deck = DECKS[currentDeckId];
+    if (!deck) return;
+    const modal = document.getElementById('roulette-modal');
+    if (!modal) return;
+    rouletteExcludedIds = new Set();
+    rouletteSpinning = false;
+
+    const t = I18N[currentLang] || I18N.de;
+    const slotEmoji = document.getElementById('roulette-slot-emoji');
+    const slotText = document.getElementById('roulette-slot-text');
+    const spinBtn = document.getElementById('btn-roulette-spin');
+    if (slotEmoji) slotEmoji.innerText = deck.icon || '🎲';
+    if (slotText) slotText.innerText = t.rouletteReady || 'Bereit zum Drehen';
+    if (spinBtn) spinBtn.disabled = false;
+
+    renderRouletteChips();
+    modal.classList.remove('hidden');
+}
+
+function closeRouletteModal() {
+    if (rouletteSpinning) return;
+    const modal = document.getElementById('roulette-modal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function getRouletteSourceCards() {
+    const deck = DECKS[currentDeckId];
+    if (!deck) return [];
+    return (activeRoundCards && activeRoundCards.length > 0) ? activeRoundCards : (deck.cards || []);
+}
+
+function renderRouletteChips() {
+    const listEl = document.getElementById('roulette-items-list');
+    const countEl = document.getElementById('roulette-active-count');
+    if (!listEl) return;
+    const cards = getRouletteSourceCards();
+    const activeCount = cards.filter(c => !rouletteExcludedIds.has(c.id)).length;
+    if (countEl) countEl.innerText = `${activeCount} / ${cards.length}`;
+
+    listEl.innerHTML = '';
+    cards.forEach(card => {
+        const excluded = rouletteExcludedIds.has(card.id);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => toggleRouletteItem(card.id);
+        btn.className = excluded
+            ? 'px-2.5 py-1.5 rounded-xl surface-raised border border-[var(--border)] text-[11.5px] font-medium text-muted-role line-through opacity-45 transition-all'
+            : 'px-2.5 py-1.5 rounded-xl surface-raised border border-[#E05A3A]/35 text-[11.5px] font-semibold text-primary-role hover:border-[#E05A3A] transition-all';
+        const label = (card.title && (card.title[currentLang] || card.title.de)) || 'Option';
+        btn.innerText = `${card.emoji || '✨'} ${label}`;
+        listEl.appendChild(btn);
+    });
+}
+
+function toggleRouletteItem(cardId) {
+    if (rouletteSpinning) return;
+    const cards = getRouletteSourceCards();
+    const t = I18N[currentLang] || I18N.de;
+    if (rouletteExcludedIds.has(cardId)) {
+        rouletteExcludedIds.delete(cardId);
+    } else {
+        const remaining = cards.length - rouletteExcludedIds.size;
+        if (remaining <= 1) {
+            if (typeof showToast === 'function') {
+                showToast(t.rouletteMinOne || 'Mindestens 1 Option muss im Lostopf bleiben!');
+            }
+            return;
+        }
+        rouletteExcludedIds.add(cardId);
+    }
+    renderRouletteChips();
+}
+
+function playRouletteTick(step, total) {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(380 + (step / total) * 320, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.045);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+    } catch (e) {}
+}
+
+function spinRoulette() {
+    if (rouletteSpinning) return;
+    const cards = getRouletteSourceCards().filter(c => !rouletteExcludedIds.has(c.id));
+    if (cards.length === 0) return;
+
+    rouletteSpinning = true;
+    const spinBtn = document.getElementById('btn-roulette-spin');
+    const slotBox = document.getElementById('roulette-slot-display');
+    const slotEmoji = document.getElementById('roulette-slot-emoji');
+    const slotText = document.getElementById('roulette-slot-text');
+    if (spinBtn) spinBtn.disabled = true;
+
+    const winner = cards[Math.floor(Math.random() * cards.length)];
+    const totalTicks = cards.length === 1 ? 4 : 18;
+    let tick = 0;
+
+    function runStep() {
+        const isLast = tick >= totalTicks;
+        const shown = isLast ? winner : cards[tick % cards.length];
+        if (slotEmoji) slotEmoji.innerText = shown.emoji || '✨';
+        if (slotText) slotText.innerText = (shown.title && (shown.title[currentLang] || shown.title.de)) || 'Match';
+        if (slotBox) {
+            slotBox.style.transform = isLast ? 'scale(1.04)' : 'scale(0.985)';
+        }
+        playRouletteTick(tick, totalTicks);
+        if ('vibrate' in navigator) {
+            try { navigator.vibrate(isLast ? [35, 45, 90] : 10); } catch (e) {}
+        }
+
+        if (isLast) {
+            setTimeout(() => {
+                rouletteSpinning = false;
+                if (slotBox) slotBox.style.transform = '';
+                closeRouletteModal();
+                clearInterval(timerInterval);
+                lastMatchMeta = { mode: 'roulette', poolSize: cards.length };
+                triggerMatchScreen(winner);
+            }, 420);
+            return;
+        }
+
+        const delay = 45 + Math.pow(tick / totalTicks, 2.2) * 230;
+        tick++;
+        setTimeout(runStep, delay);
+    }
+    runStep();
+}
+
+/**************************************************************
+ * 14. SAVED DEBATE TIME & LOCAL DECISION HISTORY (100% DSGVO)
+ **************************************************************/
+const DECISION_HISTORY_KEY = 'agreesy_history_v1';
+
+function getDecisionHistory() {
+    try {
+        const raw = localStorage.getItem(DECISION_HISTORY_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function recordDecisionHistory(emoji, title, deckId, mode) {
+    try {
+        const list = getDecisionHistory();
+        const now = Date.now();
+        // Prevent duplicate entries within 3 seconds
+        if (list.length > 0 && list[0].title === title && (now - list[0].ts) < 3000) {
+            return;
+        }
+        list.unshift({
+            emoji: emoji || '✨',
+            title: String(title || 'Match').slice(0, 60),
+            deckId: deckId || 'custom',
+            mode: mode || 'match',
+            savedMin: 20,
+            ts: now
+        });
+        localStorage.setItem(DECISION_HISTORY_KEY, JSON.stringify(list.slice(0, 30)));
+        renderDecisionStats();
+    } catch (e) {}
+}
+
+function formatSavedMinutes(totalMin) {
+    if (totalMin < 60) {
+        return `${totalMin} Min.`;
+    }
+    const hrs = Math.floor(totalMin / 60);
+    const rem = totalMin % 60;
+    const hUnit = (currentLang === 'de') ? 'Std.' : 'h';
+    return rem > 0 ? `${hrs} ${hUnit} ${rem} Min.` : `${hrs} ${hUnit}`;
+}
+
+function renderDecisionStats() {
+    const bar = document.getElementById('decision-stats-bar');
+    const summaryEl = document.getElementById('decision-stats-summary');
+    const listEl = document.getElementById('decision-history-list');
+    if (!bar || !summaryEl || !listEl) return;
+
+    const history = getDecisionHistory();
+    if (history.length === 0) {
+        bar.classList.add('hidden');
+        return;
+    }
+
+    bar.classList.remove('hidden');
+    const t = I18N[currentLang] || I18N.de;
+    const totalMin = history.reduce((sum, item) => sum + (item.savedMin || 20), 0);
+    const tpl = t.historySummaryTpl || '{n} Entscheidungen · {t} Diskussion gespart';
+    summaryEl.innerText = tpl
+        .replace('{n}', history.length)
+        .replace('{t}', formatSavedMinutes(totalMin));
+
+    listEl.innerHTML = '';
+    history.slice(0, 8).forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-2 text-[11.5px] py-1 border-b border-[var(--border)] last:border-b-0';
+        const d = new Date(item.ts);
+        const dateStr = `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+        row.innerHTML = `<span class="text-primary-role font-semibold truncate">${item.emoji} ${item.title}</span><span class="text-muted-role font-mono text-[10.5px] shrink-0">${dateStr}</span>`;
+        listEl.appendChild(row);
+    });
+}
+
+function clearDecisionHistory() {
+    try {
+        localStorage.removeItem(DECISION_HISTORY_KEY);
+    } catch (e) {}
+    renderDecisionStats();
+}
+
+/**************************************************************
+ * 15. VIRAL MATCH SHARE CARD (1080x1080 HTML5 CANVAS PNG)
+ **************************************************************/
+function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+    const words = String(text || '').split(/\s+/);
+    let line = '';
+    let lineCount = 0;
+    for (let i = 0; i < words.length; i++) {
+        const testLine = line ? `${line} ${words[i]}` : words[i];
+        if (ctx.measureText(testLine).width > maxWidth && line) {
+            lineCount++;
+            if (lineCount >= maxLines) {
+                ctx.fillText(line + '…', x, y);
+                return y + lineHeight;
+            }
+            ctx.fillText(line, x, y);
+            line = words[i];
+            y += lineHeight;
+        } else {
+            line = testLine;
+        }
+    }
+    if (line) {
+        ctx.fillText(line, x, y);
+        y += lineHeight;
+    }
+    return y;
+}
+
+async function shareMatchCardImage(kind) {
+    const t = I18N[currentLang] || I18N.de;
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // 1. Rich Dark Background + Radial Coral/Blue Glow
+    const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
+    bgGrad.addColorStop(0, '#1C2029');
+    bgGrad.addColorStop(1, '#2B3140');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    const glow1 = ctx.createRadialGradient(220, 160, 20, 220, 160, 480);
+    glow1.addColorStop(0, 'rgba(240, 113, 83, 0.24)');
+    glow1.addColorStop(1, 'rgba(240, 113, 83, 0)');
+    ctx.fillStyle = glow1;
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    const glow2 = ctx.createRadialGradient(860, 880, 20, 860, 880, 480);
+    glow2.addColorStop(0, 'rgba(56, 152, 255, 0.20)');
+    glow2.addColorStop(1, 'rgba(56, 152, 255, 0)');
+    ctx.fillStyle = glow2;
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    // 2. Inner Card Frame
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.045)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(72, 72, 936, 936, 48);
+    ctx.fill();
+    ctx.stroke();
+
+    // 3. Agreesy Double-Circle Logo + Wordmark Top Left
+    ctx.strokeStyle = '#E8ECF2';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(146, 154, 18, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = '#F07153';
+    ctx.beginPath();
+    ctx.arc(166, 154, 18, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '700 40px "Plus Jakarta Sans", -apple-system, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('agreesy', 202, 168);
+    ctx.fillStyle = '#F07153';
+    ctx.fillText('.', 202 + ctx.measureText('agreesy').width, 168);
+
+    // 4. Determine Content (Match vs. Chores)
+    let badgeText = t.shareCardSubtitle || 'GEEINIGT OHNE DISKUSSION';
+    let mainEmoji = '✨';
+    let mainTitle = 'Match';
+    let subText = '';
+
+    if (kind === 'chores') {
+        badgeText = (t.choresBadge || 'AUFTEILUNG').toUpperCase();
+        mainEmoji = '⚖️';
+        mainTitle = (t.choresTitle || 'Eure Aufgabenverteilung');
+        const volEl = document.getElementById('chores-voluntary-list');
+        const items = volEl ? Array.from(volEl.querySelectorAll('div')).map(d => d.innerText.replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, 4) : [];
+        subText = items.length ? items.join(' · ') : (t.choresSub || 'Fair aufgeteilt per Agreesy');
+    } else if (matchedCard) {
+        if (lastMatchMeta && lastMatchMeta.isSuperMatch) {
+            badgeText = (t.superMatchBadge || '🌟 SUPER-MATCH!').toUpperCase();
+        } else if (lastMatchMeta && lastMatchMeta.mode === 'roulette') {
+            badgeText = (t.rouletteBadge || '🎰 ZUFALLS-URTEIL').toUpperCase();
+        } else {
+            badgeText = (t.matchBadge || 'ÜBEREINSTIMMUNG').toUpperCase();
+        }
+        mainEmoji = matchedCard.emoji || '✨';
+        mainTitle = (matchedCard.title && (matchedCard.title[currentLang] || matchedCard.title.de)) || 'Match';
+        subText = (matchedCard.desc && (matchedCard.desc[currentLang] || matchedCard.desc.de)) || '';
+    }
+
+    // Badge Pill Top Right
+    ctx.font = '700 26px "Plus Jakarta Sans", -apple-system, sans-serif';
+    const badgeW = Math.min(480, ctx.measureText(badgeText).width + 52);
+    ctx.fillStyle = 'rgba(240, 113, 83, 0.20)';
+    ctx.strokeStyle = 'rgba(240, 113, 83, 0.55)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(948 - badgeW, 126, badgeW, 54, 27);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#F48265';
+    ctx.textAlign = 'center';
+    ctx.fillText(badgeText, 948 - badgeW / 2, 162);
+
+    // 5. Center Emoji + Winner Title + Description
+    ctx.textAlign = 'center';
+    ctx.font = '156px "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+    ctx.fillText(mainEmoji, 540, 415);
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '800 62px "Plus Jakarta Sans", -apple-system, sans-serif';
+    const nextY = wrapCanvasText(ctx, mainTitle, 540, 535, 820, 76, 3);
+
+    ctx.fillStyle = '#A9B1C1';
+    ctx.font = '500 32px "Plus Jakarta Sans", -apple-system, sans-serif';
+    wrapCanvasText(ctx, subText, 540, nextY + 18, 800, 44, 3);
+
+    // 6. Stats & Parties Strip
+    const history = getDecisionHistory();
+    const savedMin = Math.max(20, history.reduce((s, x) => s + (x.savedMin || 20), 0));
+    const partiesEl = document.getElementById('winner-parties');
+    const partiesText = (kind !== 'chores' && partiesEl && partiesEl.innerText) ? partiesEl.innerText : '';
+    const statLine = partiesText
+        ? `${partiesText}  ·  ⏱️ ${formatSavedMinutes(savedMin)}`
+        : `⏱️ ${formatSavedMinutes(savedMin)} · ${t.shareCardSubtitle || 'Geeinigt ohne Diskussion'}`;
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+    ctx.beginPath();
+    ctx.roundRect(140, 808, 800, 68, 34);
+    ctx.fill();
+    ctx.fillStyle = '#E8ECF2';
+    ctx.font = '600 26px "Plus Jakarta Sans", -apple-system, sans-serif';
+    ctx.fillText(statLine.slice(0, 56), 540, 851);
+
+    // 7. Bottom Brand Bar
+    ctx.fillStyle = '#F48265';
+    ctx.font = '700 32px "JetBrains Mono", monospace';
+    ctx.fillText('agreesy.com', 540, 946);
+
+    // 8. Export & Native Share (Fallback: PNG Download)
+    canvas.toBlob(async (blob) => {
+        if (!blob) return;
+        const file = new File([blob], 'agreesy-match.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: `Agreesy: ${mainTitle}`,
+                    text: `${mainEmoji} ${mainTitle} — agreesy.com`
+                });
+                return;
+            } catch (err) {
+                if (err && err.name === 'AbortError') return;
+            }
+        }
+        // Desktop / Fallback Download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'agreesy-match.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        if (typeof showToast === 'function') {
+            showToast(t.shareCardSavedToast || '📸 Match-Karte gespeichert – ab in die Gruppe!');
+        }
+    }, 'image/png');
 }
