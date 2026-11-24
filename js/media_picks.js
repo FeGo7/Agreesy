@@ -772,5 +772,153 @@ const MEDIA_STAGE2_PICKS = {
             { id: 'gg7_5', title: 'Cozy Baumhaus, Tiny House oder Berg-Chalet', year: 'ab 190 € · Besonders', emoji: '🌲', vibe: 'Mitten in der Natur mit Kamin oder Hot Tub unter den Sternen', targetType: 'booking' },
             { id: 'gg7_6', title: 'Hotelgutschein-Box (Freie Zielwahl für 2 Nächte)', year: 'ab 150 € · Flexibel', emoji: '🎁', vibe: 'Die Beschenkten wählen Datum und Wunschhotel selbst aus', targetType: 'amazon' }
         ]
+    },
+    nye: {
+        // 0: Raclette- oder Fondue-Abend
+        0: [
+            { id: 'ny0_1', title: 'WMF Lono Raclette für 8 Personen (Antihaft)', year: 'Bestseller #1', emoji: '🧀', vibe: 'Große Grillplatte, 8 Pfännchen & Parkdeck für heiße Pfännchen', targetType: 'amazon' },
+            { id: 'ny0_2', title: 'Severin Raclette-Grill mit Naturstein', year: 'Preis-Tipp', emoji: '🔥', vibe: 'Knuspriges Gemüse & Fleisch auf dem heißen Stein direkt am Tisch', targetType: 'amazon' },
+            { id: 'ny0_3', title: 'Elektrisches Käse- & Fleisch-Fondue Set (8 Gabeln)', year: 'Klassiker', emoji: '🫕', vibe: 'Konstante Temperatur ohne Brennpaste – perfekt für Käse & Brühe', targetType: 'amazon' },
+            { id: 'ny0_4', title: 'Raclette & Fondue Kombi-Gerät (2-in-1)', year: 'Alleskönner', emoji: '✨', vibe: 'Unten Pfännchen brutzeln, oben in der Mitte Fondue tunken', targetType: 'amazon' },
+            { id: 'ny0_5', title: 'Schokoladen-Fondue-Set für Mitternacht', year: 'Dessert-Hit', emoji: '🍓', vibe: 'Erdbeeren, Bananen & Marshmallows als süßes Finale vorm Feuerwerk', targetType: 'amazon' },
+            { id: 'ny0_6', title: 'Gourmet Raclette-Gewürz-Set (Ankerkraut)', year: 'Geschmacks-Kick', emoji: '🧂', vibe: 'Verwandelt jedes Pfännchen in ein echtes Highlight', targetType: 'amazon' }
+        ],
+        // 1: Spieleabend & Hitster-Marathon
+        1: [
+            { id: 'ny1_1', title: 'HITSTER – Das Musik-Partyspiel (Original / Guilty Pleasures)', year: 'Silvester-Hit #1', emoji: '🎵', vibe: 'Spotify-Songs raten & mitsingen – perfekte Stimmung bis Mitternacht', targetType: 'amazon' },
+            { id: 'ny1_2', title: 'Silvester Wachsgießen (Nachhaltige Bleigießen-Alternative)', year: 'Tradition', emoji: '🕯️', vibe: 'Orakel-Spaß für die ganze Runde mit Deutungsbuch fürs neue Jahr', targetType: 'amazon' },
+            { id: 'ny1_3', title: 'Codenames / Just One (Party-Klassiker)', year: 'Für Gruppen', emoji: '🕵️', vibe: 'In 2 Minuten erklärt und perfekt für 4 bis 10 Personen', targetType: 'amazon' },
+            { id: 'ny1_4', title: 'Top Ten oder Cards Against Humanity / Kampfsport', year: 'Lachgarantie', emoji: '😂', vibe: 'Absurde Fragen & lustige Runden mit Drinks', targetType: 'amazon' },
+            { id: 'ny1_5', title: 'SKYJO oder Wizard Kartenspiel', year: 'Zwischendurch', emoji: '🃏', vibe: 'Schnelle Runden, die alle am Tisch sofort fesseln', targetType: 'amazon' },
+            { id: 'ny1_6', title: 'Hidden Games Krimi-Akte (Silvester-Ermittlung)', year: '90 Min Spannung', emoji: '📂', vibe: 'Gemeinsam noch vor Mitternacht einen Kriminalfall knacken', targetType: 'amazon' }
+        ],
+        // 2: Cocktail- & Motto-Hausparty
+        2: [
+            { id: 'ny2_1', title: 'Barista & Cocktail-Shaker Profi-Set (Edelstahl)', year: 'Home-Bar', emoji: '🍸', vibe: 'Shaker, Jigger, Sieb & Stößel für Espresso Martini, Pornstar Martini & Sour', targetType: 'amazon' },
+            { id: 'ny2_2', title: 'Silvester Party-Deko & Photo-Booth-Props Set (Gold/Schwarz)', year: 'Party-Look', emoji: '🪩', vibe: 'Luftballons, Konfetti-Kanonen & witzige Foto-Requisiten für Erinnerungen', targetType: 'amazon' },
+            { id: 'ny2_3', title: 'JBL PartyBox / Bluetooth-Lautsprecher mit Lichtshow', year: 'Sound-Upgrade', emoji: '🔊', vibe: 'Satter Bass & Partylicht für die perfekte Silvester-Playlist', targetType: 'amazon' },
+            { id: 'ny2_4', title: 'Fujifilm Instax Mini 12 + Film-Pack (Party-Gästebuch)', year: 'Erinnerungen', emoji: '📸', vibe: 'Jeder Gast knipst ein Sofortbild vom Abend zum Mitnehmen', targetType: 'amazon' },
+            { id: 'ny2_5', title: 'XXL Eiswürfelformen (Kugeln & Würfel aus Silikon)', year: 'Bar-Detail', emoji: '🧊', vibe: 'Langsam schmelzendes Eis für Gin Tonic, Negroni & Whiskey Sour', targetType: 'amazon' },
+            { id: 'ny2_6', title: 'LED-Lichterketten & Discokugel (USB)', year: 'Stimmung', emoji: '✨', vibe: 'Verwandelt das Wohnzimmer in 2 Minuten in eine Lounge', targetType: 'amazon' }
+        ],
+        // 3: Gemütliches Silvester zu zweit
+        3: [
+            { id: 'ny3_1', title: 'Schott Zwiesel / Spiegelau Champagner- & Sektgläser', year: 'Anstoßen', emoji: '🥂', vibe: 'Stilvoll um 0:00 Uhr auf das neue Jahr anstoßen', targetType: 'amazon' },
+            { id: 'ny3_2', title: 'Italienische Antipasti- & Trüffel-Dinner-Box', year: '3-Gänge-Genuss', emoji: '🍝', vibe: 'Ohne stundenlanges Einkaufen ein edles Dinner zu zweit zaubern', targetType: 'amazon' },
+            { id: 'ny3_3', title: '7 Wonders Duel oder Sky Team (Top 2-Spieler-Spiel)', year: 'Spiele-Duell', emoji: '🎲', vibe: 'Gemeinsam zocken bis der Countdown läuft', targetType: 'amazon' },
+            { id: 'ny3_4', title: 'Paar-Gesprächskarten „Jahresrückblick & Wünsche“', year: 'Deep Talk', emoji: '💬', vibe: 'Schöne Fragen für den Rückblick auf das Jahr & Pläne für das nächste', targetType: 'amazon' },
+            { id: 'ny3_5', title: 'Mini-Heimkino-Beamer für den Silvester-Film-Marathon', year: 'Couch-Kino', emoji: '📽️', vibe: 'Dinner for One & Lieblingsfilme auf großer Wand', targetType: 'amazon' },
+            { id: 'ny3_6', title: 'Belgische Pralinen & Dessert-Box', year: 'Süßes Finale', emoji: '🍫', vibe: 'Perfekt zum Sekt auf der Couch oder dem Balkon', targetType: 'amazon' }
+        ],
+        // 4: Silvester-Städtetrip in Europa
+        4: [
+            { id: 'ny4_1', title: 'Wien (Silvesterpfad & Walzer um Mitternacht)', year: 'Österreich', emoji: '🎻', vibe: 'Die ganze Altstadt wird zur stilvollen Partymeile mit Pummerin-Glocke', targetType: 'booking' },
+            { id: 'ny4_2', title: 'Prag (Feuerwerk über der Moldau & Karlsbrücke)', year: 'Tschechien', emoji: '🏰', vibe: 'Märchenhafte Kulisse, top Restaurants & magische Altstadt', targetType: 'booking' },
+            { id: 'ny4_3', title: 'Lissabon (Mildes Wetter & Party am Praça do Comércio)', year: 'Portugal', emoji: '🚋', vibe: '16 Grad, Live-Konzerte am Fluss & Feuerwerk über dem Tejo', targetType: 'booking' },
+            { id: 'ny4_4', title: 'Edinburgh (Hogmanay – Legendäres Silvester-Festival)', year: 'Schottland', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', vibe: 'Fackelzug, Live-Bands und Feuerwerk über dem Edinburgh Castle', targetType: 'booking' },
+            { id: 'ny4_5', title: 'Amsterdam (Grachten, Lichtfestival & Bars)', year: 'Niederlande', emoji: '🚲', vibe: 'Amsterdam Light Festival auf den Kanälen und lebendige Viertel', targetType: 'booking' },
+            { id: 'ny4_6', title: 'Rom oder Mailand (Capodanno mit Dolcefarniente)', year: 'Italien', emoji: '🍕', vibe: 'Silvester-Dinner mit Pasta, Prosecco und milden Temperaturen', targetType: 'booking' }
+        ],
+        // 5: Hütten-Silvester in den Bergen
+        5: [
+            { id: 'ny5_1', title: 'Südtirol & Dolomiten (Chalet mit Panorama)', year: 'Italien', emoji: '🏔️', vibe: 'Schnee, Südtiroler Küche, Sauna & Ruhe zum Jahreswechsel', targetType: 'booking' },
+            { id: 'ny5_2', title: 'Tirol & Zillertal (Almhütte & Skigebiet)', year: 'Österreich', emoji: '⛷️', vibe: 'Tagsüber Piste oder Winterwandern, abends Kamin & Kaiserschmarrn', targetType: 'booking' },
+            { id: 'ny5_3', title: 'Allgäu & Oberstdorf (Gemütliches Ferienhaus)', year: 'Deutschland', emoji: '🌲', vibe: 'Schnell erreichbar, verschneite Täler & perfekte Hütten-Stimmung', targetType: 'booking' },
+            { id: 'ny5_4', title: 'Schwarzwald (Holzhaus mit Kamin & Hot Tub)', year: 'Deutschland', emoji: '🪵', vibe: 'Mitten im Wald, absolut ruhig und perfekt für Freundesgruppen', targetType: 'booking' },
+            { id: 'ny5_5', title: 'Bayerischer Wald (Winter-Auszeit)', year: 'Deutschland', emoji: '❄️', vibe: 'Gemütliche Chalets mit viel Platz und bezahlbaren Preisen', targetType: 'booking' },
+            { id: 'ny5_6', title: 'Salzburger Land (Schladming / Zell am See)', year: 'Österreich', emoji: '🎿', vibe: 'See, Berge, Fackelabfahrt und Silvesterfeuerwerk im Tal', targetType: 'booking' }
+        ],
+        // 6: Silvester-Gala, Dinner oder Bootstour
+        6: [
+            { id: 'ny6_1', title: 'Silvester-Dinner-Kreuzfahrt mit Feuerwerksblick', year: 'Top-Erlebnis', emoji: '🚢', vibe: 'Mehrgängiges Menü auf dem Wasser – freie Sicht auf das Feuerwerk', targetType: 'gyg' },
+            { id: 'ny6_2', title: 'Rooftop-Bar oder Skyline-Silvester-Dinner', year: 'Aussicht', emoji: '🌃', vibe: 'Über den Dächern der Stadt mit Champagner ins neue Jahr', targetType: 'gyg' },
+            { id: 'ny6_3', title: 'Silvester-Konzert, Oper oder Musical-Abend', year: 'Kultur-Highlight', emoji: '🎭', vibe: 'Festlich in den Abend starten und danach entspannt anstoßen', targetType: 'gyg' },
+            { id: 'ny6_4', title: 'Geführte Silvester-Kneipen- oder Cocktail-Tour', year: 'Gesellig', emoji: '🍸', vibe: 'Neue Leute treffen und versteckte Bars entdecken', targetType: 'gyg' },
+            { id: 'ny6_5', title: 'Varieté-Show mit 4-Gänge-Silvestermenü', year: 'Show & Genuss', emoji: '🎪', vibe: 'Akrobatik, Comedy und feines Essen unter einem Dach', targetType: 'gyg' },
+            { id: 'ny6_6', title: 'Neujahrs-Brunch oder Winter-Stadtführung am 1. Januar', year: 'Neujahrs-Tipp', emoji: '🥐', vibe: 'Entspannt das neue Jahr bei gutem Essen einläuten', targetType: 'gyg' }
+        ],
+        // 7: Anti-Silvester: Wellness, Sauna & Ausschlafen
+        7: [
+            { id: 'ny7_1', title: 'Rituals Luxury Home-Spa Geschenkset', year: 'Wellness-Abend', emoji: '🧖‍♀️', vibe: 'Heißes Bad, Peeling, Duftkerze & Handy auf Flugmodus', targetType: 'amazon' },
+            { id: 'ny7_2', title: 'Beurer XXL-Wärmedecke (Kuschelfleece)', year: 'Cozy-Upgrade', emoji: '🛋️', vibe: 'Einkuscheln, Tee trinken & entspannt ausschlafen', targetType: 'amazon' },
+            { id: 'ny7_3', title: 'Shiatsu Nacken- & Rückenmassagegerät mit Wärme', year: 'Entspannung', emoji: '💆‍♀️', vibe: 'Alle Verspannungen des alten Jahres einfach wegmassieren', targetType: 'amazon' },
+            { id: 'ny7_4', title: 'Wellness- & Thermenhotel über Silvester', year: 'Kurzurlaub', emoji: '♨️', vibe: 'Saunalandschaft, Infinity-Pool & Ruhe statt Böllerei', targetType: 'booking' },
+            { id: 'ny7_5', title: 'Achtsamkeits- & Neujahrs-Journal (6-Minuten-Tagebuch)', year: 'Neustart', emoji: '📔', vibe: 'In Ruhe das Jahr reflektieren und Ziele für das neue Jahr setzen', targetType: 'amazon' },
+            { id: 'ny7_6', title: 'Bio-Tee-Probierbox & Duftöl-Diffuser', year: 'Ruhe-Ritual', emoji: '🍵', vibe: 'Perfektes Wohlfühl-Ritual für einen entspannten Jahreswechsel', targetType: 'amazon' }
+        ]
+    },
+    christmasdinner: {
+        // 0: Kartoffelsalat & Würstchen (Null Stress)
+        0: [
+            { id: 'cd0_1', title: 'Villeroy & Boch / Weihnachts-Servierschalen & Platten', year: 'Festtagstisch', emoji: '🍽️', vibe: 'Selbst schlichter Kartoffelsalat sieht auf edlem Geschirr festlich aus', targetType: 'amazon' },
+            { id: 'cd0_2', title: 'Weihnachtliche Stoffservietten & Tischläufer-Set', year: 'Tischdeko', emoji: '🕯️', vibe: 'In 2 Minuten zaubert gute Deko echtes Weihnachtsfeeling', targetType: 'amazon' },
+            { id: 'cd0_3', title: 'Gourmet-Senf- & Feinkost-Set (Für die Würstchen)', year: 'Upgrade', emoji: '🌭', vibe: 'Feigen-, Honig- & Trüffelsenf heben den Klassiker auf neues Niveau', targetType: 'amazon' },
+            { id: 'cd0_4', title: 'Glühwein- & Punsch-Gewürzset im Korkenglas', year: 'Aperitif', emoji: '🍷', vibe: 'Selbstgemachter Winzer-Glühwein direkt vor dem Essen', targetType: 'amazon' },
+            { id: 'cd0_5', title: 'Frischhaltedosen aus Glas (Für Vorbereitung am Vortag)', year: 'Meal-Prep', emoji: '🥗', vibe: 'Kartoffelsalat zieht über Nacht perfekt durch', targetType: 'amazon' },
+            { id: 'cd0_6', title: 'Weihnachts-Dessert-Gläser (Für Spekulatius-Tiramisu)', year: 'Nachtisch', emoji: '🍨', vibe: 'Schnelles Schicht-Dessert in 10 Minuten vorbereitet', targetType: 'amazon' }
+        ],
+        // 1: Weihnachts-Raclette oder Fondue
+        1: [
+            { id: 'cd1_1', title: 'WMF Lono Raclette für 8 Personen', year: 'Bestseller #1', emoji: '🧀', vibe: 'Perfekt für die ganze Familie – mit Antihaft-Pfännchen & Parkdeck', targetType: 'amazon' },
+            { id: 'cd1_2', title: 'Severin Raclette-Grill mit heißem Stein', year: 'Preis-Hit', emoji: '🔥', vibe: 'Kein Fett nötig – Fleisch & Gemüse auf dem Naturstein grillen', targetType: 'amazon' },
+            { id: 'cd1_3', title: 'Elektrisches Fondue-Set (Edelstahl, 8 Gabeln)', year: 'Klassiker', emoji: '🫕', vibe: 'Für Käsefondue, Fleischbrühe oder Schokofondue', targetType: 'amazon' },
+            { id: 'cd1_4', title: 'Mini-Raclette für 2–4 Personen (Kompakt)', year: 'Für Paare', emoji: '✨', vibe: 'Nimmt kaum Platz weg und ist in 3 Minuten aufgeheizt', targetType: 'amazon' },
+            { id: 'cd1_5', title: 'Raclette-Gewürz-Set (Ankerkraut)', year: 'Geschmacks-Kick', emoji: '🧂', vibe: 'Spezielle Gewürzmischungen für Käse, Kartoffeln & Gemüse', targetType: 'amazon' },
+            { id: 'cd1_6', title: 'Holz-Schaber & Dip-Schälchen-Set (8-teilig)', year: 'Zubehör', emoji: '🥣', vibe: 'Für Knoblauchsauce, Preiselbeeren, Cornichons & Silberzwiebeln', targetType: 'amazon' }
+        ],
+        // 2: Ente, Gans oder Festtagsbraten mit Klößen
+        2: [
+            { id: 'cd2_1', title: 'Gusseisen-Bräter mit Deckel (Le Creuset / Staub / Overmont)', year: 'Küchen-Schatz', emoji: '🍲', vibe: 'Macht Ente, Gans & Rotkohl butterzart mit perfekter Kruste', targetType: 'amazon' },
+            { id: 'cd2_2', title: 'Digitales Funk-Fleischthermometer (Kerntemperatur)', year: 'Geling-Garantie', emoji: '🌡️', vibe: 'Nie wieder trockener Braten – piept exakt beim perfekten Garpunkt', targetType: 'amazon' },
+            { id: 'cd2_3', title: 'Geflügelschere & Tranchierbesteck (Edelstahl)', year: 'Am Tisch', emoji: '🍗', vibe: 'Ente & Gans mühelos und sauber vor den Gästen zerlegen', targetType: 'amazon' },
+            { id: 'cd2_4', title: 'Weihnachtsbraten & Gänse-Gewürzmischung', year: 'Aroma', emoji: '🌿', vibe: 'Beifuß, Majoran, Thymian & Orange für himmlische Soße', targetType: 'amazon' },
+            { id: 'cd2_5', title: 'Edelstahl-Sauciere (Doppelwandig, hält warm)', year: 'Servier-Tipp', emoji: '🥄', vibe: 'Die Bratensoße bleibt den ganzen Abend heiß', targetType: 'amazon' },
+            { id: 'cd2_6', title: 'Großes Schneidebrett mit Saftrille (Akazie / Eiche)', year: 'Tranchieren', emoji: '🪵', vibe: 'Kein Tropfen Bratensaft geht verloren', targetType: 'amazon' }
+        ],
+        // 3: Rinderfilet, Beef Wellington oder Lachs im Blätterteig
+        3: [
+            { id: 'cd3_1', title: 'MEATER Kabelloses Smart-Fleischthermometer', year: 'Profi-Gadget', emoji: '📱', vibe: 'Zeigt per App auf die Minute genau an, wann dein Filet medium-rare ist', targetType: 'amazon' },
+            { id: 'cd3_2', title: 'Damast-Kochmesser / Tranchiermesser', year: 'Scharf', emoji: '🔪', vibe: 'Schneidet Beef Wellington & Blätterteig ohne ihn zu zerdrücken', targetType: 'amazon' },
+            { id: 'cd3_3', title: 'Sous-Vide Garer (Stick) für perfektes Filet', year: 'Sterne-Trick', emoji: '🥩', vibe: 'Null Stress: Filet gart punktgenau im Wasserbad, nur kurz anbraten', targetType: 'amazon' },
+            { id: 'cd3_4', title: 'Backblech & Silikon-Backmatte (Für Blätterteig)', year: 'Knusprig', emoji: '🥐', vibe: 'Lachs im Blätterteig klebt nicht an und wird rundum goldbraun', targetType: 'amazon' },
+            { id: 'cd3_5', title: 'Schwarzer Trüffel-Salz & Kampot-Pfeffer Set', year: 'Gourmet', emoji: '✨', vibe: 'Veredelt Rinderfilet, Kartoffelpüree und Fisch in Sekunden', targetType: 'amazon' },
+            { id: 'cd3_6', title: 'Weindekanter / Karaffe (Kristallglas)', year: 'Rotwein-Upgrade', emoji: '🍷', vibe: 'Lässt den Festtags-Rotwein perfekt atmen', targetType: 'amazon' }
+        ],
+        // 4: Vorbereitbares 3-Gänge-Weihnachtsmenü
+        4: [
+            { id: 'cd4_1', title: 'Kochbuch „Weihnachtsmenüs stressfrei vorbereiten“', year: 'Inspiration', emoji: '📖', vibe: 'Erprobte 3-Gänge-Pläne mit Zeitplan ab 2 Tage vorher', targetType: 'amazon' },
+            { id: 'cd4_2', title: 'Gusseisen-Schmortopf (Für Boeuf Bourguignon & Gulasch)', year: 'Über-Nacht-Hit', emoji: '🥘', vibe: 'Schmorgerichte schmecken am 2. Tag sogar noch besser!', targetType: 'amazon' },
+            { id: 'cd4_3', title: 'Stabmixer-Set (Für samtige Maronen- oder Kürbissuppe)', year: 'Vorspeise', emoji: '🥣', vibe: 'In 15 Minuten eine cremige Festtagssuppe pürieren', targetType: 'amazon' },
+            { id: 'cd4_4', title: 'Dessert-Schälchen & Crème-Brûlée-Brenner', year: 'Wow-Dessert', emoji: '🔥', vibe: 'Crème Brûlée am Vortag backen & am Tisch frisch karamellisieren', targetType: 'amazon' },
+            { id: 'cd4_5', title: 'Warmhalteplatte für den Esstisch', year: 'Entspannt', emoji: '♨️', vibe: 'Beilagen bleiben warm, während ihr in Ruhe die Vorspeise esst', targetType: 'amazon' },
+            { id: 'cd4_6', title: 'Spekulatius- & Zimt-Gewürzmühle', year: 'Weihnachtsduft', emoji: '🎄', vibe: 'Perfekt für Tiramisu, Mousse au Chocolat & Kaffee', targetType: 'amazon' }
+        ],
+        // 5: Festliches Veggie- / Veganes Weihnachtsmenü
+        5: [
+            { id: 'cd5_1', title: 'Kochbuch „Vegane Weihnachten & Festtage“', year: 'Bestseller', emoji: '🌱', vibe: 'Von Pilz-Wellington über Nussbraten bis veganer Bratensoße', targetType: 'amazon' },
+            { id: 'cd5_2', title: 'Kastenform mit Antihaft (Für perfekten Nussbraten)', year: 'Hauptgang', emoji: '🌰', vibe: 'Saftiger Nuss-Linsen-Braten mit knuspriger Kruste', targetType: 'amazon' },
+            { id: 'cd5_3', title: 'Getrocknete Steinpilze & Trüffelöl (Umami-Boost)', year: 'Geheimzutat', emoji: '🍄', vibe: 'Macht vegane Bratensoßen & Risotto unfassbar würzig', targetType: 'amazon' },
+            { id: 'cd5_4', title: 'Auflaufform aus Keramik (Für Bratäpfel & Ofengemüse)', year: 'Ofen-Hit', emoji: '🍎', vibe: 'Gefüllte Bratäpfel mit Marzipan, Nüssen & Vanillesoße', targetType: 'amazon' },
+            { id: 'cd5_5', title: 'Ninja Dual Zone Airfryer (Für knuspriges Ofengemüse)', year: 'Zeitsparer', emoji: '🥦', vibe: 'Rosenkohl, Maronen & Kartoffeln perfekt knusprig nebenbei', targetType: 'amazon' },
+            { id: 'cd5_6', title: 'Bio-Gewürzset (Lebkuchen, Zimt, Sternanis & Tonkabohne)', year: 'Festlich', emoji: '⭐', vibe: 'Bringt echte Weihnachtsaromen in jedes pflanzliche Gericht', targetType: 'amazon' }
+        ],
+        // 6: Italienisches Weihnachtsmahl
+        6: [
+            { id: 'cd6_1', title: 'Original Italienischer Panettone (Geschenkdose)', year: 'Tradition', emoji: '🥮', vibe: 'Luftiger Klassiker aus Mailand – pur oder mit Mascarpone-Creme', targetType: 'amazon' },
+            { id: 'cd6_2', title: 'Große Keramik-Lasagneform (Ofen auf den Tisch)', year: 'Hauptgang', emoji: '🍝', vibe: 'Lasagne al Forno am Vortag schichten – null Stress an Weihnachten', targetType: 'amazon' },
+            { id: 'cd6_3', title: 'Italienisches Trüffel-Pasta & Olivenöl-Set', year: 'Gourmet', emoji: '🫒', vibe: 'Tagliatelle mit weißer Trüffelcreme in 12 Minuten serviert', targetType: 'amazon' },
+            { id: 'cd6_4', title: 'Bialetti Moka Express (Für den Espresso zum Tiramisu)', year: 'Italien-Flair', emoji: '☕', vibe: 'Frischer Espresso als perfekter Abschluss nach dem Festmahl', targetType: 'amazon' },
+            { id: 'cd6_5', title: 'Parmesan-Reibe / Microplane (Tisch-Upgrade)', year: 'Detail', emoji: '🧀', vibe: 'Hauchfeiner Parmigiano frisch am Tisch über die Pasta gehobelt', targetType: 'amazon' },
+            { id: 'cd6_6', title: 'Amaretti, Cantuccini & Vin Santo Set', year: 'Dolci', emoji: '🍪', vibe: 'Gemütlich zum Kaffee und Gesprächen nach dem Essen', targetType: 'amazon' }
+        ],
+        // 7: Festliches Tapas-, Antipasti- & Fingerfood-Buffet
+        7: [
+            { id: 'cd7_1', title: 'XXL Servierbrett / Grazing Board aus Akazienholz', year: 'Hingucker', emoji: '🧀', vibe: 'Für Käse, Trauben, Nüsse, Antipasti & Baguette wie vom Caterer', targetType: 'amazon' },
+            { id: 'cd7_2', title: 'Tapas-Schälchen-Set aus Keramik (6–12 Teile)', year: 'Buffet-Look', emoji: '🫒', vibe: 'Oliven, Datteln im Speckmantel, Hummus & Dips stilvoll serviert', targetType: 'amazon' },
+            { id: 'cd7_3', title: '3-stöckige Etagere (Für Fingerfood & Weihnachtsgebäck)', year: 'Platzsparer', emoji: '🧁', vibe: 'Bringt Höhe und Festtags-Optik auf jeden Esstisch', targetType: 'amazon' },
+            { id: 'cd7_4', title: 'Käsemesser-Set (4-teilig, Holz & Edelstahl)', year: 'Käseplatte', emoji: '🔪', vibe: 'Für Brie, Parmesan, Manchego & Ziegenkäse', targetType: 'amazon' },
+            { id: 'cd7_5', title: 'Kleine Tafel-Schildchen zum Beschriften der Gerichte', year: 'Party-Detail', emoji: '🏷️', vibe: 'Jeder weiß sofort, was vegan, scharf oder mit Nüssen ist', targetType: 'amazon' },
+            { id: 'cd7_6', title: 'Elektrischer Speisenwärmer / Chafing Dish', year: 'Warmes Buffet', emoji: '🥘', vibe: 'Hält Fleischbällchen, Ofengemüse & Soßen den ganzen Abend warm', targetType: 'amazon' }
+        ]
     }
 };

@@ -7716,6 +7716,500 @@ const DECKS = {
                 "actionUrl": "https://www.booking.com/searchresults.de.html?ss=Wellness+Hotel"
             }
         ]
+    },
+    "nye": {
+        "id": "nye",
+        "category": "trips",
+        "mode": "match",
+        "icon": "🥂",
+        "gradient": "from-amber-500 to-purple-700",
+        "title": {
+            "de": "Silvester-Planer",
+            "en": "New Year's Eve Planner",
+            "es": "Planes de Nochevieja",
+            "fr": "Soirée du Nouvel An",
+            "it": "Piani di Capodanno"
+        },
+        "sub": {
+            "de": "8 Silvester-Ideen + 48 konkrete Tipps",
+            "en": "8 NYE vibes + 48 concrete party & trip picks",
+            "es": "8 planes + 48 ideas para Nochevieja",
+            "fr": "8 ambiances + 48 idées pour le Réveillon",
+            "it": "8 idee + 48 consigli per Capodanno"
+        },
+        "cards": [
+            {
+                "id": 0,
+                "emoji": "🧀",
+                "bg": "from-amber-600 to-orange-700",
+                "tag": { "de": "Silvester-Klassiker", "en": "NYE Classic", "es": "Clásico", "fr": "Classique", "it": "Classico" },
+                "title": {
+                    "de": "Raclette- oder Fondue-Abend",
+                    "en": "Raclette or Fondue Dinner Night",
+                    "es": "Noche de Raclette o Fondue",
+                    "fr": "Soirée Raclette ou Fondue",
+                    "it": "Serata Raclette o Fonduta"
+                },
+                "desc": {
+                    "de": "Stundenlang schlemmen, Pfännchen brutzeln & entspannt ins neue Jahr.",
+                    "en": "Hours of melted cheese, sizzling pans & relaxed countdown vibes.",
+                    "es": "Horas disfrutando a la mesa sin prisas hasta las campanadas.",
+                    "fr": "Des heures de convivialité autour du fromage jusqu'à minuit.",
+                    "it": "Ore di gusto a tavola aspettando la mezzanotte in relax."
+                },
+                "actionLabel": {
+                    "de": "Raclette- & Fondue-Sets ansehen",
+                    "en": "Browse Raclette & Fondue Sets",
+                    "es": "Ver sets de Raclette y Fondue",
+                    "fr": "Voir les appareils à Raclette",
+                    "it": "Vedi set Raclette e Fonduta"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Raclette+Grill+Fondue+Set+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 1,
+                "emoji": "🎲",
+                "bg": "from-indigo-600 to-violet-700",
+                "tag": { "de": "Bis Mitternacht", "en": "Until Midnight", "es": "Hasta Medianoche", "fr": "Jusqu'à Minuit", "it": "Fino a Mezzanotte" },
+                "title": {
+                    "de": "Spieleabend & Hitster-Marathon",
+                    "en": "Board Game & Music Party Marathon",
+                    "es": "Maratón de Juegos y Música",
+                    "fr": "Marathon Jeux de Société & Musique",
+                    "it": "Maratona Giochi da Tavolo & Musica"
+                },
+                "desc": {
+                    "de": "Hitster, Codenames, Wachsgießen & Drinks – keine Minute Langeweile.",
+                    "en": "Party games, music quizzes, snacks & laughs right up to midnight.",
+                    "es": "Juegos de fiesta, música, risas y brindis sin aburrirse.",
+                    "fr": "Jeux d'ambiance, quiz musicaux et fous rires jusqu'au décompte.",
+                    "it": "Party game, quiz musicali e risate fino al brindisi."
+                },
+                "actionLabel": {
+                    "de": "Top Silvester-Partyspiele ansehen",
+                    "en": "Browse NYE Party Games",
+                    "es": "Ver juegos para Nochevieja",
+                    "fr": "Voir les jeux du Nouvel An",
+                    "it": "Vedi giochi per Capodanno"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Silvester+Partyspiele+Hitster+Wachsgiessen&tag=f05b1-21"
+            },
+            {
+                "id": 2,
+                "emoji": "🍸",
+                "bg": "from-pink-600 to-rose-700",
+                "tag": { "de": "Hausparty & Drinks", "en": "House Party", "es": "Fiesta en Casa", "fr": "Soirée Maison", "it": "Festa in Casa" },
+                "title": {
+                    "de": "Cocktail- & Motto-Hausparty",
+                    "en": "Cocktail & Theme House Party",
+                    "es": "Fiesta de Cócteles Temática",
+                    "fr": "Soirée Cocktails & Thème",
+                    "it": "Festa a Tema & Cocktail Bar"
+                },
+                "desc": {
+                    "de": "Eigene Cocktail-Bar, gute Playlist, Deko & alle Lieblingsmenschen.",
+                    "en": "DIY cocktail bar, great playlist, sparkle & all your favorite people.",
+                    "es": "Barra de cócteles casera, buena música y tus mejores amigos.",
+                    "fr": "Bar à cocktails maison, playlist au top et ambiance festive.",
+                    "it": "Cocktail bar fai-da-te, musica top e gli amici migliori."
+                },
+                "actionLabel": {
+                    "de": "Cocktail-Sets & Silvester-Deko ansehen",
+                    "en": "Browse Cocktail Kits & NYE Decor",
+                    "es": "Ver kits de cóctel y decoración",
+                    "fr": "Voir kits cocktails & déco",
+                    "it": "Vedi kit cocktail e decorazioni"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Cocktail+Shaker+Set+Silvester+Deko&tag=f05b1-21"
+            },
+            {
+                "id": 3,
+                "emoji": "🛋️",
+                "bg": "from-rose-600 to-purple-800",
+                "tag": { "de": "Gemütlich zu zweit", "en": "Cozy for Two", "es": "Acogedor en Pareja", "fr": "Cocooning à Deux", "it": "Intimo in Due" },
+                "title": {
+                    "de": "Gemütliches Silvester zu zweit",
+                    "en": "Cozy New Year's Eve for Two",
+                    "es": "Nochevieja Romántica en Pareja",
+                    "fr": "Réveillon Cocooning en Amoureux",
+                    "it": "Capodanno Romantico in Coppia"
+                },
+                "desc": {
+                    "de": "Leckeres 3-Gänge-Dinner, Lieblingsfilme & entspannt mit Sekt anstoßen.",
+                    "en": "Homemade 3-course dinner, movies & sparkling toast without the crowds.",
+                    "es": "Cena especial en casa, pelis y brindis tranquilos sin aglomeraciones.",
+                    "fr": "Bon petit dîner, films cultes et bulles au calme loin de la foule.",
+                    "it": "Cenetta speciale, film preferiti e brindisi senza caos."
+                },
+                "actionLabel": {
+                    "de": "Genuss- & Champagner-Sets ansehen",
+                    "en": "Browse Gourmet & Toast Sets",
+                    "es": "Ver sets gourmet y brindis",
+                    "fr": "Voir coffrets gourmets",
+                    "it": "Vedi cofanetti gourmet"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Silvester+Sektglaeser+Feinkost+Box&tag=f05b1-21"
+            },
+            {
+                "id": 4,
+                "emoji": "🏙️",
+                "bg": "from-sky-600 to-indigo-800",
+                "tag": { "de": "Städtetrip", "en": "City Break", "es": "Escapada Urbana", "fr": "City-Trip", "it": "Città d'Arte" },
+                "title": {
+                    "de": "Silvester-Städtetrip in Europa",
+                    "en": "European New Year's City Break",
+                    "es": "Escapada de Fin de Año en Europa",
+                    "fr": "Nouvel An en City-Trip Européen",
+                    "it": "Capodanno in una Capitale Europea"
+                },
+                "desc": {
+                    "de": "Wien, Prag, Amsterdam, Edinburgh oder Berlin – Feuerwerk mal woanders.",
+                    "en": "Vienna, Prague, Amsterdam, Lisbon or Edinburgh – ring it in abroad.",
+                    "es": "Viena, Praga, Ámsterdam, Lisboa o Roma para empezar el año viajando.",
+                    "fr": "Vienne, Prague, Amsterdam, Lisbonne ou Londres pour changer d'air.",
+                    "it": "Vienna, Praga, Amsterdam, Lisbona o Parigi per festeggiare viaggiando."
+                },
+                "actionLabel": {
+                    "de": "Silvester-Hotels prüfen",
+                    "en": "Check NYE City Hotels",
+                    "es": "Ver hoteles para Nochevieja",
+                    "fr": "Voir hôtels Nouvel An",
+                    "it": "Vedi hotel per Capodanno"
+                },
+                "actionUrl": "https://www.booking.com/searchresults.de.html?ss=Wien"
+            },
+            {
+                "id": 5,
+                "emoji": "🏔️",
+                "bg": "from-emerald-700 to-slate-800",
+                "tag": { "de": "Berge & Kamin", "en": "Cabin & Snow", "es": "Montaña y Chimenea", "fr": "Chalet & Neige", "it": "Baita & Neve" },
+                "title": {
+                    "de": "Hütten-Silvester in den Bergen",
+                    "en": "Cozy Mountain Cabin NYE",
+                    "es": "Fin de Año en Cabaña de Montaña",
+                    "fr": "Réveillon en Chalet à la Montagne",
+                    "it": "Capodanno in Baita in Montagna"
+                },
+                "desc": {
+                    "de": "Schnee, Kaminfeuer, Glühwein & Sternenhimmel statt Großstadt-Lärm.",
+                    "en": "Snow, fireplace, mulled wine & starry skies away from city noise.",
+                    "es": "Nieve, chimenea, vino caliente y estrellas lejos del ruido.",
+                    "fr": "Neige, feu de cheminée, vin chaud et ciel étoilé au calme.",
+                    "it": "Neve, camino acceso, vin brulé e cielo stellato."
+                },
+                "actionLabel": {
+                    "de": "Berghütten & Chalets suchen",
+                    "en": "Find Mountain Cabins",
+                    "es": "Buscar cabañas de montaña",
+                    "fr": "Trouver un chalet",
+                    "it": "Cerca baite e chalet"
+                },
+                "actionUrl": "https://www.booking.com/searchresults.de.html?ss=Tirol+Chalet"
+            },
+            {
+                "id": 6,
+                "emoji": "🍽️",
+                "bg": "from-amber-700 to-zinc-900",
+                "tag": { "de": "Schick ausgehen", "en": "Dress Up & Go Out", "es": "Cena de Gala", "fr": "Sortie Chic", "it": "Cenone & Evento" },
+                "title": {
+                    "de": "Silvester-Gala, Dinner oder Bootstour",
+                    "en": "NYE Gala Dinner, Show or River Cruise",
+                    "es": "Cena de Gala, Show o Crucero",
+                    "fr": "Dîner-Croisière, Gala ou Spectacle",
+                    "it": "Cenone, Spettacolo o Crociera"
+                },
+                "desc": {
+                    "de": "Rausputzen, bedienen lassen & Mitternacht mit Top-Aussicht erleben.",
+                    "en": "Dress up, zero cooking & watch midnight fireworks from the best spot.",
+                    "es": "Arréglate, olvídate de cocinar y disfruta las vistas a medianoche.",
+                    "fr": "Mettez-vous sur votre 31, zéro cuisine et vue magique à minuit.",
+                    "it": "Eleganti, zero cucina e vista spettacolare a mezzanotte."
+                },
+                "actionLabel": {
+                    "de": "Silvester-Events & Cruises prüfen",
+                    "en": "Explore NYE Cruises & Dinners",
+                    "es": "Ver eventos de Nochevieja",
+                    "fr": "Voir soirées du Réveillon",
+                    "it": "Scopri eventi di Capodanno"
+                },
+                "actionUrl": "https://www.getyourguide.de/s/?q=Silvester+Dinner+Bootstour"
+            },
+            {
+                "id": 7,
+                "emoji": "🧖‍♀️",
+                "bg": "from-teal-600 to-cyan-800",
+                "tag": { "de": "Null Stress", "en": "Zero Stress", "es": "Cero Estrés", "fr": "Zéro Stress", "it": "Zero Stress" },
+                "title": {
+                    "de": "Anti-Silvester: Wellness, Sauna & Ausschlafen",
+                    "en": "Anti-NYE: Spa, Sauna & Early Sleep",
+                    "es": "Anti-Nochevieja: Spa y Relax Total",
+                    "fr": "Anti-Réveillon : Spa, Sauna & Calme",
+                    "it": "Anti-Capodanno: Spa, Sauna & Relax"
+                },
+                "desc": {
+                    "de": "Kein Partyzwang – top ausgeschlafen & entspannt ins neue Jahr starten.",
+                    "en": "Skip the hype – start January 1st deeply rested and refreshed.",
+                    "es": "Sin presiones de fiesta: empieza el 1 de enero descansado y feliz.",
+                    "fr": "Sans pression festive : commencez le 1er janvier en pleine forme.",
+                    "it": "Niente caos: inizia il 1° gennaio riposato e rigenerato."
+                },
+                "actionLabel": {
+                    "de": "Home-Spa & Wellness-Sets ansehen",
+                    "en": "Browse Home-Spa & Wellness Sets",
+                    "es": "Ver sets de spa en casa",
+                    "fr": "Voir coffrets spa maison",
+                    "it": "Vedi set home spa"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Home+Spa+Wellness+Sauna+Set&tag=f05b1-21"
+            }
+        ]
+    },
+    "christmasdinner": {
+        "id": "christmasdinner",
+        "category": "food",
+        "mode": "match",
+        "icon": "🎄",
+        "gradient": "from-red-600 to-emerald-700",
+        "title": {
+            "de": "Weihnachtsessen-Planer",
+            "en": "Christmas Dinner Picker",
+            "es": "Cena de Navidad",
+            "fr": "Repas de Noël",
+            "it": "Cena di Natale"
+        },
+        "sub": {
+            "de": "8 Festtags-Menüs + 48 Küchen- & Menü-Ideen",
+            "en": "8 festive menus + 48 concrete holiday picks",
+            "es": "8 menús festivos + 48 ideas navideñas",
+            "fr": "8 menus de fête + 48 idées gourmandes",
+            "it": "8 menù delle feste + 48 idee natalizie"
+        },
+        "cards": [
+            {
+                "id": 0,
+                "emoji": "🌭",
+                "bg": "from-amber-600 to-red-700",
+                "tag": { "de": "Heiligabend-Tradition", "en": "Zero-Stress Classic", "es": "Sin Estrés", "fr": "Sans Stress", "it": "Zero Stress" },
+                "title": {
+                    "de": "Kartoffelsalat & Würstchen (Null Stress)",
+                    "en": "Simple Comfort Classic (Zero Kitchen Stress)",
+                    "es": "Cena Sencilla y Tradicional (Cero Estrés)",
+                    "fr": "Classique Simple & Convivial (Zéro Stress)",
+                    "it": "Classico Semplice e Zero Stress"
+                },
+                "desc": {
+                    "de": "Am Vortag vorbereitet – mehr Zeit unterm Baum statt in der Küche.",
+                    "en": "Prepped ahead so everyone spends time together instead of cooking.",
+                    "es": "Preparado con antelación para disfrutar más en familia.",
+                    "fr": "Préparé à l'avance pour profiter de la soirée plutôt que des fourneaux.",
+                    "it": "Preparato in anticipo per godersi la serata invece dei fornelli."
+                },
+                "actionLabel": {
+                    "de": "Servier- & Küchen-Helfer ansehen",
+                    "en": "Browse Holiday Serving Gear",
+                    "es": "Ver accesorios de mesa navideña",
+                    "fr": "Voir accessoires de table de fête",
+                    "it": "Vedi accessori tavola natalizia"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Weihnachten+Tischdeko+Servierplatte+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 1,
+                "emoji": "🧀",
+                "bg": "from-orange-500 to-amber-700",
+                "tag": { "de": "Gesellig am Tisch", "en": "Tabletop Feast", "es": "En la Mesa", "fr": "Convivial", "it": "Conviviale" },
+                "title": {
+                    "de": "Weihnachts-Raclette oder Fondue",
+                    "en": "Festive Raclette or Fondue Feast",
+                    "es": "Raclette o Fondue Navideña",
+                    "fr": "Raclette ou Fondue de Noël",
+                    "it": "Raclette o Fonduta di Natale"
+                },
+                "desc": {
+                    "de": "Jeder brutzelt sein Lieblingspfännchen – Veggies & Fleischfans glücklich.",
+                    "en": "Everyone builds their own plate – keeps meat lovers & veggies happy.",
+                    "es": "Cada uno elige sus ingredientes: ideal para familias variadas.",
+                    "fr": "Chacun compose son assiette – parfait pour tous les goûts.",
+                    "it": "Ognuno prepara ciò che preferisce: tutti felici a tavola."
+                },
+                "actionLabel": {
+                    "de": "Top Raclette- & Fondue-Sets ansehen",
+                    "en": "Browse Raclette & Fondue Sets",
+                    "es": "Ver sets de Raclette y Fondue",
+                    "fr": "Voir appareils Raclette & Fondue",
+                    "it": "Vedi set Raclette e Fonduta"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=WMF+Severin+Raclette+Grill+8+Personen&tag=f05b1-21"
+            },
+            {
+                "id": 2,
+                "emoji": "🍗",
+                "bg": "from-red-700 to-amber-800",
+                "tag": { "de": "Großer Festtagsbraten", "en": "Traditional Roast", "es": "Asado Festivo", "fr": "Rôti de Fête", "it": "Arrosto delle Feste" },
+                "title": {
+                    "de": "Ente, Gans oder Festtagsbraten mit Klößen",
+                    "en": "Roast Goose, Duck or Turkey with Sides",
+                    "es": "Pato, Pavo o Asado Navideño Clásico",
+                    "fr": "Dinde, Chapon ou Magret de Noël",
+                    "it": "Arrosto, Anatra o Tacchino delle Feste"
+                },
+                "desc": {
+                    "de": "Knusprige Haut, Rotkohl, Klöße & Bratensoße – echtes Weihnachtsgefühl.",
+                    "en": "Crispy roast, gravy, red cabbage & dumplings – pure holiday magic.",
+                    "es": "Crujiente al horno con salsa y guarnición tradicional.",
+                    "fr": "Rôti doré, marrons et sauce maison – le vrai goût de Noël.",
+                    "it": "Arrosto croccante e contorni tradizionali dal profumo di festa."
+                },
+                "actionLabel": {
+                    "de": "Gusseisen-Bräter & Thermometer ansehen",
+                    "en": "Browse Roasting Pans & Thermometers",
+                    "es": "Ver fuentes de horno y termómetros",
+                    "fr": "Voir cocottes en fonte & thermomètres",
+                    "it": "Vedi teglie in ghisa e termometri"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Gusseisen+Braeter+Fleischthermometer+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 3,
+                "emoji": "🥩",
+                "bg": "from-rose-700 to-slate-800",
+                "tag": { "de": "Edel & Besonders", "en": "Fine Dining", "es": "Gourmet", "fr": "Gastronomique", "it": "Gourmet" },
+                "title": {
+                    "de": "Rinderfilet, Beef Wellington oder Lachs im Blätterteig",
+                    "en": "Beef Wellington, Tenderloin or Salmon en Croûte",
+                    "es": "Solomillo Wellington o Salmón en Hojaldre",
+                    "fr": "Bœuf Wellington ou Saumon en Croûte",
+                    "it": "Filetto alla Wellington o Salmone in Crosta"
+                },
+                "desc": {
+                    "de": "Restaurant-Niveau auf dem Festtagstisch mit Wow-Effekt beim Anschneiden.",
+                    "en": "Restaurant-level centerpiece with a jaw-dropping slice reveal.",
+                    "es": "Nivel de restaurante con un corte espectacular en la mesa.",
+                    "fr": "Un plat digne d'un grand restaurant avec effet waouh garanti.",
+                    "it": "Un secondo da ristorante con effetto wow al taglio."
+                },
+                "actionLabel": {
+                    "de": "Profi-Kochmesser & Thermometer ansehen",
+                    "en": "Browse Chef Knives & Meat Thermometers",
+                    "es": "Ver cuchillos y termómetros de cocina",
+                    "fr": "Voir couteaux de chef & sondes",
+                    "it": "Vedi coltelli da chef e termometri"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=MEATER+Fleischthermometer+Kochmesser+Set&tag=f05b1-21"
+            },
+            {
+                "id": 4,
+                "emoji": "🍲",
+                "bg": "from-emerald-600 to-teal-800",
+                "tag": { "de": "Entspannt vorbereiten", "en": "Make-Ahead Menu", "es": "Preparar Antes", "fr": "Préparé à l'Avance", "it": "Prepara Prima" },
+                "title": {
+                    "de": "Vorbereitbares 3-Gänge-Weihnachtsmenü",
+                    "en": "Make-Ahead 3-Course Christmas Menu",
+                    "es": "Menú de 3 Platos Preparado con Antelación",
+                    "fr": "Menu de Noël 3 Plats Préparé la Veille",
+                    "it": "Menù di Natale 3 Portate Senza Stress"
+                },
+                "desc": {
+                    "de": "Maronensuppe, Schmorgericht & Spekulatius-Tiramisu – 90 % am Vortag fertig.",
+                    "en": "Soup, slow-cooked main & festive dessert – 90% done the day before.",
+                    "es": "Crema caliente, guiso al horno y postre casero listos la víspera.",
+                    "fr": "Velouté, plat mijoté et dessert festif prêts dès la veille.",
+                    "it": "Vellutata, brasato e tiramisù natalizio pronti dal giorno prima."
+                },
+                "actionLabel": {
+                    "de": "Weihnachts-Kochbücher ansehen",
+                    "en": "Browse Christmas Cookbooks",
+                    "es": "Ver libros de cocina navideña",
+                    "fr": "Voir livres de cuisine de Noël",
+                    "it": "Vedi libri di ricette di Natale"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Weihnachtsmenue+Kochbuch+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 5,
+                "emoji": "🌱",
+                "bg": "from-green-600 to-emerald-800",
+                "tag": { "de": "Veggie & Vegan", "en": "Festive Plant-Based", "es": "Veggie y Vegano", "fr": "Végétarien & Vegan", "it": "Veggie & Vegano" },
+                "title": {
+                    "de": "Festliches Veggie- / Veganes Weihnachtsmenü",
+                    "en": "Festive Veggie or Vegan Holiday Feast",
+                    "es": "Menú Navideño Vegetariano o Vegano",
+                    "fr": "Repas de Noël Végétarien ou Vegan",
+                    "it": "Cenone di Natale Vegetariano o Vegano"
+                },
+                "desc": {
+                    "de": "Nussbraten im Blätterteig, Pilz-Wellington, Trüffel-Risotto & Bratapfel.",
+                    "en": "Mushroom Wellington, nut roast, truffle risotto & baked apples.",
+                    "es": "Wellington de setas, risotto de trufa y manzanas asadas.",
+                    "fr": "Wellington aux champignons, risotto à la truffe et pommes au four.",
+                    "it": "Wellington di funghi, risotto al tartufo e mele al forno."
+                },
+                "actionLabel": {
+                    "de": "Vegane Festtags-Kochbücher ansehen",
+                    "en": "Browse Vegan Holiday Cookbooks",
+                    "es": "Ver recetarios veganos festivos",
+                    "fr": "Voir livres de fêtes vegan",
+                    "it": "Vedi ricettari vegani delle feste"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Vegane+Weihnachten+Kochbuch+Bestseller&tag=f05b1-21"
+            },
+            {
+                "id": 6,
+                "emoji": "🍝",
+                "bg": "from-red-600 to-orange-600",
+                "tag": { "de": "La Dolce Vita", "en": "Italian Feast", "es": "Festín Italiano", "fr": "Festin Italien", "it": "Tradizione Italiana" },
+                "title": {
+                    "de": "Italienisches Weihnachtsmahl",
+                    "en": "Italian Christmas Feast (Lasagna & Tiramisu)",
+                    "es": "Cena Italiana de Navidad",
+                    "fr": "Noël à l'Italienne (Lasagnes & Tiramisu)",
+                    "it": "Gran Cenone Italiano (Lasagne & Panettone)"
+                },
+                "desc": {
+                    "de": "Antipasti, frische Trüffel-Pasta oder Ofen-Lasagne & Panettone-Tiramisu.",
+                    "en": "Antipasti, truffle pasta or baked lasagna & rich tiramisu.",
+                    "es": "Antipasti, lasaña al horno o pasta con trufa y tiramisú.",
+                    "fr": "Antipasti, lasagnes maison ou pâtes à la truffe et tiramisu.",
+                    "it": "Antipasti, lasagne al forno o pasta al tartufo e panettone."
+                },
+                "actionLabel": {
+                    "de": "Italienische Feinkost & Pasta-Sets ansehen",
+                    "en": "Browse Italian Gourmet Sets",
+                    "es": "Ver delicias italianas",
+                    "fr": "Voir épicerie fine italienne",
+                    "it": "Vedi specialità italiane"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Italienische+Feinkost+Trueffel+Panettone&tag=f05b1-21"
+            },
+            {
+                "id": 7,
+                "emoji": "🥘",
+                "bg": "from-purple-600 to-rose-700",
+                "tag": { "de": "Jeder bringt was mit", "en": "Potluck Buffet", "es": "Buffet Compartido", "fr": "Buffet Partagé", "it": "Buffet Condiviso" },
+                "title": {
+                    "de": "Festliches Tapas-, Antipasti- & Fingerfood-Buffet",
+                    "en": "Festive Tapas, Grazing Board & Buffet",
+                    "es": "Buffet Navideño de Tapas y Picoteo",
+                    "fr": "Grand Buffet Festif & Planches Apéro",
+                    "it": "Buffet Natalizio di Antipasti e Sfizi"
+                },
+                "desc": {
+                    "de": "Keiner steht allein in der Küche – jeder steuert 2 Highlights bei.",
+                    "en": "Nobody cooks alone – everyone brings 2 festive dishes to share.",
+                    "es": "Nadie cocina solo: cada invitado trae 2 platos deliciosos.",
+                    "fr": "Personne ne reste seul en cuisine : chacun apporte 2 délices.",
+                    "it": "Nessuno cucina da solo: ognuno porta 2 piatti speciali."
+                },
+                "actionLabel": {
+                    "de": "Servierbretter & Buffet-Zubehör ansehen",
+                    "en": "Browse Grazing Boards & Buffet Sets",
+                    "es": "Ver tablas de aperitivo y buffet",
+                    "fr": "Voir planches apéro et service",
+                    "it": "Vedi taglieri e accessori buffet"
+                },
+                "actionUrl": "https://www.amazon.de/s?k=Servierbrett+Holz+Tapas+Schalen+Set&tag=f05b1-21"
+            }
+        ]
     }
 };
 
