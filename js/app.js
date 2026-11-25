@@ -858,9 +858,23 @@ function setLang(lang) {
     setText('t-profile-blacklist-title', t.profileBlacklistTitle);
     setText('t-profile-blacklist-reset', t.profileBlacklistReset);
     setText('t-stage2-shuffle-btn', t.stage2ShuffleBtn);
-    setText('t-pill-breakfast', t.pillBreakfast);
-    setText('t-pill-lunch', t.pillLunch);
-    setText('t-pill-vegan', t.pillVegan);
+    setText('t-pill-boardgames', t.pillBoardgames || 'Brettspiele');
+    setText('t-pill-gaming', t.pillGaming || 'Gaming');
+    setText('t-food-modal-title', t.foodModalTitle);
+    setText('t-food-modal-sub', t.foodModalSub);
+    setText('t-food-opt-breakfast', t.foodOptBreakfast);
+    setText('t-food-opt-breakfast-sub', t.foodOptBreakfastSub);
+    setText('t-food-opt-lunch', t.foodOptLunch);
+    setText('t-food-opt-lunch-sub', t.foodOptLunchSub);
+    setText('t-food-opt-dinner', t.foodOptDinner);
+    setText('t-food-opt-dinner-sub', t.foodOptDinnerSub);
+    setText('t-food-opt-snacks', t.foodOptSnacks);
+    setText('t-food-opt-snacks-sub', t.foodOptSnacksSub);
+    setText('t-food-opt-more-label', t.foodOptMoreLabel);
+    setText('t-food-pill-delivery', t.foodPillDelivery);
+    setText('t-food-pill-vegan', t.foodPillVegan);
+    setText('t-food-pill-quick', t.foodPillQuick);
+    setText('t-food-pill-drinks', t.foodPillDrinks);
     setText('t-pill-series', t.pillSeries);
     setText('t-pill-datenight', t.pillDatenight);
     setText('t-pill-weekend', t.pillWeekend);
@@ -2873,7 +2887,7 @@ function resetToHome() {
 }
 
 function isAnyModalOpen() {
-    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal', 'modal-pass-play']
+    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal', 'modal-pass-play', 'modal-food-picker']
         .some(id => {
             const el = document.getElementById(id);
             return el && !el.classList.contains('hidden');
@@ -4179,4 +4193,21 @@ function initSmartContextPill() {
 
 function handleContextPillClick() {
     startGame(currentContextDeckId || 'dinner');
+}
+
+function openFoodPickerModal() {
+    hidePwaBannerTemp();
+    resetConfettiSafe();
+    const modal = document.getElementById('modal-food-picker');
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closeFoodPickerModal() {
+    const modal = document.getElementById('modal-food-picker');
+    if (modal) modal.classList.add('hidden');
+}
+
+function selectFoodDeck(deckId) {
+    closeFoodPickerModal();
+    startGame(deckId);
 }

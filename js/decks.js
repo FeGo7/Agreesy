@@ -11,11 +11,11 @@ const DECKS = {
         "icon": "🍔",
         "gradient": "from-orange-500 to-rose-600",
         "title": {
-            "de": "Was essen wir heute?",
-            "en": "What Should We Eat?",
-            "es": "¿Qué comemos hoy?",
-            "fr": "On mange quoi ?",
-            "it": "Cosa mangiamo oggi?"
+            "de": "Abendessen",
+            "en": "Dinner",
+            "es": "Cena",
+            "fr": "Dîner",
+            "it": "Cena"
         },
         "sub": {
             "de": "8 schnelle Ideen gegen den Hunger",
@@ -914,6 +914,77 @@ const DECKS = {
                 "tag": { "de": "Außer Haus", "en": "Local Spot", "es": "Menú del Día", "fr": "À Emporter", "it": "Fuori Casa" },
                 "title": { "de": "Mittagstisch / Imbiss um die Ecke", "en": "Local Lunch Special / Takeout", "es": "Menú del Día / Comida para Llevar", "fr": "Plat du Jour / Traiteur du Coin", "it": "Menù del Giorno / Takeaway" },
                 "desc": { "de": "Kurz frische Luft schnappen und was Warmes mitbringen.", "en": "Step out for fresh air and grab a fresh lunch special.", "es": "Salir a tomar el aire y traer algo rico.", "fr": "Prendre l'air et ramener un bon plat chaud.", "it": "Prendere aria fresca e portare via qualcosa di buono." }
+            }
+        ]
+    },
+    "snacks": {
+        "id": "snacks",
+        "category": "food",
+        "mode": "match",
+        "icon": "🍿",
+        "gradient": "from-pink-500 to-amber-600",
+        "title": {
+            "de": "Snacks & Süßes",
+            "en": "Snacks & Sweet Cravings",
+            "es": "Snacks y Picoteo",
+            "fr": "Snacks & Gourmandises",
+            "it": "Snack & Dolci"
+        },
+        "sub": {
+            "de": "Couch-Snacks, Fingerfood, Eis oder süßer Heißhunger",
+            "en": "Couch snacks, finger food, ice cream, or sweet cravings",
+            "es": "Picoteo de sofá, helado o antojo dulce",
+            "fr": "Grignotage canapé, glace ou envie sucrée",
+            "it": "Stuzzichini da divano, gelato o voglia di dolce"
+        },
+        "cards": [
+            {
+                "id": 0, "emoji": "🧀", "bg": "from-amber-500 to-orange-700",
+                "tag": { "de": "Herzhaft & Knusprig", "en": "Savory & Crispy", "es": "Salado", "fr": "Salé & Croquant", "it": "Salato e Croccante" },
+                "title": { "de": "Nachos mit Käse-Dip & Salsa", "en": "Loaded Nachos with Cheese Dip & Salsa", "es": "Nachos con Queso Fundido y Salsa", "fr": "Nachos au Fromage Fondu & Salsa", "it": "Nachos con Salsa al Formaggio" },
+                "desc": { "de": "Warm überbacken mit Jalapeños, Guacamole oder Sour Cream.", "en": "Warm tortilla chips with jalapeños, guac, or sour cream.", "es": "Con jalapeños, guacamole o crema agria.", "fr": "Chauds et gratinés avec jalapeños ou guacamole.", "it": "Caldi con jalapeños, guacamole o panna acida." }
+            },
+            {
+                "id": 1, "emoji": "🍦", "bg": "from-pink-500 to-rose-700",
+                "tag": { "de": "Eiszeit", "en": "Ice Cream", "es": "Helado", "fr": "Glace", "it": "Gelato" },
+                "title": { "de": "Eisbecher oder Pint auf der Couch", "en": "Ice Cream Pint or Sundae", "es": "Tarrina de Helado en el Sofá", "fr": "Pot de Glace sur le Canapé", "it": "Gelato sul Divano" },
+                "desc": { "de": "Zwei Löffel, ein großer Becher Cookie Dough oder Schoko-Fudge.", "en": "Two spoons, one tub of cookie dough or chocolate fudge.", "es": "Dos cucharas y un buen bote de helado.", "fr": "Deux cuillères, un grand pot bien gourmand.", "it": "Due cucchiaini e una vaschetta di gelato." }
+            },
+            {
+                "id": 2, "emoji": "🍿", "bg": "from-yellow-500 to-amber-700",
+                "tag": { "de": "Kino-Feeling", "en": "Movie Night", "es": "Cine en Casa", "fr": "Soirée Ciné", "it": "Serata Film" },
+                "title": { "de": "Warmes Popcorn, Chips & Flips", "en": "Warm Popcorn, Crisps & Salty Mix", "es": "Palomitas Calientes y Patatas", "fr": "Popcorn Chaud & Chips", "it": "Popcorn Caldi e Patatine" },
+                "desc": { "de": "Süß oder salzig – Hauptsache es raschelt ordentlich.", "en": "Sweet or salted – crispy comfort straight from the bowl.", "es": "Dulces o saladas, lo importante es picar.", "fr": "Sucré ou salé, l'essentiel est que ça croustille.", "it": "Dolci o salati, l'importante è sgranocchiare." }
+            },
+            {
+                "id": 3, "emoji": "🧁", "bg": "from-purple-600 to-fuchsia-800",
+                "tag": { "de": "Süßer Zahn", "en": "Sweet Tooth", "es": "Muy Dulce", "fr": "Douceur", "it": "Dolcezza" },
+                "title": { "de": "Schokolade, Cookies oder Brownies", "en": "Chocolate, Warm Cookies or Brownies", "es": "Chocolate, Galletas o Brownies", "fr": "Chocolat, Cookies ou Brownies", "it": "Cioccolato, Biscotti o Brownies" },
+                "desc": { "de": "Saftig, schokoladig und perfekt zu Tee, Milch oder Kakao.", "en": "Gooey, chocolatey, and perfect with tea or cold milk.", "es": "Tiernos, con mucho chocolate y perfectos para el antojo.", "fr": "Fondants et chocolatés pour calmer l'envie de sucré.", "it": "Morbidi e cioccolatosi per una pausa dolce." }
+            },
+            {
+                "id": 4, "emoji": "🥞", "bg": "from-orange-500 to-red-700",
+                "tag": { "de": "Warm & Süß", "en": "Warm Treat", "es": "Recién Hecho", "fr": "Chaud & Sucré", "it": "Caldo e Dolce" },
+                "title": { "de": "Frische Waffeln oder Crêpes", "en": "Fresh Waffles or Sweet Crêpes", "es": "Gofres o Crêpes Recién Hechos", "fr": "Gaufres ou Crêpes Maison", "it": "Waffle o Crêpes Calde" },
+                "desc": { "de": "Mit Nuss-Nougat-Creme, Zimt-Zucker oder heißen Kirschen.", "en": "With hazelnut spread, cinnamon sugar, or warm berries.", "es": "Con crema de cacao, azúcar y canela o fruta.", "fr": "Avec pâte à tartiner, sucre cannelle ou fruits.", "it": "Con crema alla nocciola, zucchero o frutti caldi." }
+            },
+            {
+                "id": 5, "emoji": "🥔", "bg": "from-amber-600 to-stone-800",
+                "tag": { "de": "Fingerfood", "en": "Finger Food", "es": "Para Picar", "fr": "Finger Food", "it": "Sfizioso" },
+                "title": { "de": "Pommes, Wedges oder Ofen-Fingerfood", "en": "Crispy Fries, Wedges or Finger Food", "es": "Patatas Gajo o Finger Food al Horno", "fr": "Frites, Wedges ou Finger Food", "it": "Patatine, Wedges o Finger Food" },
+                "desc": { "de": "Knusprig aus Ofen oder Airfryer mit Ketchup, Mayo & Aioli.", "en": "Crispy from the oven or airfryer with garlic aioli & dips.", "es": "Crujientes al horno con tus salsas favoritas.", "fr": "Croustillantes au four avec sauces maison.", "it": "Croccanti al forno con maionese e salse." }
+            },
+            {
+                "id": 6, "emoji": "🫒", "bg": "from-emerald-600 to-teal-800",
+                "tag": { "de": "Savory Board", "en": "Grazing Board", "es": "Tabla de Picoteo", "fr": "Planche Apéro", "it": "Tagliere" },
+                "title": { "de": "Käse-, Oliven- & Antipasti-Platte", "en": "Cheese, Olives & Tapas Board", "es": "Tabla de Quesos, Olivas y Tapas", "fr": "Planche Fromage, Olives & Tapas", "it": "Tagliere di Formaggi e Olive" },
+                "desc": { "de": "Trauben, Cracker, Parmesan, Oliven und ein gutes Glas dazu.", "en": "Grapes, crackers, aged cheese, olives, and a good drink.", "es": "Uvas, picos, queso curado y aceitunas para compartir.", "fr": "Raisin, crackers, fromage affiné et olives à partager.", "it": "Uva, cracker, formaggi, olive e un buon calice." }
+            },
+            {
+                "id": 7, "emoji": "🍊", "bg": "from-rose-500 to-orange-600",
+                "tag": { "de": "Frisch & Leicht", "en": "Fresh & Light", "es": "Fresco", "fr": "Frais & Léger", "it": "Fresco" },
+                "title": { "de": "Obstteller mit Schoko-Dip oder Nüssen", "en": "Fresh Fruit Plate with Chocolate or Nuts", "es": "Fruta Fresca con Chocolate o Frutos Secos", "fr": "Assiette de Fruits & Chocolat", "it": "Frutta Fresca con Cioccolato o Noci" },
+                "desc": { "de": "Äpfel, Mandarinen, Trauben & Erdnussbutter oder dunkle Schoki.", "en": "Crisp fruit slices with dark chocolate or peanut butter.", "es": "Fruta cortada con chocolate negro o frutos secos.", "fr": "Fruits frais avec chocolat noir ou beurre de cacahuète.", "it": "Frutta tagliata con cioccolato fondente o noci." }
             }
         ]
     },

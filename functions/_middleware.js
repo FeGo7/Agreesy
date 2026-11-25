@@ -19,7 +19,8 @@ const MARKDOWN_DOC = `# Agreesy (https://agreesy.com)
 `;
 
 const DECK_OG_META = {
-  dinner: { e: '🍔', de: 'Was essen wir heute?', en: 'What to Eat Picker', es: '¿Qué comemos hoy?', fr: 'On mange quoi ?', it: 'Cosa mangiamo oggi?' },
+  dinner: { e: '🍔', de: 'Abendessen', en: 'Dinner', es: 'Cena', fr: 'Dîner', it: 'Cena' },
+  snacks: { e: '🍿', de: 'Snacks & Süßes', en: 'Snacks & Sweet Cravings', es: 'Snacks y Picoteo', fr: 'Snacks & Gourmandises', it: 'Snack & Dolci' },
   breakfast: { e: '🥐', de: 'Frühstück & Brunch', en: 'Breakfast & Brunch', es: 'Desayuno y Brunch', fr: 'Petit-Déj & Brunch', it: 'Colazione & Brunch' },
   lunch: { e: '🥗', de: 'Mittagessen & Lunch', en: 'Lunch Break Picker', es: 'Comida y Almuerzo', fr: 'Pause Déjeuner', it: 'Pausa Pranzo' },
   streaming: { e: '🎬', de: 'Film-Entscheider', en: 'Movie Picker', es: '¿Qué película ver?', fr: 'Choix du Film', it: 'Quale film vedere?' },
