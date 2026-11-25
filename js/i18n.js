@@ -328,7 +328,12 @@ const I18N = {
         foodPillVegan: "🌱 Veggie & Vegan",
         foodPillDrinks: "🍸 Drinks & Cocktails",
         pillBoardgames: "Brettspiele",
-        pillGaming: "Gaming"
+        pillGaming: "Gaming",
+        timerAdd15: "+15s",
+        timeoutTitle: "Zeit abgelaufen!",
+        timeoutSub: "Du hast noch {rem} von {total} Karten vor dir. Möchtest du kurz verlängern?",
+        timeoutExtendBtn: "⏱️ +30 Sek. zum Fertigswipen",
+        timeoutFinishBtn: "Mit bisheriger Auswahl auswerten →"
     },
     en: {
         badge: "Quickstart · 8 cards in 30 sec.",
@@ -646,7 +651,12 @@ const I18N = {
         foodPillVegan: "🌱 Veggie & Vegan",
         foodPillDrinks: "🍸 Drinks & Cocktails",
         pillBoardgames: "Board Games",
-        pillGaming: "Gaming"
+        pillGaming: "Gaming",
+        timerAdd15: "+15s",
+        timeoutTitle: "Time's up!",
+        timeoutSub: "You still have {rem} of {total} cards left. Need 30 more seconds?",
+        timeoutExtendBtn: "⏱️ +30 sec to finish swiping",
+        timeoutFinishBtn: "Finish with current picks →"
     },
     es: {
         badge: "Inicio rápido · 8 cartas en 30 s",
@@ -964,7 +974,12 @@ const I18N = {
         foodPillVegan: "🌱 Veggie y Vegano",
         foodPillDrinks: "🍸 Cócteles",
         pillBoardgames: "Juegos de Mesa",
-        pillGaming: "Videojuegos"
+        pillGaming: "Videojuegos",
+        timerAdd15: "+15s",
+        timeoutTitle: "¡Tiempo agotado!",
+        timeoutSub: "Te quedan {rem} de {total} cartas. ¿Quieres 30 segundos más?",
+        timeoutExtendBtn: "⏱️ +30 s para terminar",
+        timeoutFinishBtn: "Terminar con mi selección actual →"
     },
     fr: {
         badge: "Accès rapide · 8 cartes en 30 s",
@@ -1282,7 +1297,12 @@ const I18N = {
         foodPillVegan: "🌱 Veggie & Vegan",
         foodPillDrinks: "🍸 Cocktails",
         pillBoardgames: "Jeux de Société",
-        pillGaming: "Jeux Vidéo"
+        pillGaming: "Jeux Vidéo",
+        timerAdd15: "+15s",
+        timeoutTitle: "Temps écoulé !",
+        timeoutSub: "Il te reste {rem} cartes sur {total}. Besoin de 30 secondes de plus ?",
+        timeoutExtendBtn: "⏱️ +30 s pour finir",
+        timeoutFinishBtn: "Valider mes choix actuels →"
     },
     it: {
         badge: "Avvio rapido · 8 carte in 30 s",
@@ -1600,6 +1620,11 @@ const I18N = {
         foodPillVegan: "🌱 Veggie & Vegan",
         foodPillDrinks: "🍸 Cocktail",
         pillBoardgames: "Giochi da Tavolo",
-        pillGaming: "Videogiochi"
+        pillGaming: "Videogiochi",
+        timerAdd15: "+15s",
+        timeoutTitle: "Tempo scaduto!",
+        timeoutSub: "Ti restano {rem} carte su {total}. Vuoi altri 30 secondi?",
+        timeoutExtendBtn: "⏱️ +30 s per finire",
+        timeoutFinishBtn: "Concludi con le scelte attuali →"
     }
 };

@@ -860,6 +860,7 @@ function setLang(lang) {
     setText('t-stage2-shuffle-btn', t.stage2ShuffleBtn);
     setText('t-pill-boardgames', t.pillBoardgames || 'Brettspiele');
     setText('t-pill-gaming', t.pillGaming || 'Gaming');
+    setText('btn-timer-boost', t.timerAdd15 || '+15s');
     setText('t-food-modal-title', t.foodModalTitle);
     setText('t-food-modal-sub', t.foodModalSub);
     setText('t-food-opt-breakfast', t.foodOptBreakfast);
@@ -1413,13 +1414,15 @@ function startFreshShuffleRound() {
 function startTimer() {
     clearInterval(timerInterval);
     timeLeft = 30;
+    closeTimeoutModal();
     updateTimerUI();
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerUI();
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            finishSwipingRound();
+            timerInterval = null;
+            handleRoundTimeout();
         }
     }, 1000);
 }
@@ -1427,11 +1430,71 @@ function startTimer() {
 function updateTimerUI() {
     const display = document.getElementById('timer-display');
     const bar = document.getElementById('timer-bar');
-    if (display) display.innerText = String(timeLeft).padStart(2, '0');
+    const boostBtn = document.getElementById('btn-timer-boost');
+    if (display) display.innerText = String(Math.max(0, timeLeft)).padStart(2, '0');
     if (bar) {
-        const pct = Math.max(0, (timeLeft / 30) * 100);
+        const pct = Math.max(0, Math.min(100, (timeLeft / 30) * 100));
         bar.style.width = pct + '%';
+        bar.style.background = (timeLeft <= 10) ? '#E05A3A' : 'var(--ring-green)';
     }
+    if (boostBtn) {
+        if (timeLeft > 0 && timeLeft <= 10) boostBtn.classList.remove('hidden');
+        else boostBtn.classList.add('hidden');
+    }
+}
+
+function extendRoundTimer(seconds) {
+    closeTimeoutModal();
+    timeLeft = Math.min(60, Math.max(0, timeLeft) + (seconds || 30));
+    updateTimerUI();
+    if (!timerInterval) {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerUI();
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                handleRoundTimeout();
+            }
+        }, 1000);
+    }
+}
+
+function handleRoundTimeout() {
+    const gameScreen = document.getElementById('screen-game');
+    if (!gameScreen || gameScreen.classList.contains('hidden') || currentCardIndex >= activeRoundCards.length) {
+        finishSwipingRound();
+        return;
+    }
+    const modal = document.getElementById('modal-timeout');
+    if (!modal) {
+        finishSwipingRound();
+        return;
+    }
+    const t = I18N[currentLang] || I18N.de;
+    const total = activeRoundCards.length;
+    const rem = Math.max(1, total - currentCardIndex);
+    const titleEl = document.getElementById('t-timeout-title');
+    const subEl = document.getElementById('t-timeout-sub');
+    const extBtn = document.getElementById('t-timeout-extend-btn');
+    const finBtn = document.getElementById('t-timeout-finish-btn');
+    if (titleEl) titleEl.innerText = t.timeoutTitle || 'Zeit abgelaufen!';
+    if (subEl) subEl.innerText = (t.timeoutSub || 'Du hast noch {rem} von {total} Karten vor dir.').replace('{rem}', rem).replace('{total}', total);
+    if (extBtn) extBtn.innerText = t.timeoutExtendBtn || '⏱️ +30 Sek. zum Fertigswipen';
+    if (finBtn) finBtn.innerText = t.timeoutFinishBtn || 'Mit bisheriger Auswahl auswerten →';
+    modal.classList.remove('hidden');
+}
+
+function closeTimeoutModal() {
+    const modal = document.getElementById('modal-timeout');
+    if (modal) modal.classList.add('hidden');
+}
+
+function confirmFinishAfterTimeout() {
+    closeTimeoutModal();
+    clearInterval(timerInterval);
+    timerInterval = null;
+    finishSwipingRound();
 }
 
 function renderCurrentCard() {
@@ -1550,6 +1613,7 @@ function renderCurrentCard() {
  * 6. SWIPE ACTIONS, SUDDEN-DEATH MATCH & ANTI-MATCH ENGINE
  **************************************************************/
 function handleSwipe(isLike) {
+    closeTimeoutModal();
     playSwipeClick(isLike);
     const deck = DECKS[currentDeckId];
     if (!deck || !activeRoundCards.length) return;
@@ -2887,7 +2951,7 @@ function resetToHome() {
 }
 
 function isAnyModalOpen() {
-    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal', 'modal-pass-play', 'modal-food-picker']
+    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal', 'modal-pass-play', 'modal-food-picker', 'modal-timeout']
         .some(id => {
             const el = document.getElementById(id);
             return el && !el.classList.contains('hidden');
@@ -2906,6 +2970,7 @@ function resetConfettiSafe() {
 }
 
 function showScreen(screenId) {
+    if (typeof closeTimeoutModal === 'function') closeTimeoutModal();
     [
         'screen-home',
         'screen-custom',
