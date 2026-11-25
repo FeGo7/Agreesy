@@ -700,11 +700,11 @@ function setLang(lang) {
     const t = I18N[lang];
     const setText = (id, val) => {
         const el = document.getElementById(id);
-        if (el && val !== undefined) el.innerText = val;
+        if (el && val !== undefined) setTextIfChanged(el, val);
     };
     const setHtml = (id, val) => {
         const el = document.getElementById(id);
-        if (el && val !== undefined) el.innerHTML = val;
+        if (el && val !== undefined) setHtmlIfChanged(el, val);
     };
 
     setText('t-badge', t.badge);
@@ -2724,6 +2724,22 @@ function handleHeroCardClick() {
     }
 }
 
+// LCP guard: only touch the DOM when the text actually changes, so the
+// pre-rendered hero text is not re-painted (and re-counted as LCP) after JS boots.
+function setTextIfChanged(el, val) {
+    if (!el || val === undefined || val === null) return;
+    const next = String(val);
+    if (el.textContent.trim() !== next.trim()) el.innerText = next;
+}
+function setHtmlIfChanged(el, val) {
+    if (!el || val === undefined || val === null) return;
+    const next = String(val);
+    if (el.innerHTML.trim() === next.trim()) return;
+    const probe = document.createElement('div');
+    probe.innerHTML = next;
+    if (probe.innerHTML.trim() !== el.innerHTML.trim()) el.innerHTML = next;
+}
+
 function updateHeroRoundCardUI() {
     const badgeEl = document.getElementById('t-badge');
     const titleEl = document.getElementById('t-hero-title');
@@ -2763,22 +2779,22 @@ function updateHeroRoundCardUI() {
             imgEl.src = `options_gallery/images/${FLUENT_EMOJI_MAP[card.emoji]}`;
         }
     } else {
-        if (badgeEl) badgeEl.innerText = t.badge;
+        setTextIfChanged(badgeEl, t.badge);
         if (titleEl) {
-            titleEl.innerHTML = (targetPlayerCount === 1 && t.heroTitleSolo) ? t.heroTitleSolo : t.heroTitle;
+            setHtmlIfChanged(titleEl, (targetPlayerCount === 1 && t.heroTitleSolo) ? t.heroTitleSolo : t.heroTitle);
         }
         if (subEl) {
             if (targetPlayerCount === 1) {
-                subEl.innerText = t.heroSubSolo || t.heroSub;
+                setTextIfChanged(subEl, t.heroSubSolo || t.heroSub);
             } else if (targetPlayerCount >= 3) {
-                subEl.innerText = (t.heroSubGroup || t.heroSub).replace('{count}', targetPlayerCount);
+                setTextIfChanged(subEl, (t.heroSubGroup || t.heroSub).replace('{count}', targetPlayerCount));
             } else {
-                subEl.innerText = t.heroSub;
+                setTextIfChanged(subEl, t.heroSub);
             }
         }
-        if (ctaEl) ctaEl.innerText = t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten';
-        if (ringEl) ringEl.setAttribute('stroke-dashoffset', '175');
-        if (imgEl) imgEl.src = 'options_gallery/images/thumbs/spaghetti_3d_96.webp';
+        setTextIfChanged(ctaEl, t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten');
+        if (ringEl && ringEl.getAttribute('stroke-dashoffset') !== '175') ringEl.setAttribute('stroke-dashoffset', '175');
+        if (imgEl && imgEl.getAttribute('src') !== 'options_gallery/images/thumbs/spaghetti_3d_96.webp') imgEl.src = 'options_gallery/images/thumbs/spaghetti_3d_96.webp';
     }
 
     // Update Chores Card Labels for Solo vs. Duo/Group Mode
