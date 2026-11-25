@@ -4,15 +4,26 @@
   "description": "Schluss mit 'Mir egal, sag du!': Wische durch kuratierte Decks und finde in 30 Sekunden gemeinsame Matches für Essen, Filme, Dates & Haushalts-Pflichten. (ID: 2d31)",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#090D16",
-  "theme_color": "#090D16",
+  "background_color": "#1B212E",
+  "theme_color": "#1B212E",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./icon.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ]
 }

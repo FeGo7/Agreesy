@@ -1,18 +1,14 @@
 // Agreesy Service Worker (Network-First for 100% instant UI updates, Cache for offline)
-const CACHE_NAME = 'agreesy-v45';
+const CACHE_NAME = 'agreesy-v46';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon.svg',
+  './icon-64.webp',
+  './icon-192.png',
   './css/style.min.css',
-  './js/app.js',
-  './js/decks.js',
-  './js/media_picks.js',
-  './js/i18n.js',
-  './js/fluent_map.js',
-  './js/logos.js',
-  './js/theme.js'
+  './js/bundle.min.js'
 ];
 
 self.addEventListener('install', (event) => {

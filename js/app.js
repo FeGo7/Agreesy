@@ -2731,7 +2731,7 @@ function updateHeroRoundCardUI() {
         }
         if (ctaEl) ctaEl.innerText = t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten';
         if (ringEl) ringEl.setAttribute('stroke-dashoffset', '175');
-        if (imgEl) imgEl.src = 'options_gallery/images/spaghetti_3d.png';
+        if (imgEl) imgEl.src = 'options_gallery/images/thumbs/spaghetti_3d_96.webp';
     }
 
     // Update Chores Card Labels for Solo vs. Duo/Group Mode
@@ -3536,16 +3536,31 @@ async function shareMatchCardImage(kind) {
     ctx.fill();
     ctx.stroke();
 
-    // 3. Agreesy Double-Circle Logo + Wordmark Top Left
-    ctx.strokeStyle = '#E8ECF2';
-    ctx.lineWidth = 6;
-    ctx.beginPath();
-    ctx.arc(146, 154, 18, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.strokeStyle = '#F07153';
-    ctx.beginPath();
-    ctx.arc(166, 154, 18, 0, Math.PI * 2);
-    ctx.stroke();
+    // 3. Agreesy App Logo + Wordmark Top Left
+    try {
+        const logoImg = await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = './icon-192.png';
+        });
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(122, 126, 56, 56, 14);
+        ctx.clip();
+        ctx.drawImage(logoImg, 122, 126, 56, 56);
+        ctx.restore();
+    } catch (e) {
+        ctx.strokeStyle = '#E8ECF2';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.arc(146, 154, 18, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.strokeStyle = '#F07153';
+        ctx.beginPath();
+        ctx.arc(166, 154, 18, 0, Math.PI * 2);
+        ctx.stroke();
+    }
 
     ctx.fillStyle = '#FFFFFF';
     ctx.font = '700 40px "Plus Jakarta Sans", -apple-system, sans-serif';
