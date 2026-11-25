@@ -96,7 +96,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="css/style.min.css?v=11">
+    <link rel="stylesheet" href="css/style.min.css?v=12">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
     <style>
         :root {
@@ -1253,99 +1253,142 @@
     </div>
 
     <!-- Floating PWA Install Banner -->
-    <div id="pwa-install-banner" class="hidden fixed bottom-4 left-4 right-4 max-w-md mx-auto z-40 surface-raised border border-[var(--border)] rounded-[16px] p-3 shadow-2xl backdrop-blur-md flex items-center justify-between gap-3 animate-fade-in">
-        <div class="flex items-center gap-2.5 min-w-0">
-            <img src="icon-64.webp" alt="Agreesy" width="36" height="36" loading="lazy" decoding="async" class="w-9 h-9 rounded-[9px] shadow-sm shrink-0 border border-black/10 dark:border-white/10">
-            <div class="min-w-0">
-                <div class="text-[13px] font-semibold text-primary-role truncate" id="t-pwa-banner-title">Zum Startbildschirm hinzufügen</div>
-                <div class="text-[11px] text-secondary-role truncate" id="t-pwa-banner-sub">Läuft wie eine App im Vollbild – ohne Download</div>
+    <div id="pwa-install-banner" class="hidden fixed bottom-4 left-3 right-3 sm:left-4 sm:right-4 max-w-md mx-auto z-40 surface border border-[var(--border)] rounded-[18px] p-3.5 shadow-2xl backdrop-blur-md flex flex-col gap-2.5 animate-fade-in">
+        <div class="flex items-start gap-3">
+            <img src="icon-64.webp" alt="Agreesy" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-[11px] shadow-sm shrink-0 border border-black/10 dark:border-white/10">
+            <div class="flex-1 min-w-0">
+                <div class="text-[14px] font-bold text-primary-role leading-snug" id="t-pwa-banner-title">Agreesy als App speichern</div>
+                <p class="text-[12px] text-secondary-role leading-snug mt-0.5" id="t-pwa-banner-sub">Starte direkt vom Startbildschirm im Vollbild – 100% kostenlos &amp; ohne App-Store-Download.</p>
+                <div class="text-[11.5px] font-semibold text-[#B83B1D] dark:text-[#F48265] leading-snug mt-1" id="t-pwa-banner-os-hint">🍎 iPhone / iPad: In 3 kurzen Schritten über Safari-Teilen</div>
             </div>
+            <button type="button" onclick="dismissPwaBanner()" aria-label="Schließen" class="w-7 h-7 rounded-[8px] surface-raised flex items-center justify-center text-xs text-secondary-role hover:text-primary-role transition-colors shrink-0" title="Schließen">✕</button>
         </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-            <button onclick="handlePwaInstallClick()" id="t-pwa-banner-btn" class="h-8 px-3 rounded-[8px] btn-primary text-[12px] font-medium shadow-sm">
-                Hinzufügen
+        <div class="flex items-center gap-2">
+            <button type="button" onclick="handlePwaInstallClick()" id="t-pwa-banner-btn" class="flex-1 h-9 px-3 rounded-[10px] btn-primary text-[12.5px] font-semibold shadow-sm text-center">
+                So geht's (iOS &amp; Android)
             </button>
-            <button onclick="dismissPwaBanner()" class="w-7 h-7 rounded-[6px] surface flex items-center justify-center text-xs text-muted-role hover:text-primary-role transition-colors" title="Schließen">✕</button>
+            <button type="button" onclick="openPwaModal()" id="t-pwa-banner-guide-btn" class="hidden h-9 px-3 rounded-[10px] btn-secondary text-[12px] font-medium shrink-0">
+                Anleitung
+            </button>
         </div>
     </div>
 
     <!-- PWA Install Modal (OS-Tailored Instructions) -->
-    <div id="modal-pwa-install" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4">
+    <div id="modal-pwa-install" onclick="if(event.target===this) closePwaModal()" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4">
         <div class="w-full max-w-md surface rounded-[18px] p-5 max-h-[90vh] flex flex-col shadow-2xl">
             <!-- Modal Header -->
-            <div class="flex items-center justify-between pb-3 border-b border-[var(--border)]">
-                <div class="flex items-center gap-2.5">
-                    <img src="icon-64.webp" alt="Agreesy" width="28" height="28" loading="lazy" decoding="async" class="w-7 h-7 rounded-[7px] shadow-sm">
-                    <h3 id="pwa-modal-title" class="text-[16px] font-semibold text-primary-role">Agreesy zum Startbildschirm</h3>
+            <div class="flex items-center justify-between gap-2 pb-3 border-b border-[var(--border)] shrink-0">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <img src="icon-64.webp" alt="Agreesy" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8 rounded-[8px] shadow-sm shrink-0">
+                    <h3 id="pwa-modal-title" class="text-[16px] font-bold text-primary-role leading-snug">Agreesy zum Startbildschirm hinzufügen</h3>
                 </div>
-                <button onclick="closePwaModal()" class="w-7 h-7 rounded-[6px] surface-raised flex items-center justify-center text-xs text-secondary-role hover:text-primary-role transition-colors">✕</button>
+                <button type="button" onclick="closePwaModal()" aria-label="Schließen" class="w-7 h-7 rounded-[6px] surface-raised flex items-center justify-center text-xs text-secondary-role hover:text-primary-role transition-colors shrink-0">✕</button>
             </div>
 
-            <!-- Modal Subtitle -->
-            <p id="pwa-modal-sub" class="text-[13px] text-secondary-role mt-3 mb-3 leading-relaxed">
-                Installiere Agreesy in 10 Sekunden als Web-App – ohne App-Store-Download und 100% kostenlos.
-            </p>
+            <!-- Scrollable Body -->
+            <div class="overflow-y-auto flex-1 pr-0.5 pt-3 pb-1">
+                <!-- Modal Subtitle + Benefits -->
+                <p id="pwa-modal-sub" class="text-[13px] text-secondary-role leading-relaxed mb-3">
+                    Nutze Agreesy wie eine echte App direkt auf deinem Homescreen – ohne Speicherfresser, ohne Login und ohne App-Store-Download.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mb-3.5">
+                    <span id="pwa-benefit-1" class="px-2.5 py-1 rounded-full surface-raised border border-[var(--border)] text-[11px] font-semibold text-primary-role">⚡ 1-Tipp-Start</span>
+                    <span id="pwa-benefit-2" class="px-2.5 py-1 rounded-full surface-raised border border-[var(--border)] text-[11px] font-semibold text-primary-role">📱 Echtes Vollbild</span>
+                    <span id="pwa-benefit-3" class="px-2.5 py-1 rounded-full surface-raised border border-[var(--border)] text-[11px] font-semibold text-primary-role">🔒 Kein App Store</span>
+                </div>
 
-            <!-- OS Switcher Tabs -->
-            <div class="flex rounded-[10px] surface-raised p-1 mb-3.5 gap-1">
-                <button type="button" onclick="switchPwaTab('ios')" id="pwa-tab-ios" class="flex-1 py-1.5 rounded-[8px] text-[12px] font-medium text-center transition-all">
-                    🍎 Apple iOS
-                </button>
-                <button type="button" onclick="switchPwaTab('android')" id="pwa-tab-android" class="flex-1 py-1.5 rounded-[8px] text-[12px] font-medium text-center transition-all">
-                    🤖 Android
-                </button>
-                <button type="button" onclick="switchPwaTab('desktop')" id="pwa-tab-desktop" class="flex-1 py-1.5 rounded-[8px] text-[12px] font-medium text-center transition-all">
-                    💻 PC / Mac
-                </button>
-            </div>
+                <!-- OS Switcher Tabs -->
+                <div class="flex rounded-[10px] surface-raised p-1 mb-3.5 gap-1">
+                    <button type="button" onclick="switchPwaTab('ios')" id="pwa-tab-ios" class="flex-1 py-1.5 px-1 rounded-[8px] text-[11.5px] font-medium text-center leading-tight transition-all">
+                        🍎 iPhone / iPad
+                    </button>
+                    <button type="button" onclick="switchPwaTab('android')" id="pwa-tab-android" class="flex-1 py-1.5 px-1 rounded-[8px] text-[11.5px] font-medium text-center leading-tight transition-all">
+                        🤖 Android
+                    </button>
+                    <button type="button" onclick="switchPwaTab('desktop')" id="pwa-tab-desktop" class="flex-1 py-1.5 px-1 rounded-[8px] text-[11.5px] font-medium text-center leading-tight transition-all">
+                        💻 PC / Mac
+                    </button>
+                </div>
 
-            <!-- iOS Content -->
-            <div id="pwa-content-ios" class="space-y-2.5 text-[13px] text-secondary-role pb-2">
-                <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
-                    <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">1</span>
-                    <span id="pwa-ios-step1" class="leading-snug">Tippe unten in Safari auf das <strong>Teilen-Symbol</strong> (Viereck mit Pfeil nach oben).</span>
+                <!-- iOS Content -->
+                <div id="pwa-content-ios" class="space-y-2.5 text-[13px] text-secondary-role pb-1">
+                    <div class="flex items-center justify-between gap-2">
+                        <h4 id="pwa-ios-title" class="text-[12.5px] font-bold text-primary-role">Anleitung für iPhone &amp; iPad (Safari)</h4>
+                        <span id="pwa-detected-ios" class="hidden text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] shrink-0">Dein Gerät</span>
+                    </div>
+                    <div id="pwa-ios-note" class="surface-raised border border-[#E05A3A]/25 rounded-[12px] p-2.5 text-[12px] text-primary-role leading-snug">
+                        Wichtig: Öffne <strong>agreesy.com</strong> dafür direkt in <strong>Safari</strong> (nicht im WhatsApp- oder Instagram-Browser).
+                    </div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">1</span>
+                        <span id="pwa-ios-step1" class="leading-snug flex-1">Tippe unten in Safari auf das <strong>Teilen-Symbol</strong> (Viereck mit Pfeil nach oben).</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary-role shrink-0 mt-0.5" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                    </div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">2</span>
+                        <span id="pwa-ios-step2" class="leading-snug flex-1">Scrolle im Menü etwas nach unten und wähle <strong>„Zum Home-Bildschirm“</strong> (Plus-Symbol).</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary-role shrink-0 mt-0.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    </div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">3</span>
+                        <span id="pwa-ios-step3" class="leading-snug flex-1">Tippe oben rechts auf <strong>„Hinzufügen“</strong> – schon erscheint das Agreesy-Icon auf deinem Homescreen!</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary-role shrink-0 mt-0.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
                 </div>
-                <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
-                    <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">2</span>
-                    <span id="pwa-ios-step2" class="leading-snug">Scrolle nach unten und wähle <strong>„Zum Home-Bildschirm“</strong> (mit dem Plus-Zeichen).</span>
-                </div>
-                <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
-                    <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">3</span>
-                    <span id="pwa-ios-step3" class="leading-snug">Tippe oben rechts auf <strong>„Hinzufügen“</strong> – fertig!</span>
-                </div>
-            </div>
 
-            <!-- Android Content -->
-            <div id="pwa-content-android" class="space-y-2.5 text-[13px] text-secondary-role pb-2 hidden">
-                <button id="pwa-android-install-direct-btn" onclick="triggerNativeInstallPrompt()" class="w-full h-11 rounded-[10px] btn-primary text-[13px] font-medium hidden items-center justify-center gap-2 mb-2">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span id="pwa-android-btn-text">Jetzt direkt installieren</span>
-                </button>
-                <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
-                    <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">1</span>
-                    <span id="pwa-android-step1" class="leading-snug">Tippe oben rechts auf das <strong>Drei-Punkte-Menü</strong> (⋮).</span>
+                <!-- Android Content -->
+                <div id="pwa-content-android" class="space-y-2.5 text-[13px] text-secondary-role pb-1 hidden">
+                    <div class="flex items-center justify-between gap-2">
+                        <h4 id="pwa-android-title" class="text-[12.5px] font-bold text-primary-role">Anleitung für Android (Chrome / Samsung)</h4>
+                        <span id="pwa-detected-android" class="hidden text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] shrink-0">Dein Gerät</span>
+                    </div>
+                    <button type="button" id="pwa-android-install-direct-btn" onclick="triggerNativeInstallPrompt()" class="w-full h-11 rounded-[10px] btn-primary text-[13px] font-semibold hidden items-center justify-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span id="pwa-android-btn-text">Jetzt direkt installieren</span>
+                    </button>
+                    <div id="pwa-android-manual-label" class="text-[11.5px] font-semibold text-primary-role pt-0.5">Oder manuell im Browser (Chrome / Samsung Internet):</div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">1</span>
+                        <span id="pwa-android-step1" class="leading-snug flex-1">Tippe oben rechts in Chrome oder Samsung Internet auf das <strong>Drei-Punkte-Menü</strong> (⋮).</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-secondary-role shrink-0 mt-0.5" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">2</span>
+                        <span id="pwa-android-step2" class="leading-snug flex-1">Wähle <strong>„App installieren“</strong> oder <strong>„Zum Startbildschirm hinzufügen“</strong>.</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary-role shrink-0 mt-0.5" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">3</span>
+                        <span id="pwa-android-step3" class="leading-snug flex-1">Bestätige kurz mit <strong>„Installieren“</strong> – fertig, Agreesy startet ab jetzt im Vollbild!</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary-role shrink-0 mt-0.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
                 </div>
-                <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
-                    <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">2</span>
-                    <span id="pwa-android-step2" class="leading-snug">Wähle <strong>„App installieren“</strong> oder <strong>„Zum Startbildschirm hinzufügen“</strong>.</span>
-                </div>
-            </div>
 
-            <!-- Desktop Content -->
-            <div id="pwa-content-desktop" class="space-y-2.5 text-[13px] text-secondary-role pb-2 hidden">
-                <button id="pwa-desktop-install-direct-btn" onclick="triggerNativeInstallPrompt()" class="w-full h-11 rounded-[10px] btn-primary text-[13px] font-medium hidden items-center justify-center gap-2 mb-2">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span id="pwa-desktop-btn-text">Auf Computer installieren</span>
-                </button>
-                <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
-                    <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">1</span>
-                    <span id="pwa-desktop-step1" class="leading-snug">Klicke rechts in der Adressleiste auf das <strong>Installieren-Symbol</strong> (⊕) oder im Browsermenü auf <strong>„Agreesy installieren“</strong>.</span>
+                <!-- Desktop Content -->
+                <div id="pwa-content-desktop" class="space-y-2.5 text-[13px] text-secondary-role pb-1 hidden">
+                    <div class="flex items-center justify-between gap-2">
+                        <h4 id="pwa-desktop-title" class="text-[12.5px] font-bold text-primary-role">Anleitung für PC &amp; Mac (Chrome / Edge / Safari)</h4>
+                        <span id="pwa-detected-desktop" class="hidden text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] shrink-0">Dein Gerät</span>
+                    </div>
+                    <button type="button" id="pwa-desktop-install-direct-btn" onclick="triggerNativeInstallPrompt()" class="w-full h-11 rounded-[10px] btn-primary text-[13px] font-semibold hidden items-center justify-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span id="pwa-desktop-btn-text">Auf Computer installieren</span>
+                    </button>
+                    <div id="pwa-desktop-manual-label" class="text-[11.5px] font-semibold text-primary-role pt-0.5">Oder manuell im Desktop-Browser:</div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">1</span>
+                        <span id="pwa-desktop-step1" class="leading-snug flex-1">In <strong>Chrome oder Edge</strong>: Klicke rechts in der Adressleiste auf das <strong>Installieren-Symbol</strong> (⊕) oder im Menü auf <strong>„Agreesy installieren“</strong>.</span>
+                    </div>
+                    <div class="flex items-start gap-3 surface-raised p-2.5 rounded-[12px]">
+                        <span class="w-6 h-6 rounded-full bg-[#E05A3A]/15 text-[#B83B1D] dark:text-[#F48265] font-semibold text-xs flex items-center justify-center shrink-0">2</span>
+                        <span id="pwa-desktop-step2" class="leading-snug flex-1">In <strong>Safari auf Mac</strong>: Klicke oben in der Menüleiste auf <strong>Ablage → Zum Dock hinzufügen</strong>.</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Modal Footer -->
-            <div class="pt-3 border-t border-[var(--border)] mt-2">
-                <button onclick="closePwaModal()" id="pwa-modal-close-btn" class="w-full h-10 rounded-[8px] btn-secondary font-medium text-[13px]">
+            <div class="pt-3 border-t border-[var(--border)] mt-2 shrink-0">
+                <button type="button" onclick="closePwaModal()" id="pwa-modal-close-btn" class="w-full h-10 rounded-[8px] btn-secondary font-medium text-[13px]">
                     Schließen
                 </button>
             </div>
@@ -1427,13 +1470,13 @@
         </div>
     </div>
 
-    <!-- Bundled & Minified App Scripts v46 -->
-    <script src="js/bundle.min.js?v=46" defer></script>
+    <!-- Bundled & Minified App Scripts v47 -->
+    <script src="js/bundle.min.js?v=47" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             const hadController = !!navigator.serviceWorker.controller;
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=46')
+                navigator.serviceWorker.register('./sw.js?v=47')
                     .then(reg => {
                         reg.update();
                     })

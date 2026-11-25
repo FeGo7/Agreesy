@@ -903,19 +903,36 @@ function setLang(lang) {
     // PWA Install Texts
     setText('t-pwa-banner-title', t.pwaBannerTitle);
     setText('t-pwa-banner-sub', t.pwaBannerSub);
-    setText('t-pwa-banner-btn', t.pwaBannerBtn);
+    setText('t-pwa-banner-guide-btn', t.pwaBannerBtn);
     setText('t-footer-pwa', t.pwaFooterBtn);
     setText('pwa-modal-title', t.pwaModalTitle);
     setText('pwa-modal-sub', t.pwaModalSub);
+    setText('pwa-benefit-1', t.pwaBenefit1);
+    setText('pwa-benefit-2', t.pwaBenefit2);
+    setText('pwa-benefit-3', t.pwaBenefit3);
+    setText('pwa-tab-ios', t.pwaTabIos);
+    setText('pwa-tab-android', t.pwaTabAndroid);
+    setText('pwa-tab-desktop', t.pwaTabDesktop);
+    setText('pwa-ios-title', t.pwaIosTitle);
+    setHtml('pwa-ios-note', t.pwaIosNote);
     setHtml('pwa-ios-step1', t.pwaIosStep1);
     setHtml('pwa-ios-step2', t.pwaIosStep2);
     setHtml('pwa-ios-step3', t.pwaIosStep3);
+    setText('pwa-android-title', t.pwaAndroidTitle);
     setText('pwa-android-btn-text', t.pwaAndroidBtn);
+    setText('pwa-android-manual-label', t.pwaAndroidManualLabel);
     setHtml('pwa-android-step1', t.pwaAndroidStep1);
     setHtml('pwa-android-step2', t.pwaAndroidStep2);
+    setHtml('pwa-android-step3', t.pwaAndroidStep3);
+    setText('pwa-desktop-title', t.pwaDesktopTitle);
     setText('pwa-desktop-btn-text', t.pwaDesktopBtn);
+    setText('pwa-desktop-manual-label', t.pwaDesktopManualLabel);
     setHtml('pwa-desktop-step1', t.pwaDesktopStep1);
+    setHtml('pwa-desktop-step2', t.pwaDesktopStep2);
     setText('pwa-modal-close-btn', t.pwaCloseBtn);
+    if (typeof updatePwaBannerForPlatform === 'function') {
+        updatePwaBannerForPlatform();
+    }
 
     renderCategoryFilter();
     renderDeckList();
@@ -3062,6 +3079,10 @@ function initPwaInstall() {
         if (footerBtn) footerBtn.classList.add('hidden');
     });
 
+    if (typeof updatePwaBannerForPlatform === 'function') {
+        updatePwaBannerForPlatform();
+    }
+
     setTimeout(() => {
         checkAndShowPwaBanner();
     }, 2500);
@@ -3112,6 +3133,45 @@ function triggerNativeInstallPrompt() {
     });
 }
 
+function updatePwaBannerForPlatform() {
+    const t = I18N[currentLang] || I18N.de;
+    const platform = detectUserPlatform();
+
+    const hintEl = document.getElementById('t-pwa-banner-os-hint');
+    if (hintEl) {
+        hintEl.innerText = platform === 'ios'
+            ? (t.pwaBannerHintIos || '')
+            : (platform === 'android' ? (t.pwaBannerHintAndroid || '') : (t.pwaBannerHintDesktop || ''));
+    }
+
+    const primaryBtn = document.getElementById('t-pwa-banner-btn');
+    const guideBtn = document.getElementById('t-pwa-banner-guide-btn');
+    if (primaryBtn) {
+        primaryBtn.innerText = deferredPwaPrompt
+            ? (t.pwaBannerBtnDirect || t.pwaAndroidBtn || 'Jetzt direkt installieren')
+            : (t.pwaBannerBtn || "So geht's");
+    }
+    if (guideBtn) {
+        guideBtn.innerText = t.pwaBannerBtn || "So geht's";
+        if (deferredPwaPrompt) {
+            guideBtn.classList.remove('hidden');
+        } else {
+            guideBtn.classList.add('hidden');
+        }
+    }
+
+    ['ios', 'android', 'desktop'].forEach(p => {
+        const badgeEl = document.getElementById(`pwa-detected-${p}`);
+        if (!badgeEl) return;
+        badgeEl.innerText = t.pwaDetectedBadge || 'Dein Gerät';
+        if (p === platform) {
+            badgeEl.classList.remove('hidden');
+        } else {
+            badgeEl.classList.add('hidden');
+        }
+    });
+}
+
 function updatePwaDirectInstallButtons(available) {
     const androidBtn = document.getElementById('pwa-android-install-direct-btn');
     const desktopBtn = document.getElementById('pwa-desktop-install-direct-btn');
@@ -3133,6 +3193,7 @@ function updatePwaDirectInstallButtons(available) {
             desktopBtn.classList.remove('flex');
         }
     }
+    updatePwaBannerForPlatform();
 }
 
 function openPwaModal(forcedTab) {
