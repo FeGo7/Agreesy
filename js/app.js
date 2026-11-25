@@ -858,6 +858,8 @@ function setLang(lang) {
     setText('t-profile-blacklist-title', t.profileBlacklistTitle);
     setText('t-profile-blacklist-reset', t.profileBlacklistReset);
     setText('t-stage2-shuffle-btn', t.stage2ShuffleBtn);
+    setText('t-pill-breakfast', t.pillBreakfast);
+    setText('t-pill-lunch', t.pillLunch);
     setText('t-pill-vegan', t.pillVegan);
     setText('t-pill-series', t.pillSeries);
     setText('t-pill-datenight', t.pillDatenight);
@@ -2778,64 +2780,55 @@ function updateHeroRoundCardUI() {
     const badgeEl = document.getElementById('t-badge');
     const titleEl = document.getElementById('t-hero-title');
     const subEl = document.getElementById('t-hero-sub');
+    const resumeCard = document.getElementById('home-active-round-card');
+    const resumeBadge = document.getElementById('t-active-round-badge');
+    const resumeTitle = document.getElementById('t-active-round-title');
     const ctaEl = document.getElementById('hero-cta-text');
     const ringEl = document.getElementById('hero-ring-circle');
     const imgEl = document.getElementById('hero-ring-img');
     const t = I18N[currentLang] || I18N.de;
 
+    setTextIfChanged(badgeEl, t.badge);
+    if (titleEl) {
+        setHtmlIfChanged(titleEl, (targetPlayerCount === 1 && t.heroTitleSolo) ? t.heroTitleSolo : t.heroTitle);
+    }
+    if (subEl) {
+        if (targetPlayerCount === 1) {
+            setTextIfChanged(subEl, t.heroSubSolo || t.heroSub);
+        } else if (targetPlayerCount >= 3) {
+            setTextIfChanged(subEl, (t.heroSubGroup || t.heroSub).replace('{count}', targetPlayerCount));
+        } else {
+            setTextIfChanged(subEl, t.heroSub);
+        }
+    }
+
     const hasActiveRound = currentDeckId && DECKS[currentDeckId] && activeRoundCards.length > 0 && currentCardIndex < activeRoundCards.length;
-    if (hasActiveRound) {
-        const deck = DECKS[currentDeckId];
-        const card = activeRoundCards[currentCardIndex] || activeRoundCards[0];
-        const num = currentCardIndex + 1;
-        const total = activeRoundCards.length;
-        const remaining = total - num + 1;
-
-        if (badgeEl) {
-            badgeEl.innerText = (t.heroActiveBadge || "Aktive Runde · Karte {num} von {total}")
-                .replace('{num}', num)
-                .replace('{total}', total);
-        }
-        if (titleEl) titleEl.innerText = deck.title[currentLang] || deck.title.de;
-        if (subEl) {
-            subEl.innerText = (t.heroActiveSub || "Noch {rem} Karten offen")
-                .replace('{rem}', remaining);
-        }
-        if (ctaEl) ctaEl.innerText = num === 1 ? (t.heroCtaStart || 'Runde jetzt starten') : (t.heroCtaResume || 'Runde fortsetzen');
-
-        if (ringEl) {
-            const circumference = 207;
-            const offset = circumference - (num / Math.max(1, total)) * circumference;
-            ringEl.setAttribute('stroke', 'var(--text-primary)');
-            ringEl.setAttribute('stroke-dashoffset', Math.round(offset));
-        }
-
-        if (imgEl && card && typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji && FLUENT_EMOJI_MAP[card.emoji]) {
-            imgEl.src = `options_gallery/images/${FLUENT_EMOJI_MAP[card.emoji]}`;
-            imgEl.className = 'w-9 h-9 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]';
-        }
-    } else {
-        setTextIfChanged(badgeEl, t.badge);
-        if (titleEl) {
-            setHtmlIfChanged(titleEl, (targetPlayerCount === 1 && t.heroTitleSolo) ? t.heroTitleSolo : t.heroTitle);
-        }
-        if (subEl) {
-            if (targetPlayerCount === 1) {
-                setTextIfChanged(subEl, t.heroSubSolo || t.heroSub);
-            } else if (targetPlayerCount >= 3) {
-                setTextIfChanged(subEl, (t.heroSubGroup || t.heroSub).replace('{count}', targetPlayerCount));
-            } else {
-                setTextIfChanged(subEl, t.heroSub);
+    if (resumeCard) {
+        if (hasActiveRound) {
+            resumeCard.classList.remove('hidden');
+            const deck = DECKS[currentDeckId];
+            const card = activeRoundCards[currentCardIndex] || activeRoundCards[0];
+            const num = currentCardIndex + 1;
+            const total = activeRoundCards.length;
+            if (resumeBadge) {
+                resumeBadge.innerText = (t.heroActiveBadge || "Aktive Runde · Karte {num} von {total}")
+                    .replace('{num}', num)
+                    .replace('{total}', total);
             }
-        }
-        setTextIfChanged(ctaEl, t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten');
-        if (ringEl) {
-            if (ringEl.getAttribute('stroke') !== '#E05A3A') ringEl.setAttribute('stroke', '#E05A3A');
-            if (ringEl.getAttribute('stroke-dashoffset') !== '0') ringEl.setAttribute('stroke-dashoffset', '0');
-        }
-        if (imgEl) {
-            if (imgEl.getAttribute('src') !== 'icon-64.webp') imgEl.src = 'icon-64.webp';
-            imgEl.className = 'w-9 h-9 rounded-[10px] object-contain shadow-sm';
+            if (resumeTitle) resumeTitle.innerText = deck.title[currentLang] || deck.title.de;
+            if (ctaEl) ctaEl.innerText = t.heroCtaResume || 'Runde fortsetzen';
+            if (ringEl) {
+                const circumference = 207;
+                const offset = circumference - (num / Math.max(1, total)) * circumference;
+                ringEl.setAttribute('stroke', '#E05A3A');
+                ringEl.setAttribute('stroke-dashoffset', Math.round(offset));
+            }
+            if (imgEl && card && typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji && FLUENT_EMOJI_MAP[card.emoji]) {
+                imgEl.src = `options_gallery/images/${FLUENT_EMOJI_MAP[card.emoji]}`;
+                imgEl.className = 'w-7 h-7 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]';
+            }
+        } else {
+            resumeCard.classList.add('hidden');
         }
     }
 

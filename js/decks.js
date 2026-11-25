@@ -11,11 +11,11 @@ const DECKS = {
         "icon": "🍔",
         "gradient": "from-orange-500 to-rose-600",
         "title": {
-            "de": "Abendessen-Retter",
-            "en": "Dinner Savior",
-            "es": "¿Qué cenamos hoy?",
-            "fr": "Sauveur du Dîner",
-            "it": "Salva-Cena"
+            "de": "Was essen wir heute?",
+            "en": "What Should We Eat?",
+            "es": "¿Qué comemos hoy?",
+            "fr": "On mange quoi ?",
+            "it": "Cosa mangiamo oggi?"
         },
         "sub": {
             "de": "8 schnelle Ideen gegen den Hunger",
@@ -772,6 +772,148 @@ const DECKS = {
                     "it": "Idee per comporre il tagliere"
                 },
                 "actionUrl": "https://www.google.com/search?q=antipasti+kaeseplatte+ideen"
+            }
+        ]
+    },
+    "breakfast": {
+        "id": "breakfast",
+        "category": "food",
+        "mode": "match",
+        "icon": "🥐",
+        "gradient": "from-amber-500 to-orange-600",
+        "title": {
+            "de": "Frühstück & Brunch",
+            "en": "Breakfast & Brunch",
+            "es": "Desayuno y Brunch",
+            "fr": "Petit-Déj & Brunch",
+            "it": "Colazione & Brunch"
+        },
+        "sub": {
+            "de": "Süß, herzhaft, Café oder gemütlich im Bett",
+            "en": "Sweet, savory, café outing, or cozy at home",
+            "es": "Dulce, salado, cafetería o en casa",
+            "fr": "Sucré, salé, café ou brunch maison",
+            "it": "Dolce, salato, bar o brunch a casa"
+        },
+        "cards": [
+            {
+                "id": 0, "emoji": "🥞", "bg": "from-amber-500 to-orange-600",
+                "tag": { "de": "Süß & Warm", "en": "Sweet & Warm", "es": "Dulce y Caliente", "fr": "Sucré & Chaud", "it": "Dolce e Caldo" },
+                "title": { "de": "Fluffy Pancakes & Waffeln", "en": "Fluffy Pancakes & Waffles", "es": "Tortitas y Gofres", "fr": "Pancakes & Gaufres", "it": "Pancakes e Waffle" },
+                "desc": { "de": "Mit Ahornsirup, frischen Beeren oder geschmolzener Schokolade.", "en": "With maple syrup, fresh berries, or melted chocolate.", "es": "Con sirope de arce, frutos rojos o chocolate fundido.", "fr": "Avec sirop d'érable, fruits rouges ou chocolat fondu.", "it": "Con sciroppo d'acero, frutti di bosco o cioccolato." }
+            },
+            {
+                "id": 1, "emoji": "🥐", "bg": "from-yellow-500 to-amber-700",
+                "tag": { "de": "Frisch vom Bäcker", "en": "Bakery Run", "es": "Recién Horneado", "fr": "Boulangerie", "it": "Dal Forno" },
+                "title": { "de": "Frische Croissants & Brötchen", "en": "Fresh Croissants & Bakery Run", "es": "Croissants y Pan Recién Hecho", "fr": "Croissants & Pains Frais", "it": "Cornetti e Pane Fresco" },
+                "desc": { "de": "Kurz zum Bäcker flitzen – Butter, Marmelade, Käse & Aufschnitt.", "en": "Quick bakery run – butter, jam, cheese, and warm rolls.", "es": "Pasar por la panadería: mantequilla, mermelada y queso.", "fr": "Un tour à la boulangerie : beurre, confiture et fromage.", "it": "Corsa in pasticceria: burro, marmellata e brioche calde." }
+            },
+            {
+                "id": 2, "emoji": "🍳", "bg": "from-emerald-600 to-teal-800",
+                "tag": { "de": "Herzhaft", "en": "Savory Classic", "es": "Salado", "fr": "Salé", "it": "Salato" },
+                "title": { "de": "Rührei, Shakshuka & Avocado-Brot", "en": "Eggs, Shakshuka & Avocado Toast", "es": "Huevos, Shakshuka y Tostadas", "fr": "Œufs, Shakshuka & Avocado Toast", "it": "Uova, Shakshuka e Avocado Toast" },
+                "desc": { "de": "Sättigend, proteinreich und in 12 Minuten auf dem Tisch.", "en": "Protein-packed, hearty, and ready in 12 minutes.", "es": "Nutritivo, sabroso y listo en 12 minutos.", "fr": "Gourmand, riche en protéines et prêt en 12 min.", "it": "Sostanzioso, proteico e pronto in 12 minuti." }
+            },
+            {
+                "id": 3, "emoji": "🥣", "bg": "from-rose-500 to-pink-700",
+                "tag": { "de": "Leicht & Frisch", "en": "Light & Fresh", "es": "Ligero y Fresco", "fr": "Léger & Frais", "it": "Leggero e Fresco" },
+                "title": { "de": "Smoothie Bowl, Porridge & Müsli", "en": "Smoothie Bowl, Porridge & Granola", "es": "Smoothie Bowl, Porridge y Muesli", "fr": "Smoothie Bowl, Porridge & Granola", "it": "Smoothie Bowl, Porridge e Muesli" },
+                "desc": { "de": "Mit Joghurt, knusprigem Granola, Banane und Nussmus.", "en": "Topped with yogurt, crunchy granola, banana, and nut butter.", "es": "Con yogur, granola crujiente, plátano y crema de frutos secos.", "fr": "Avec yaourt, granola croquant, banane et purée d'amande.", "it": "Con yogurt, granola croccante, banana e frutta secca." }
+            },
+            {
+                "id": 4, "emoji": "🥪", "bg": "from-sky-600 to-blue-800",
+                "tag": { "de": "Auf die Hand", "en": "Handheld", "es": "Para Llevar", "fr": "Sur le Pouce", "it": "Al Volo" },
+                "title": { "de": "Herzhafte Bagels & Stullen", "en": "Loaded Bagels & Sandwiches", "es": "Bagels y Tostadas Rellenas", "fr": "Bagels & Tartines Garnies", "it": "Bagel e Toast Farciti" },
+                "desc": { "de": "Mit Frischkäse, Lachs, Putenbrust oder gegrilltem Gemüse.", "en": "With cream cheese, smoked salmon, egg, or roasted veggies.", "es": "Con queso crema, salmón, huevo o verduras asadas.", "fr": "Avec fromage frais, saumon fumé, œuf ou légumes grillés.", "it": "Con formaggio spalmabile, salmone, uovo o verdure." }
+            },
+            {
+                "id": 5, "emoji": "☕", "bg": "from-stone-700 to-stone-900",
+                "tag": { "de": "Ausgehen", "en": "Go Out", "es": "Salir a Desayunar", "fr": "Sortir au Café", "it": "Al Bar" },
+                "title": { "de": "Im Lieblingscafé brunchen gehen", "en": "Brunch Out at a Cozy Café", "es": "Ir de Brunch a una Cafetería", "fr": "Bruncher dans un Café Cosy", "it": "Brunch Fuori al Bar" },
+                "desc": { "de": "Cappuccino, Eggs Benedict & Co. – ohne selbst abzuwaschen.", "en": "Specialty coffee, Eggs Benedict & zero dishes to wash.", "es": "Buen café, huevos benedictinos y cero platos por fregar.", "fr": "Bon café, œufs Bénédicte et zéro vaisselle à faire.", "it": "Cappuccino speciale, uova Benedict e zero piatti." }
+            },
+            {
+                "id": 6, "emoji": "🥖", "bg": "from-orange-600 to-red-800",
+                "tag": { "de": "Gemütlich", "en": "Slow Morning", "es": "Sin Prisas", "fr": "Matinée Douce", "it": "Colazione Lenta" },
+                "title": { "de": "Großer Sonntags-Brunch am Tisch", "en": "Big Table Brunch Spread", "es": "Gran Brunch en Casa", "fr": "Grand Brunch à Table", "it": "Grande Brunch in Casa" },
+                "desc": { "de": "Alles auf den Tisch: Obst, Käseplatte, O-Saft, Aufbackbrötchen & Ei.", "en": "Everything on the table: fruit, cheese, fresh juice, rolls & eggs.", "es": "De todo en la mesa: fruta, queso, zumo natural y huevos.", "fr": "Tout sur la table : fruits, fromage, jus frais et œufs.", "it": "Tutto in tavola: frutta, formaggi, spremuta e uova." }
+            },
+            {
+                "id": 7, "emoji": "🧁", "bg": "from-fuchsia-600 to-purple-800",
+                "tag": { "de": "Blitz-Start", "en": "Quick Bite", "es": "Rápido", "fr": "Express", "it": "Veloce" },
+                "title": { "de": "Schneller Kaffee & Teilchen to go", "en": "Quick Coffee & Pastry to Go", "es": "Café Rápido y Bollería", "fr": "Café & Viennoiserie Express", "it": "Caffè e Brioche al Volo" },
+                "desc": { "de": "Kein großes Tamtam – Wachmacher und was Kleines auf die Hand.", "en": "Keep it simple – good coffee and a sweet bite in 5 minutes.", "es": "Sin complicaciones: un buen café y algo dulce en 5 minutos.", "fr": "Simple et efficace : un bon café et une gourmandise en 5 min.", "it": "Senza complicazioni: caffè e dolce in 5 minuti." }
+            }
+        ]
+    },
+    "lunch": {
+        "id": "lunch",
+        "category": "food",
+        "mode": "match",
+        "icon": "🥗",
+        "gradient": "from-emerald-600 to-teal-800",
+        "title": {
+            "de": "Mittagessen & Lunch",
+            "en": "Lunch Break Picker",
+            "es": "Comida y Almuerzo",
+            "fr": "Pause Déjeuner",
+            "it": "Pausa Pranzo"
+        },
+        "sub": {
+            "de": "Leicht, schnell fürs Homeoffice oder außer Haus",
+            "en": "Quick, fresh, home office or lunch spot",
+            "es": "Ligero, rápido en casa o menú del día",
+            "fr": "Léger, rapide en télétravail ou sur le pouce",
+            "it": "Leggero, veloce a casa o fuori"
+        },
+        "cards": [
+            {
+                "id": 0, "emoji": "🥗", "bg": "from-emerald-600 to-green-800",
+                "tag": { "de": "Leicht & Knackig", "en": "Light & Crisp", "es": "Ligero y Fresco", "fr": "Léger & Frais", "it": "Leggero e Fresco" },
+                "title": { "de": "Bunte Bowl oder frischer Salat", "en": "Fresh Poke Bowl or Crispy Salad", "es": "Bowl Fresco o Ensalada Completa", "fr": "Poke Bowl ou Salade Croquante", "it": "Poke Bowl o Insalatona" },
+                "desc": { "de": "Macht satt ohne Mittagstief – mit Avocado, Feta oder Hähnchen.", "en": "Filling without the afternoon slump – avocado, feta, or chicken.", "es": "Saciante sin pesadez: con aguacate, queso o pollo.", "fr": "Rassasiant sans coup de barre : avocat, feta ou poulet.", "it": "Sazia senza appesantire: avocado, feta o pollo." }
+            },
+            {
+                "id": 1, "emoji": "🥪", "bg": "from-amber-600 to-orange-700",
+                "tag": { "de": "10 Min Pause", "en": "10-Min Break", "es": "Pausa de 10 min", "fr": "Pause 10 min", "it": "Pausa 10 min" },
+                "title": { "de": "Warmes Panini, Sandwich oder Bagel", "en": "Warm Panini, Club Sandwich or Bagel", "es": "Panini Caliente o Sándwich Club", "fr": "Panini Chaud, Club ou Bagel", "it": "Panino Caldo, Club o Bagel" },
+                "desc": { "de": "Außen knusprig getoastet, innen geschmolzener Käse & frische Sauce.", "en": "Crispy toasted outside with melted cheese and crisp greens.", "es": "Tostado por fuera con queso fundido y salsa fresca.", "fr": "Croustillant à l'extérieur, fromage fondant à l'intérieur.", "it": "Croccante fuori, formaggio fuso e salse dentro." }
+            },
+            {
+                "id": 2, "emoji": "🍜", "bg": "from-red-600 to-rose-800",
+                "tag": { "de": "Warm & Würzig", "en": "Warm & Savory", "es": "Caliente", "fr": "Chaud & Épicé", "it": "Caldo e Saporito" },
+                "title": { "de": "Ramen, Pho oder schnelle Suppe", "en": "Ramen, Pho or Noodle Soup", "es": "Ramen, Pho o Sopa Caliente", "fr": "Ramen, Pho ou Soupe de Nouilles", "it": "Ramen, Pho o Zuppa Calda" },
+                "desc": { "de": "Wohltuende Brühe, Nudeln und frische Kräuter – perfekt zwischendurch.", "en": "Comforting broth, noodles, and herbs – hits the spot.", "es": "Caldo reconfortante, fideos y hierbas frescas.", "fr": "Bouillon réconfortant, nouilles et herbes fraîches.", "it": "Brodo caldo, noodles ed erbe fresche." }
+            },
+            {
+                "id": 3, "emoji": "🌯", "bg": "from-teal-600 to-cyan-800",
+                "tag": { "de": "Schnell & Satt", "en": "Fast & Filling", "es": "Rápido", "fr": "Rapide", "it": "Veloce" },
+                "title": { "de": "Wraps, Burrito oder Falafel-Tasche", "en": "Wraps, Burrito or Falafel Pocket", "es": "Wrap, Burrito o Falafel", "fr": "Wrap, Burrito ou Falafel", "it": "Wrap, Burrito o Falafel" },
+                "desc": { "de": "Praktisch am Schreibtisch oder unterwegs – knusprig und würzig.", "en": "Easy to eat at your desk or on the go.", "es": "Cómodo, sabroso y perfecto para seguir el día.", "fr": "Pratique au bureau ou à emporter.", "it": "Pratico in pausa pranzo o da asporto." }
+            },
+            {
+                "id": 4, "emoji": "🍝", "bg": "from-orange-500 to-red-700",
+                "tag": { "de": "15 Min Küche", "en": "15-Min Cook", "es": "15 min en casa", "fr": "Cuisine 15 min", "it": "15 min in cucina" },
+                "title": { "de": "Schnelle 15-Minuten-Pasta", "en": "Quick 15-Minute Lunch Pasta", "es": "Pasta Rápida de 15 Minutos", "fr": "Pâtes Express en 15 Minutes", "it": "Pasta Veloce 15 Minuti" },
+                "desc": { "de": "Aglio e Olio, Pesto oder Tomaten-Mozzarella – ohne Aufwand.", "en": "Aglio e olio, pesto, or tomato-mozzarella – effortless.", "es": "Aglio e olio, pesto o tomate y mozzarella.", "fr": "Aglio e olio, pesto ou tomate-mozzarella.", "it": "Aglio e olio, pesto o pomodoro e mozzarella." }
+            },
+            {
+                "id": 5, "emoji": "🍛", "bg": "from-yellow-600 to-amber-800",
+                "tag": { "de": "Soulfood", "en": "Comfort Lunch", "es": "Reconfortante", "fr": "Gourmand", "it": "Gusto Pieno" },
+                "title": { "de": "Warmes Curry oder Reisgericht", "en": "Warm Curry or Rice Bowl", "es": "Curry Caliente o Arroz Salteado", "fr": "Curry Chaud ou Bol de Riz", "it": "Curry Caldo o Riso Saltato" },
+                "desc": { "de": "Cremiges Kokos-Curry oder gebratener Reis mit knackigem Gemüse.", "en": "Creamy coconut curry or wok fried rice with veggies.", "es": "Curry cremoso de coco o arroz salteado con verduras.", "fr": "Curry crémeux ou riz sauté aux légumes.", "it": "Curry cremoso o riso saltato con verdure." }
+            },
+            {
+                "id": 6, "emoji": "🍕", "bg": "from-rose-600 to-orange-700",
+                "tag": { "de": "Gönnung", "en": "Treat", "es": "Capricho", "fr": "Plaisir", "it": "Sfizio" },
+                "title": { "de": "Pizza-Slice oder Flammkuchen", "en": "Pizza Slice or Crispy Flatbread", "es": "Porción de Pizza o Tarte Flambée", "fr": "Part de Pizza ou Flammekueche", "it": "Pizza al Taglio o Focaccia" },
+                "desc": { "de": "Schnell auf die Hand oder fix im Ofen gebacken.", "en": "Quick slice on the go or crispy from the oven.", "es": "Rápido para llevar o crujiente al horno.", "fr": "Rapide à emporter ou croustillant au four.", "it": "Veloce al taglio o croccante al forno." }
+            },
+            {
+                "id": 7, "emoji": "🍚", "bg": "from-indigo-600 to-slate-800",
+                "tag": { "de": "Außer Haus", "en": "Local Spot", "es": "Menú del Día", "fr": "À Emporter", "it": "Fuori Casa" },
+                "title": { "de": "Mittagstisch / Imbiss um die Ecke", "en": "Local Lunch Special / Takeout", "es": "Menú del Día / Comida para Llevar", "fr": "Plat du Jour / Traiteur du Coin", "it": "Menù del Giorno / Takeaway" },
+                "desc": { "de": "Kurz frische Luft schnappen und was Warmes mitbringen.", "en": "Step out for fresh air and grab a fresh lunch special.", "es": "Salir a tomar el aire y traer algo rico.", "fr": "Prendre l'air et ramener un bon plat chaud.", "it": "Prendere aria fresca e portare via qualcosa di buono." }
             }
         ]
     },
