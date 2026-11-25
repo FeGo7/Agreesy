@@ -63,6 +63,10 @@ function getRandomCodename() {
 }
 
 function getUserProfile() {
+    const passPlayName = sessionStorage.getItem('agreesy_passplay_name');
+    if (passPlayName && passPlayName.trim()) {
+        return { name: passPlayName.trim(), dot: '#E05A3A', isCustom: true };
+    }
     const customName = localStorage.getItem('easyagree_user_name');
     if (customName && customName.trim()) {
         return { name: customName.trim(), dot: '#0071E3', isCustom: true };
@@ -495,6 +499,11 @@ window.addEventListener('DOMContentLoaded', () => {
     if (typeof renderDecisionStats === 'function') {
         renderDecisionStats();
     }
+
+    // 8. Smart Context Suggestion Pill
+    if (typeof initSmartContextPill === 'function') {
+        initSmartContextPill();
+    }
 });
 
 function detectInitialLanguage() {
@@ -716,8 +725,11 @@ function setLang(lang) {
     const isChoresActive = currentDeckId && DECKS[currentDeckId] && DECKS[currentDeckId].mode === 'chores';
     setText('t-nope-hint', `← ${isChoresActive ? t.choreNopeHint : t.nopeHint}`);
     setText('t-like-hint', `${isChoresActive ? t.choreLikeHint : t.likeHint} →`);
-    setText('t-btn-swipe-no', isChoresActive ? t.swipeChoreBtnNo : t.swipeBtnNo);
-    setText('t-btn-swipe-yes', isChoresActive ? t.swipeChoreBtnYes : t.swipeBtnYes);
+    setText('t-btn-swipe-no', isChoresActive ? (t.swipeChoreShortNo || t.swipeChoreBtnNo) : (t.swipeShortNo || t.swipeBtnNo));
+    setText('t-btn-swipe-yes', isChoresActive ? (t.swipeChoreShortYes || t.swipeChoreBtnYes) : (t.swipeShortYes || t.swipeBtnYes));
+    setText('user-profile-prefix', t.profilePrefix || 'Du:');
+    setText('t-wrapped-btn', t.wrappedBtn || '✨ Euer Agreesy-Recap als Story-Bild teilen');
+    setText('t-favorites-header', t.favListHeader || '♥ Eure gemerkten Favoriten');
     const btnSwipeNoBtn = document.getElementById('btn-swipe-no');
     const btnSwipeYesBtn = document.getElementById('btn-swipe-yes');
     if (btnSwipeNoBtn) btnSwipeNoBtn.setAttribute('aria-label', isChoresActive ? t.swipeChoreBtnNo : t.swipeBtnNo);
@@ -727,7 +739,7 @@ function setLang(lang) {
     setText('t-share-link-label', t.shareLinkLabel);
     setText('t-wa-btn', t.waBtn);
     setText('t-copy-btn', t.copyBtn);
-    setText('t-pass-phone', t.passPhone);
+    setText('t-pass-phone', t.passPlayStartBtn || t.passPhone);
     setText('t-match-badge', t.matchBadge);
     setText('t-match-title', t.matchTitle);
     setText('t-match-sub', t.matchSub);
@@ -830,6 +842,7 @@ function setLang(lang) {
     setText('t-history-clear-btn', t.historyClearBtn);
     if (typeof updateJokerUI === 'function') updateJokerUI();
     if (typeof renderDecisionStats === 'function') renderDecisionStats();
+    if (typeof initSmartContextPill === 'function') initSmartContextPill();
 
     setText('t-meta-food-1', t.metaFood1);
     setText('t-meta-food-2', t.metaFood2);
@@ -1451,8 +1464,8 @@ function renderCurrentCard() {
 
     const btnNoSpan = document.getElementById('t-btn-swipe-no');
     const btnYesSpan = document.getElementById('t-btn-swipe-yes');
-    if (btnNoSpan) btnNoSpan.innerText = isChoresMode ? t.swipeChoreBtnNo : t.swipeBtnNo;
-    if (btnYesSpan) btnYesSpan.innerText = isChoresMode ? t.swipeChoreBtnYes : t.swipeBtnYes;
+    if (btnNoSpan) btnNoSpan.innerText = isChoresMode ? (t.swipeChoreShortNo || t.swipeChoreBtnNo) : (t.swipeShortNo || t.swipeBtnNo);
+    if (btnYesSpan) btnYesSpan.innerText = isChoresMode ? (t.swipeChoreShortYes || t.swipeChoreBtnYes) : (t.swipeShortYes || t.swipeBtnYes);
     const btnNoEl = document.getElementById('btn-swipe-no');
     const btnYesEl = document.getElementById('btn-swipe-yes');
     if (btnNoEl) btnNoEl.setAttribute('aria-label', isChoresMode ? t.swipeChoreBtnNo : t.swipeBtnNo);
@@ -1497,8 +1510,23 @@ function renderCurrentCard() {
         }
     }
 
-    document.getElementById('card-title').innerText = card.title[currentLang] || card.title.de;
+    const cardTitleText = card.title[currentLang] || card.title.de;
+    document.getElementById('card-title').innerText = cardTitleText;
     document.getElementById('card-desc').innerText = card.desc[currentLang] || card.desc.de;
+
+    const repeatEl = document.getElementById('card-repeat-badge');
+    if (repeatEl) {
+        const recentInfo = typeof getCardRecentMatchInfo === 'function' ? getCardRecentMatchInfo(currentDeckId, card.id, cardTitleText) : null;
+        if (recentInfo) {
+            repeatEl.innerText = recentInfo.days === 0
+                ? (t.repeatBadgeToday || '↺ Heute schon gewählt')
+                : (t.repeatBadgeDays || '↺ Vor {d} Tg. gewählt').replace('{d}', recentInfo.days);
+            repeatEl.classList.remove('hidden');
+        } else {
+            repeatEl.classList.add('hidden');
+        }
+    }
+
     updateHeroRoundCardUI();
 }
 
@@ -1644,7 +1672,7 @@ function finishSwipingRound() {
         } else {
             if (shareTitleEl) shareTitleEl.innerText = t.shareTitle;
             if (shareSubEl) shareSubEl.innerText = t.shareSub;
-            if (passPhoneEl) passPhoneEl.innerText = t.passPhone;
+            if (passPhoneEl) passPhoneEl.innerText = t.passPlayStartBtn || t.passPhone;
         }
 
         showScreen('screen-share');
@@ -2347,10 +2375,13 @@ function revealMatchScreen(card) {
     if (typeof confetti === 'function') {
         const isSuper = !!(lastMatchMeta && lastMatchMeta.isSuperMatch);
         confetti({
-            particleCount: isSuper ? 120 : 70,
-            spread: isSuper ? 85 : 60,
+            particleCount: isSuper ? 95 : 55,
+            spread: isSuper ? 80 : 60,
+            ticks: 110,
+            zIndex: 5,
+            disableForReducedMotion: true,
             colors: isSuper ? ['#F59E0B', '#FBBF24', '#F07153', '#FFFFFF'] : undefined,
-            origin: { y: 0.6 }
+            origin: { y: 0.55 }
         });
     }
 
@@ -2368,12 +2399,15 @@ function revealMatchScreen(card) {
     // Record into local Decision History & Saved Debate Time
     if (typeof recordDecisionHistory === 'function' && card) {
         const cTitle = (card.title && (card.title[currentLang] || card.title.de)) || 'Match';
-        recordDecisionHistory(card.emoji || '✨', cTitle, currentDeckId, (lastMatchMeta && lastMatchMeta.mode) || 'match');
+        recordDecisionHistory(card.emoji || '✨', cTitle, currentDeckId, (lastMatchMeta && lastMatchMeta.mode) || 'match', card.id);
+    }
+    if (typeof updateFavoriteButtonUI === 'function') {
+        updateFavoriteButtonUI();
     }
 
     const winnerCardEl = document.getElementById('winner-card');
     if (winnerCardEl) {
-        winnerCardEl.className = "w-full rounded-[24px] p-6 mb-5 flex flex-col items-center text-center surface transition-all";
+        winnerCardEl.className = "w-full rounded-[24px] p-6 mb-4 flex flex-col items-center text-center surface relative z-20 transition-all";
     }
 
     // Microsoft Fluent 3D Image Rendering for Winner Card
@@ -2772,6 +2806,7 @@ function updateHeroRoundCardUI() {
         if (ringEl) {
             const circumference = 207;
             const offset = circumference - (num / Math.max(1, total)) * circumference;
+            ringEl.setAttribute('stroke', 'var(--text-primary)');
             ringEl.setAttribute('stroke-dashoffset', Math.round(offset));
         }
 
@@ -2793,7 +2828,10 @@ function updateHeroRoundCardUI() {
             }
         }
         setTextIfChanged(ctaEl, t.heroCtaStart || t.customStartBtn || 'Runde jetzt starten');
-        if (ringEl && ringEl.getAttribute('stroke-dashoffset') !== '175') ringEl.setAttribute('stroke-dashoffset', '175');
+        if (ringEl) {
+            if (ringEl.getAttribute('stroke') !== '#E05A3A') ringEl.setAttribute('stroke', '#E05A3A');
+            if (ringEl.getAttribute('stroke-dashoffset') !== '0') ringEl.setAttribute('stroke-dashoffset', '0');
+        }
         if (imgEl && imgEl.getAttribute('src') !== 'options_gallery/images/thumbs/spaghetti_3d_96.webp') imgEl.src = 'options_gallery/images/thumbs/spaghetti_3d_96.webp';
     }
 
@@ -2821,6 +2859,8 @@ function resetToHome() {
     const wasInGame = gameScreen && !gameScreen.classList.contains('hidden');
 
     if (!wasInGame) {
+        try { sessionStorage.removeItem('agreesy_passplay_name'); } catch (e) {}
+        updateProfileUI();
         partnerLikes = null;
         partnerRoundCardIds = null;
         completedPlayers = [];
@@ -2836,7 +2876,7 @@ function resetToHome() {
 }
 
 function isAnyModalOpen() {
-    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal']
+    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal', 'modal-pass-play']
         .some(id => {
             const el = document.getElementById(id);
             return el && !el.classList.contains('hidden');
@@ -3352,14 +3392,14 @@ function updateJokerUI() {
         vetoBtn.disabled = used;
         vetoBtn.classList.toggle('opacity-45', used);
         vetoBtn.classList.toggle('cursor-not-allowed', used);
-        vetoLbl.innerText = used ? (t.jokerVetoUsed || 'Veto genutzt ✓') : (t.jokerVeto || 'Veto (1×)');
+        vetoLbl.innerText = used ? '✓' : (t.jokerVetoShort || 'Veto');
     }
     if (superBtn && superLbl) {
         const used = mySuperLikeId !== null;
         superBtn.disabled = used;
         superBtn.classList.toggle('opacity-45', used);
         superBtn.classList.toggle('cursor-not-allowed', used);
-        superLbl.innerText = used ? (t.jokerSuperUsed || 'Super-Like ✓') : (t.jokerSuper || 'Super-Like (1×)');
+        superLbl.innerText = used ? '✓' : (t.jokerSuperShort || 'Super');
     }
 }
 
@@ -3556,7 +3596,70 @@ function getDecisionHistory() {
     }
 }
 
-function recordDecisionHistory(emoji, title, deckId, mode) {
+const FAVORITES_KEY = 'agreesy_favorites_v1';
+
+function getSavedFavorites() {
+    try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveFavoritesList(list) {
+    try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(list.slice(0, 30)));
+    } catch (e) {}
+}
+
+function toggleCurrentMatchFavorite() {
+    if (!matchedCard) return;
+    const title = (matchedCard.title && (matchedCard.title[currentLang] || matchedCard.title.de)) || 'Match';
+    const emoji = matchedCard.emoji || '✨';
+    const key = `${getCanonicalDeckId(currentDeckId)}:${matchedCard.id ?? title}`;
+    const list = getSavedFavorites();
+    const idx = list.findIndex(f => f.key === key);
+    if (idx >= 0) {
+        list.splice(idx, 1);
+    } else {
+        list.unshift({ key, emoji, title: String(title).slice(0, 60), deckId: currentDeckId || 'custom', ts: Date.now() });
+    }
+    saveFavoritesList(list);
+    updateFavoriteButtonUI();
+    renderDecisionStats();
+}
+
+function updateFavoriteButtonUI() {
+    const btn = document.getElementById('btn-toggle-favorite');
+    if (!btn || !matchedCard) return;
+    const t = I18N[currentLang] || I18N.de;
+    const title = (matchedCard.title && (matchedCard.title[currentLang] || matchedCard.title.de)) || 'Match';
+    const key = `${getCanonicalDeckId(currentDeckId)}:${matchedCard.id ?? title}`;
+    const isFav = getSavedFavorites().some(f => f.key === key);
+    btn.innerText = isFav ? (t.favToggleSaved || '♥ Gemerkt') : (t.favToggleSave || '♡ Merken');
+    btn.classList.toggle('text-[#B83B1D]', isFav);
+    btn.classList.toggle('dark:text-[#F48265]', isFav);
+    btn.classList.toggle('border-[#E05A3A]/40', isFav);
+}
+
+function getCardRecentMatchInfo(deckId, cardId, title) {
+    const history = getDecisionHistory();
+    if (!history.length) return null;
+    const canon = getCanonicalDeckId(deckId);
+    const now = Date.now();
+    const match = history.find(item => {
+        if ((now - (item.ts || 0)) > 14 * 86400000) return false;
+        if (item.canonDeckId === canon && item.cardId !== undefined && item.cardId === cardId) return true;
+        return item.title && title && item.title.toLowerCase() === title.toLowerCase();
+    });
+    if (!match) return null;
+    const days = Math.max(0, Math.floor((now - match.ts) / 86400000));
+    return { days };
+}
+
+function recordDecisionHistory(emoji, title, deckId, mode, cardId) {
     try {
         const list = getDecisionHistory();
         const now = Date.now();
@@ -3568,6 +3671,8 @@ function recordDecisionHistory(emoji, title, deckId, mode) {
             emoji: emoji || '✨',
             title: String(title || 'Match').slice(0, 60),
             deckId: deckId || 'custom',
+            canonDeckId: getCanonicalDeckId(deckId),
+            cardId: cardId !== undefined ? cardId : null,
             mode: mode || 'match',
             savedMin: 20,
             ts: now
@@ -3594,7 +3699,21 @@ function renderDecisionStats() {
     if (!bar || !summaryEl || !listEl) return;
 
     const history = getDecisionHistory();
-    if (history.length === 0) {
+    const favs = getSavedFavorites();
+    const favBox = document.getElementById('decision-favorites-box');
+    const favList = document.getElementById('decision-favorites-list');
+    if (favBox && favList) {
+        if (favs.length > 0) {
+            favBox.classList.remove('hidden');
+            favList.innerHTML = favs.slice(0, 8).map(f =>
+                `<span class="px-2.5 py-1 rounded-full surface-raised border border-[#E05A3A]/25 text-[11px] font-semibold text-primary-role inline-flex items-center gap-1">${f.emoji} ${f.title}</span>`
+            ).join('');
+        } else {
+            favBox.classList.add('hidden');
+        }
+    }
+
+    if (history.length === 0 && favs.length === 0) {
         bar.classList.add('hidden');
         return;
     }
@@ -3729,7 +3848,28 @@ async function shareMatchCardImage(kind) {
     let mainTitle = 'Match';
     let subText = '';
 
-    if (kind === 'chores') {
+    if (kind === 'wrapped') {
+        const hist = getDecisionHistory();
+        const totalDecisions = hist.length;
+        const savedMinTotal = Math.max(20, hist.reduce((sum, x) => sum + (x.savedMin || 20), 0));
+        const pickCounts = {};
+        const deckCounts = {};
+        hist.forEach(item => {
+            const k = `${item.emoji || '✨'} ${item.title}`;
+            pickCounts[k] = (pickCounts[k] || 0) + 1;
+            const dKey = item.canonDeckId || item.deckId || 'dinner';
+            deckCounts[dKey] = (deckCounts[dKey] || 0) + 1;
+        });
+        const topPick = Object.entries(pickCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '🍕 Pizza';
+        const topDeckId = Object.entries(deckCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'dinner';
+        const topDeckObj = DECKS[topDeckId] || DECKS.dinner;
+        const topDeckLabel = (topDeckObj && topDeckObj.title && (topDeckObj.title[currentLang] || topDeckObj.title.de)) || topDeckId;
+
+        badgeText = (t.wrappedBadge || 'EUER AGREESY-RECAP').toUpperCase();
+        mainEmoji = '🏆';
+        mainTitle = `${totalDecisions}× ${t.shareCardSubtitle || 'Geeinigt ohne Diskussion'}`;
+        subText = `${t.wrappedTopPick || 'Lieblings-Treffer'}: ${topPick}  ·  ${t.wrappedTopCategory || 'Häufigstes Thema'}: ${topDeckLabel}`;
+    } else if (kind === 'chores') {
         badgeText = (t.choresBadge || 'AUFTEILUNG').toUpperCase();
         mainEmoji = '⚖️';
         mainTitle = (t.choresTitle || 'Eure Aufgabenverteilung');
@@ -3966,4 +4106,90 @@ function fallbackCopyText(text) {
         document.execCommand('copy');
         ta.remove();
     } catch (e) {}
+}
+
+
+/**************************************************************
+ * 16. PASS & PLAY COUCH-MODE & SMART CONTEXT PILL
+ **************************************************************/
+function openPassPlayModal() {
+    hidePwaBannerTemp();
+    resetConfettiSafe();
+    const modal = document.getElementById('modal-pass-play');
+    if (!modal) {
+        simulatePartnerRightHere();
+        return;
+    }
+    const t = I18N[currentLang] || I18N.de;
+    const nextNum = completedPlayers.length + 2;
+    const nextLabel = `${t.choresPlayer2 ? t.choresPlayer2.replace('2', String(nextNum)) : 'Person ' + nextNum}`;
+
+    const titleEl = document.getElementById('t-pass-play-title');
+    const subEl = document.getElementById('t-pass-play-sub');
+    const nameLabelEl = document.getElementById('t-pass-play-name-label');
+    const readyBtnEl = document.getElementById('t-pass-play-ready-btn');
+    const cancelBtnEl = document.getElementById('t-pass-play-cancel-btn');
+    const inputEl = document.getElementById('pass-play-name-input');
+
+    if (titleEl) titleEl.innerText = t.passPlayModalTitle || 'Handy übergeben';
+    if (subEl) subEl.innerText = (t.passPlayModalSub || 'Deine Auswahl ist geheim gespeichert. Gib das Gerät jetzt an {next} weiter!').replace('{next}', nextLabel);
+    if (nameLabelEl) nameLabelEl.innerText = t.passPlayNameLabel || 'Wie heißt die nächste Person? (optional)';
+    if (readyBtnEl) readyBtnEl.innerText = t.passPlayReadyBtn || 'Ich bin bereit – Runde starten →';
+    if (cancelBtnEl) cancelBtnEl.innerText = t.customCancelBtn || 'Abbrechen';
+    if (inputEl) {
+        inputEl.value = '';
+        inputEl.placeholder = nextLabel;
+    }
+    modal.classList.remove('hidden');
+}
+
+function closePassPlayModal() {
+    const modal = document.getElementById('modal-pass-play');
+    if (modal) modal.classList.add('hidden');
+}
+
+function confirmPassPlayHandoff() {
+    const inputEl = document.getElementById('pass-play-name-input');
+    const enteredName = inputEl ? inputEl.value.trim() : '';
+    if (enteredName) {
+        try { sessionStorage.setItem('agreesy_passplay_name', enteredName); } catch (e) {}
+    } else {
+        const nextNum = completedPlayers.length + 2;
+        try { sessionStorage.setItem('agreesy_passplay_name', `Person ${nextNum}`); } catch (e) {}
+    }
+    updateProfileUI();
+    closePassPlayModal();
+    simulatePartnerRightHere();
+}
+
+let currentContextDeckId = 'dinner';
+
+function initSmartContextPill() {
+    const textEl = document.getElementById('context-smart-text');
+    if (!textEl) return;
+    const t = I18N[currentLang] || I18N.de;
+    const now = new Date();
+    const hour = now.getHours();
+    const day = now.getDay(); // 0 = Sun, 6 = Sat
+
+    if ((day === 0 || day === 6) && hour >= 9 && hour < 15) {
+        currentContextDeckId = 'chores';
+        textEl.innerText = t.ctxWeekendChores || '🧹 Wochenende · Haushalt fair in 30 Sek. teilen';
+    } else if (hour >= 6 && hour < 11) {
+        currentContextDeckId = 'quickcook';
+        textEl.innerText = t.ctxMorningFood || '☀️ Guten Morgen · Schnelle Ideen für heute';
+    } else if (hour >= 11 && hour < 15) {
+        currentContextDeckId = 'dinner';
+        textEl.innerText = t.ctxLunchFood || '🍴 Mittagszeit · In 30 Sek. wissen, was ihr esst';
+    } else if (hour >= 15 && hour < 21) {
+        currentContextDeckId = 'dinner';
+        textEl.innerText = t.ctxEveningFood || '🍕 Feierabend · Was essen wir heute Abend?';
+    } else {
+        currentContextDeckId = 'streaming';
+        textEl.innerText = t.ctxLateWatch || '🎬 Später Abend · Film oder Serie in 30 Sek.';
+    }
+}
+
+function handleContextPillClick() {
+    startGame(currentContextDeckId || 'dinner');
 }
