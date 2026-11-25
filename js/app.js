@@ -460,11 +460,8 @@ window.addEventListener('DOMContentLoaded', () => {
     currentLang = detectInitialLanguage();
     setLang(currentLang);
 
-    // 2b. Profil & Codename anzeigen + beim allerersten Öffnen nach Namen/Alias fragen
+    // 2b. Profil & Codename anzeigen (Nutzer kann Namen jederzeit über Pill oben rechts anpassen)
     updateProfileUI();
-    if (!localStorage.getItem('agreesy_profile_initialized')) {
-        openProfileModal();
-    }
 
     // 3. Partner-Herausforderung via Hash prüfen (#m=... oder #c=...)
     checkIncomingChallenge();
@@ -3085,7 +3082,7 @@ function initPwaInstall() {
 
     setTimeout(() => {
         checkAndShowPwaBanner();
-    }, 2500);
+    }, 8000);
 }
 
 function checkAndShowPwaBanner() {
@@ -3785,7 +3782,6 @@ function updateSiteShareUI() {
 
     const waText = `${title}\n${desc}\n${url}`;
     setElHref('site-share-wa', `https://wa.me/?text=${encodeURIComponent(waText)}`);
-    setElHref('site-share-email', `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${title}\n\n${desc}\n\n${url}`)}`);
     setElHref('site-share-telegram', `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(`${title} — ${desc}`)}`);
     setElHref('site-share-x', `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`);
     setElHref('site-share-pinterest', `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imgAbs)}&description=${encodeURIComponent(`${title} – ${desc}`)}`);
@@ -3811,6 +3807,12 @@ function openSiteShareModal() {
 function closeSiteShareModal() {
     const modal = document.getElementById('modal-site-share');
     if (modal) modal.classList.add('hidden');
+}
+
+function shareSiteViaEmail() {
+    const { title, desc, url, subject } = getSiteShareData();
+    const scheme = 'mail' + 'to:';
+    window.location.href = `${scheme}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${title}\n\n${desc}\n\n${url}`)}`;
 }
 
 async function shareSiteNative() {
