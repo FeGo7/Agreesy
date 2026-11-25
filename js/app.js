@@ -762,6 +762,13 @@ function setLang(lang) {
     setText('t-matching-title', t.matchingTitle);
     setText('t-matching-sub', t.matchingSub);
 
+    // Screen Solo Duel
+    setText('t-duel-badge', (t.soloDuelBadge || 'K.O.-Stechen · Duell {cur} von {total}').replace('{cur}', '1').replace('{total}', '2'));
+    setText('t-duel-title', t.soloDuelTitle);
+    setText('t-duel-sub', t.soloDuelSub);
+    setText('t-duel-coin-btn', t.soloDuelCoinBtn);
+    setText('t-duel-back-btn', t.retryBtn);
+
     // Screen No Match
     setText('t-nomatch-wa-btn', t.noMatchWaBtn);
     setText('t-nomatch-idea-label', t.noMatchIdeaLabel);
