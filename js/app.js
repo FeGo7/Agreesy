@@ -109,6 +109,8 @@ function updateProfileUI() {
 }
 
 function openProfileModal() {
+    if (typeof hidePwaBannerTemp === 'function') hidePwaBannerTemp();
+    if (typeof resetConfettiSafe === 'function') resetConfettiSafe();
     const modal = document.getElementById('modal-profile');
     const input = document.getElementById('profile-name-input');
     const dotEl = document.getElementById('profile-modal-dot');
@@ -1066,7 +1068,7 @@ function renderDeckList() {
                     <div class="font-medium text-[14px] text-primary-role truncate">
                         ${deck.title[currentLang] || deck.title.de}
                     </div>
-                    <div class="text-[12px] text-secondary-role truncate mt-0.5">
+                    <div class="text-[12px] text-secondary-role line-clamp-2 leading-snug mt-0.5">
                         ${deck.sub[currentLang] || deck.sub.de}
                     </div>
                 </div>
@@ -2015,6 +2017,7 @@ function updateWinnerAffiliateLinks(card) {
     if (actionBtn && actionText) {
         const cat = deck ? deck.category : 'all';
         const titleStr = card.title[currentLang] || card.title.de || 'Idee';
+        const shortTitle = titleStr.length > 24 ? '' : titleStr;
         const cleanQueryStr = card.searchCleanTitle || titleStr;
         const query = encodeURIComponent(cleanQueryStr);
         const store = getRegionalStoreConfig(currentLang);
@@ -2023,7 +2026,9 @@ function updateWinnerAffiliateLinks(card) {
         // Check if this is a Round 2 card with an explicit targetType ('booking', 'gyg', 'amazon', 'prime')
         if (card.targetType === 'booking') {
             actionBtn.href = `https://www.booking.com/searchresults.${store.bookingLang}.html?ss=${query}`;
-            actionText.innerText = `${titleStr} (${store.bookingDomain}) *`;
+            actionText.innerText = shortTitle
+                ? `${shortTitle} (${store.bookingDomain}) *`
+                : `${t.winnerCheckPrices || 'Angebote prüfen'} (${store.bookingDomain}) *`;
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.gygHost}/s/?q=${query}`;
                 secondaryText.innerText = formatWithDomainTag(t.winnerActivities || 'Erlebnisse & Touren vor Ort', store.gygDomain);
@@ -2031,7 +2036,10 @@ function updateWinnerAffiliateLinks(card) {
             }
         } else if (card.targetType === 'gyg') {
             actionBtn.href = `https://${store.gygHost}/s/?q=${query}`;
-            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerActivities || 'Tickets & Erlebnisse'}`, store.gygDomain);
+            actionText.innerText = formatWithDomainTag(
+                shortTitle ? `${shortTitle} – ${t.winnerActivities || 'Tickets & Erlebnisse'}` : (t.winnerActivities || 'Tickets & Erlebnisse ansehen'),
+                store.gygDomain
+            );
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
                 secondaryText.innerText = formatWithDomainTag(t.winnerActivitySecondary || 'Passende Geschenk-Boxen', store.amazonDomain);
@@ -2039,7 +2047,10 @@ function updateWinnerAffiliateLinks(card) {
             }
         } else if (card.targetType === 'amazon' || currentDeckId === 'gaming' || currentDeckId === 'boardgames' || currentDeckId === 'christmasdinner' || (currentDeckId === 'gifts' && [3, 4, 5, 7, 8].includes(card.id)) || (currentDeckId === 'groupgifts' && [0, 1, 2, 4, 5, 6].includes(card.id)) || (currentDeckId === 'nye' && [0, 1, 2, 3, 7].includes(card.id))) {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
-            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOpenAction || 'Jetzt ansehen'}`, store.amazonDomain);
+            actionText.innerText = formatWithDomainTag(
+                shortTitle ? `${shortTitle} – ${t.winnerOpenAction || 'Jetzt ansehen'}` : (t.winnerOpenAction || 'Jetzt ansehen'),
+                store.amazonDomain
+            );
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${store.snackQuery}&tag=${store.tag}`;
                 secondaryText.innerText = formatWithDomainTag(t.winnerSnackBox || 'Passende Snackbox bestellen', store.amazonDomain);
@@ -2047,16 +2058,29 @@ function updateWinnerAffiliateLinks(card) {
             }
         } else if (cat === 'food') {
             actionBtn.href = store.foodUrl(query);
-            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOrderFood || 'bestellen'}`, store.foodDomain);
+            actionText.innerText = formatWithDomainTag(
+                shortTitle ? `${shortTitle} – ${t.winnerOrderFood || 'bestellen'}` : (t.winnerOrderFood || 'Direkt bestellen'),
+                store.foodDomain
+            );
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}+${store.foodSuffix}&tag=${store.tag}`;
-                const secPattern = (t.winnerFoodSecondary || 'Zutaten & Koch-Sets für {title}').replace('{title}', titleStr);
-                secondaryText.innerText = formatWithDomainTag(secPattern, store.amazonDomain);
+                const secFallback = currentLang === 'en' ? 'Matching ingredients & kits'
+                    : currentLang === 'es' ? 'Ingredientes y kits de cocina'
+                    : currentLang === 'fr' ? 'Ingrédients & coffrets cuisine'
+                    : currentLang === 'it' ? 'Ingredienti e kit cucina'
+                    : 'Passende Zutaten & Koch-Sets';
+                const secLabel = shortTitle
+                    ? (t.winnerFoodSecondary || 'Zutaten & Koch-Sets für {title}').replace('{title}', shortTitle)
+                    : (t.winnerFoodSecondaryShort || secFallback);
+                secondaryText.innerText = formatWithDomainTag(secLabel, store.amazonDomain);
                 secondaryBtn.classList.remove('hidden');
             }
         } else if (cat === 'entertainment') {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&i=instant-video&tag=${store.tag}`;
-            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerStreamPrime || 'auf Prime Video streamen'}`, store.amazonDomain);
+            actionText.innerText = formatWithDomainTag(
+                shortTitle ? `${shortTitle} – ${t.winnerStreamPrime || 'auf Prime Video streamen'}` : (t.winnerStreamPrime || 'Auf Prime Video streamen'),
+                store.amazonDomain
+            );
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${store.snackQuery}&tag=${store.tag}`;
                 secondaryText.innerText = formatWithDomainTag(t.winnerSnackBox || 'Passende Heimkino-Snackbox bestellen', store.amazonDomain);
@@ -2064,7 +2088,10 @@ function updateWinnerAffiliateLinks(card) {
             }
         } else if (cat === 'activity') {
             actionBtn.href = `https://${store.gygHost}/s/?q=${query}`;
-            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerActivities || 'Erlebnisse & Tickets'}`, store.gygDomain);
+            actionText.innerText = formatWithDomainTag(
+                shortTitle ? `${shortTitle} – ${t.winnerActivities || 'Erlebnisse & Tickets'}` : (t.winnerActivities || 'Erlebnisse & Tickets ansehen'),
+                store.gygDomain
+            );
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}+${store.activitySuffix}&tag=${store.tag}`;
                 secondaryText.innerText = formatWithDomainTag(t.winnerActivitySecondary || 'Passendes Zubehör & Date-Boxen', store.amazonDomain);
@@ -2072,7 +2099,9 @@ function updateWinnerAffiliateLinks(card) {
             }
         } else if (cat === 'trips') {
             actionBtn.href = `https://www.booking.com/searchresults.${store.bookingLang}.html?ss=${query}`;
-            actionText.innerText = `${titleStr} (${store.bookingDomain}) *`;
+            actionText.innerText = shortTitle
+                ? `${shortTitle} (${store.bookingDomain}) *`
+                : `${t.winnerCheckPrices || 'Reiseziele ansehen'} (${store.bookingDomain}) *`;
             if (secondaryBtn && secondaryText) {
                 secondaryBtn.href = `https://${store.amazonHost}/s?k=${query}+${store.tripsSuffix}&tag=${store.tag}`;
                 secondaryText.innerText = formatWithDomainTag(t.winnerTripsSecondary || 'Reise-Gadgets & Geschenk-Sets', store.amazonDomain);
@@ -2080,7 +2109,10 @@ function updateWinnerAffiliateLinks(card) {
             }
         } else {
             actionBtn.href = `https://${store.amazonHost}/s?k=${query}&tag=${store.tag}`;
-            actionText.innerText = formatWithDomainTag(`${titleStr} – ${t.winnerOpenAction || 'Direkt online entdecken'}`, store.amazonDomain);
+            actionText.innerText = formatWithDomainTag(
+                shortTitle ? `${shortTitle} – ${t.winnerOpenAction || 'Direkt online entdecken'}` : (t.winnerOpenAction || 'Direkt online entdecken'),
+                store.amazonDomain
+            );
             if (secondaryBtn) {
                 secondaryBtn.classList.add('hidden');
             }
@@ -2786,6 +2818,25 @@ function resetToHome() {
     showScreen('screen-home');
 }
 
+function isAnyModalOpen() {
+    return ['modal-profile', 'modal-pwa-install', 'modal-site-share', 'modal-legal', 'roulette-modal']
+        .some(id => {
+            const el = document.getElementById(id);
+            return el && !el.classList.contains('hidden');
+        });
+}
+
+function hidePwaBannerTemp() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
+function resetConfettiSafe() {
+    if (typeof confetti === 'function' && typeof confetti.reset === 'function') {
+        confetti.reset();
+    }
+}
+
 function showScreen(screenId) {
     [
         'screen-home',
@@ -2803,6 +2854,21 @@ function showScreen(screenId) {
     });
     const target = document.getElementById(screenId);
     if (target) target.classList.remove('hidden');
+
+    if (screenId !== 'screen-home') {
+        hidePwaBannerTemp();
+    }
+    if (screenId !== 'screen-match') {
+        resetConfettiSafe();
+    }
+    const footerEl = document.getElementById('app-footer');
+    if (footerEl) {
+        if (['screen-game', 'screen-solo-duel', 'screen-custom'].includes(screenId)) {
+            footerEl.classList.add('hidden');
+        } else {
+            footerEl.classList.remove('hidden');
+        }
+    }
 }
 
 /**************************************************************
@@ -2881,6 +2947,8 @@ function initTouchSwipe() {
  * 9. LEGAL MODALS (Impressum & Datenschutz)
  **************************************************************/
 function openLegalModal(type) {
+    hidePwaBannerTemp();
+    resetConfettiSafe();
     const modal = document.getElementById('modal-legal');
     const titleEl = document.getElementById('legal-modal-title');
     const contentEl = document.getElementById('legal-modal-content');
@@ -3091,6 +3159,9 @@ function initPwaInstall() {
 
 function checkAndShowPwaBanner() {
     if (isRunningStandalone()) return;
+    const homeEl = document.getElementById('screen-home');
+    if (!homeEl || homeEl.classList.contains('hidden')) return;
+    if (isAnyModalOpen()) return;
     const dismissedAt = localStorage.getItem('agreesy_pwa_dismissed');
     if (dismissedAt) {
         const diffDays = (Date.now() - parseInt(dismissedAt, 10)) / (1000 * 60 * 60 * 24);
@@ -3198,6 +3269,8 @@ function updatePwaDirectInstallButtons(available) {
 }
 
 function openPwaModal(forcedTab) {
+    hidePwaBannerTemp();
+    resetConfettiSafe();
     const modal = document.getElementById('modal-pwa-install');
     if (!modal) return;
     
@@ -3312,6 +3385,8 @@ let rouletteExcludedIds = new Set();
 let rouletteSpinning = false;
 
 function openRouletteModal() {
+    hidePwaBannerTemp();
+    resetConfettiSafe();
     const deck = DECKS[currentDeckId];
     if (!deck) return;
     const modal = document.getElementById('roulette-modal');
@@ -3358,8 +3433,8 @@ function renderRouletteChips() {
         btn.type = 'button';
         btn.onclick = () => toggleRouletteItem(card.id);
         btn.className = excluded
-            ? 'px-2.5 py-1.5 rounded-xl surface-raised border border-[var(--border)] text-[11.5px] font-medium text-muted-role line-through opacity-45 transition-all'
-            : 'px-2.5 py-1.5 rounded-xl surface-raised border border-[#E05A3A]/35 text-[11.5px] font-semibold text-primary-role hover:border-[#E05A3A] transition-all';
+            ? 'px-3 py-2 rounded-xl surface-raised border border-[var(--border)] text-[11.5px] font-medium text-muted-role line-through opacity-45 text-left leading-snug transition-all'
+            : 'px-3 py-2 rounded-xl surface-raised border border-[#E05A3A]/35 text-[11.5px] font-semibold text-primary-role hover:border-[#E05A3A] text-left leading-snug transition-all';
         const label = (card.title && (card.title[currentLang] || card.title.de)) || 'Option';
         btn.innerText = `${card.emoji || '✨'} ${label}`;
         listEl.appendChild(btn);
@@ -3803,6 +3878,8 @@ function updateSiteShareUI() {
 }
 
 function openSiteShareModal() {
+    hidePwaBannerTemp();
+    resetConfettiSafe();
     updateSiteShareUI();
     const modal = document.getElementById('modal-site-share');
     if (modal) modal.classList.remove('hidden');
