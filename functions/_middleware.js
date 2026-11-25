@@ -209,6 +209,78 @@ export async function onRequest(context) {
     });
   }
 
+  // 2d. Agentic Resource Discovery (ARD v0.91) & legacy ai-catalog.json manifest
+  if (
+    url.pathname === '/.well-known/ard.json' ||
+    url.pathname === '/.well-known/ai-catalog.json' ||
+    url.pathname === '/ai-catalog.json'
+  ) {
+    const ardCatalog = {
+      specVersion: '0.91',
+      host: {
+        displayName: 'Agreesy',
+        identifier: 'agreesy.com',
+        documentationUrl: 'https://agreesy.com/llms.txt',
+        logoUrl: 'https://agreesy.com/icon-512.png'
+      },
+      entries: [
+        {
+          identifier: 'urn:air:agreesy.com:docs:llms-overview',
+          displayName: 'Agreesy Decision Maker Overview & Deck Directory',
+          type: 'text/markdown',
+          url: 'https://agreesy.com/llms.txt',
+          description: "Concise machine-readable guide to Agreesy's 30-second swipe decision maker, direct deck deep links, and multilingual topic guides.",
+          representativeQueries: [
+            'help couples decide what to eat or watch in 30 seconds',
+            'find a free no-signup swipe decision maker for groups',
+            'split household chores fairly between roommates or partners'
+          ]
+        },
+        {
+          identifier: 'urn:air:agreesy.com:docs:llms-full',
+          displayName: 'Agreesy Extended Technical Specification',
+          type: 'text/markdown',
+          url: 'https://agreesy.com/llms-full.txt',
+          description: "Full technical documentation of Agreesy's 0-byte backend URL-hash architecture, all decision modes, and curated Stage-2 recommendations.",
+          representativeQueries: [
+            'how does Agreesy sync votes without a server or database',
+            'what decision decks and curated picks does Agreesy support'
+          ]
+        },
+        {
+          identifier: 'urn:air:agreesy.com:api:catalog',
+          displayName: 'Agreesy Service Discovery Linkset',
+          type: 'application/linkset+json',
+          url: 'https://agreesy.com/.well-known/api-catalog',
+          description: "RFC 9727 linkset advertising Agreesy's service description and documentation endpoints.",
+          representativeQueries: [
+            'discover Agreesy service description endpoints',
+            'find Agreesy machine-readable documentation links'
+          ]
+        }
+      ]
+    };
+    return new Response(JSON.stringify(ardCatalog, null, 2), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=86400'
+      }
+    });
+  }
+
+  // 2e. Guard unknown /.well-known/* discovery probes so Cloudflare Pages does not return 200 HTML
+  if (url.pathname.startsWith('/.well-known/')) {
+    return new Response(JSON.stringify({ error: 'Not Found' }), {
+      status: 404,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'public, max-age=300'
+      }
+    });
+  }
+
   // 3. Level 1: Markdown Content-Negotiation
   if (
     (url.pathname === '/' || url.pathname === '/index.html') &&
@@ -231,6 +303,7 @@ export async function onRequest(context) {
     const newHeaders = new Headers(response.headers);
     newHeaders.append('Link', '<https://agreesy.com/llms.txt>; rel="describedby"');
     newHeaders.append('Link', '<https://agreesy.com/sitemap.xml>; rel="sitemap"');
+    newHeaders.append('Link', '<https://agreesy.com/.well-known/ard.json>; rel="ard"');
     newHeaders.append('Link', '<https://agreesy.com/.well-known/api-catalog>; rel="service-desc"');
     newHeaders.append('Link', '<https://agreesy.com/auth.md>; rel="authorisation"');
     newHeaders.append('Link', '<https://agreesy.com/.well-known/oauth-protected-resource>; rel="oauth-protected-resource"');
