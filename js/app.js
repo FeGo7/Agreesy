@@ -663,6 +663,14 @@ function checkDirectDeckParam() {
     if (!targetDeck && hash && hash.startsWith('#deck=')) {
         targetDeck = hash.replace('#deck=', '');
     }
+    if (!targetDeck && window.location.pathname.startsWith('/@')) {
+        const slug = window.location.pathname.slice(2).split('/')[0];
+        if (DECKS[slug] && slug !== 'custom') {
+            targetDeck = slug;
+        } else if (window.location.protocol.startsWith('http')) {
+            window.history.replaceState(null, null, '/');
+        }
+    }
     if (targetMode) {
         const m = targetMode.toLowerCase();
         if (m === 'solo' || m === '1') setPlayerCount(1);
@@ -1271,7 +1279,7 @@ function startCustomDeck() {
 
     partnerLikes = null;
     partnerRoundCardIds = null;
-    window.history.replaceState(null, null, window.location.pathname);
+    window.history.replaceState(null, null, '/');
     registerCustomDeckInMemory(rawTitle, customDeckMode, rawOptions);
     startGame('custom');
 }
@@ -1342,13 +1350,24 @@ function blacklistCurrentCard() {
     handleSwipe(false);
 }
 
+function trackVirtualPath(virtualPath) {
+    try {
+        if (!window.location.protocol.startsWith('http')) return;
+        const nextPath = virtualPath.startsWith('/') ? virtualPath : '/' + virtualPath;
+        if (window.location.pathname !== nextPath) {
+            const keepHash = (window.location.hash && (window.location.hash.startsWith('#m=') || window.location.hash.startsWith('#c='))) ? window.location.hash : '';
+            window.history.pushState(null, '', nextPath + keepHash);
+        }
+    } catch (e) {}
+}
+
 function startGame(deckId) {
     if (partnerLikes !== null && deckId !== currentDeckId) {
         partnerLikes = null;
         partnerRoundCardIds = null;
         partnerSenderName = null;
         completedPlayers = [];
-        window.history.replaceState(null, null, window.location.pathname);
+        window.history.replaceState(null, null, '/');
     }
     if (partnerLikes === null) {
         completedPlayers = [];
@@ -1369,6 +1388,7 @@ function startGame(deckId) {
     lastMatchMeta = null;
 
     showScreen('screen-game');
+    trackVirtualPath('/@' + deck.id);
 
     const p2LiveEl = document.getElementById('p2-live-indicator');
     const p2TextEl = document.getElementById('p2-live-text');
@@ -1405,7 +1425,7 @@ function startFreshShuffleRound() {
     partnerLikes = null;
     partnerRoundCardIds = null;
     completedPlayers = [];
-    window.history.replaceState(null, null, window.location.pathname);
+    window.history.replaceState(null, null, '/');
     const banner = document.getElementById('p2-welcome-banner');
     if (banner) banner.classList.add('hidden');
     startGame(currentDeckId);
@@ -1701,7 +1721,7 @@ function finishSwipingRound() {
 
     // FALL A: Noch nicht alle Spieler durch (z. B. Spieler 1 von 2, oder Spieler 1/2 von 3..6) -> Link für nächsten Spieler generieren
     if (allVoters.length < targetPlayerCount) {
-        const baseUrl = window.location.origin + window.location.pathname;
+        const baseUrl = window.location.origin + '/';
         let shareUrl = '';
         const roundIds = activeRoundCards.map(c => c.id);
 
@@ -1756,6 +1776,7 @@ function finishSwipingRound() {
         }
 
         showScreen('screen-share');
+        trackVirtualPath('/@share');
         return;
     }
 
@@ -1801,6 +1822,7 @@ function finishSwipingRound() {
     const p2InputEl = document.getElementById('p2-counter-idea-input');
     if (p2InputEl) p2InputEl.value = '';
     showScreen('screen-nomatch');
+    trackVirtualPath('/@nomatch');
 }
 
 // Fall A: Spieler 1 platziert eine eigene Idee direkt in diese Runde
@@ -1809,6 +1831,7 @@ function startSoloDuel(cardsQueue) {
     soloDuelChamp = soloDuelQueue[0];
     soloDuelNextIdx = 1;
     showScreen('screen-solo-duel');
+    trackVirtualPath('/@duel');
     renderSoloDuelUI();
 }
 
@@ -1936,7 +1959,7 @@ function injectPlayer1CustomIdea() {
         return;
     }
 
-    const baseUrl = window.location.origin + window.location.pathname;
+    const baseUrl = window.location.origin + '/';
     const roundIds = activeRoundCards.map(c => c.id);
     const myName = getUserProfile().name;
     const encodedPayload = btoa(`${currentDeckId}:${myLikes.join(',')}:${roundIds.join(',')}:${encodeURIComponent(ideaText)}:${targetPlayerCount}:${encodeURIComponent(myName)}`);
@@ -1948,7 +1971,7 @@ function injectPlayer1CustomIdea() {
 
 // Fall B: Spieler 2 gibt per WhatsApp Bescheid, dass es 0 Treffer gab
 function notifyNoMatchViaWhatsApp() {
-    const baseUrl = window.location.origin + window.location.pathname;
+    const baseUrl = window.location.origin + '/';
     const t = I18N[currentLang];
     const noMatchMsg = t.waNoMatchText || "Wir hatten in dieser Runde leider keine Übereinstimmung 😅 Lass uns 8 frische Karten probieren oder eine neue Runde starten:";
     const text = encodeURIComponent(`${noMatchMsg}\n${baseUrl}`);
@@ -1982,7 +2005,7 @@ function sendCounterIdeaFromNoMatch() {
     partnerRoundCardIds = null;
     myLikes = [999];
 
-    const baseUrl = window.location.origin + window.location.pathname;
+    const baseUrl = window.location.origin + '/';
     const roundIds = activeRoundCards.map(c => c.id);
     const myName = getUserProfile().name;
     const encodedPayload = btoa(`${currentDeckId}:${myLikes.join(',')}:${roundIds.join(',')}:${encodeURIComponent(ideaText)}`);
@@ -2439,12 +2462,13 @@ function startStage2MediaRound() {
     partnerLikes = null;
     partnerRoundCardIds = null;
     completedPlayers = [];
-    window.history.replaceState(null, null, window.location.pathname);
+    window.history.replaceState(null, null, '/');
     startGame('custom');
 }
 
 function revealMatchScreen(card) {
     showScreen('screen-match');
+    trackVirtualPath('/@match');
     playMatchChime();
 
     // Jony Ive Feedback: Haptic Feedback auf Smartphones
@@ -2641,6 +2665,7 @@ function triggerChoresResultScreen() {
     };
 
     showScreen('screen-chores-result');
+    trackVirtualPath('/@chores-done');
     renderChoresSummaryUI();
 }
 
@@ -2941,7 +2966,7 @@ function resetToHome() {
         completedPlayers = [];
         currentDeckId = null;
         activeRoundCards = [];
-        window.history.replaceState(null, null, window.location.pathname);
+        window.history.replaceState(null, null, '/');
     }
     const banner = document.getElementById('p2-welcome-banner');
     if (banner) banner.classList.add('hidden');

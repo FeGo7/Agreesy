@@ -300,6 +300,19 @@ export async function onRequest(context) {
     });
   }
 
+  // 3b. SPA Virtual Funnel Paths (/@dinner, /@share, /@match, etc.) for Cloudflare Web Analytics
+  if (url.pathname.startsWith('/@')) {
+    const assetReq = new Request(new URL('/', url).toString(), context.request);
+    const assetRes = await context.env.ASSETS.fetch(assetReq);
+    const headers = new Headers(assetRes.headers);
+    headers.set('X-Robots-Tag', 'noindex, nofollow');
+    return new Response(assetRes.body, {
+      status: assetRes.status,
+      statusText: assetRes.statusText,
+      headers
+    });
+  }
+
   // 4. Level 2: Link Headers for Agent Discovery
   const response = await context.next();
   if (url.pathname === '/' || url.pathname === '/index.html') {
