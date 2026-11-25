@@ -1439,7 +1439,7 @@ function renderCurrentCard() {
     const modePill = document.getElementById('game-mode-pill');
     if (modePill) {
         modePill.innerText = isChoresMode ? t.modeChoreBadge : (deck.title[currentLang] || deck.title.de);
-        modePill.className = "font-sans text-[11.5px] font-bold text-primary-role";
+        modePill.className = "font-sans text-[11.5px] font-bold text-primary-role truncate whitespace-nowrap";
     }
 
     const nopeHintEl = document.getElementById('t-nope-hint');
