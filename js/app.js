@@ -2018,6 +2018,7 @@ function updateWinnerAffiliateLinks(card) {
         const cat = deck ? deck.category : 'all';
         const titleStr = card.title[currentLang] || card.title.de || 'Idee';
         const shortTitle = titleStr.length > 24 ? '' : titleStr;
+        const capFirst = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
         const cleanQueryStr = card.searchCleanTitle || titleStr;
         const query = encodeURIComponent(cleanQueryStr);
         const store = getRegionalStoreConfig(currentLang);
@@ -2059,7 +2060,7 @@ function updateWinnerAffiliateLinks(card) {
         } else if (cat === 'food') {
             actionBtn.href = store.foodUrl(query);
             actionText.innerText = formatWithDomainTag(
-                shortTitle ? `${shortTitle} – ${t.winnerOrderFood || 'bestellen'}` : (t.winnerOrderFood || 'Direkt bestellen'),
+                shortTitle ? `${shortTitle} – ${t.winnerOrderFood || 'bestellen'}` : capFirst(t.winnerOrderFood || 'Direkt bestellen'),
                 store.foodDomain
             );
             if (secondaryBtn && secondaryText) {

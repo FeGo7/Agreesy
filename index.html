@@ -652,7 +652,7 @@
             <div id="game-roulette-bar" class="w-full flex items-center justify-between gap-2">
                 <div class="px-3 py-1.5 rounded-full surface text-[11.5px] font-bold text-primary-role inline-flex items-center gap-1.5 border border-[var(--border)] min-w-0">
                     <span class="w-1.5 h-1.5 rounded-full bg-[var(--ring-green)] shrink-0"></span>
-                    <span id="game-mode-pill" class="truncate">Auswahl</span>
+                    <span id="game-mode-pill" class="truncate whitespace-nowrap">Auswahl</span>
                 </div>
                 <button type="button" onclick="openRouletteModal()" class="px-3 py-1.5 rounded-full surface text-[11.5px] font-bold text-secondary-role hover:text-primary-role inline-flex items-center gap-1.5 border border-[var(--border)] transition-colors shrink-0">
                     <span>🎰</span>
@@ -1390,13 +1390,13 @@
         </div>
     </div>
 
-    <!-- Bundled & Minified App Scripts v50 -->
-    <script src="js/bundle.min.js?v=50" defer></script>
+    <!-- Bundled & Minified App Scripts v51 -->
+    <script src="js/bundle.min.js?v=51" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             const hadController = !!navigator.serviceWorker.controller;
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=50')
+                navigator.serviceWorker.register('./sw.js?v=51')
                     .then(reg => {
                         reg.update();
                     })
