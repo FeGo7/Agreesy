@@ -112,8 +112,8 @@ export async function onRequest(context) {
   const accept = context.request.headers.get('Accept') || '';
   const url = new URL(context.request.url);
 
-  // 0. Canonical Host Redirect: Force www.agreesy.com -> agreesy.com (301) to prevent duplicate SEO crawling
-  if (url.hostname === 'www.agreesy.com') {
+  // 0. Canonical Host Redirect: Force www.agreesy.com and *.pages.dev -> agreesy.com (301)
+  if (url.hostname === 'www.agreesy.com' || url.hostname.endsWith('.pages.dev')) {
     url.hostname = 'agreesy.com';
     return Response.redirect(url.toString(), 301);
   }
