@@ -2754,7 +2754,7 @@ function handleHeroCardClick() {
         renderCurrentCard();
         startTimer();
     } else {
-        startGame(currentDeckId || 'dinner');
+        startGame(currentDeckId || currentContextDeckId || 'dinner');
     }
 }
 
@@ -2812,6 +2812,7 @@ function updateHeroRoundCardUI() {
 
         if (imgEl && card && typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji && FLUENT_EMOJI_MAP[card.emoji]) {
             imgEl.src = `options_gallery/images/${FLUENT_EMOJI_MAP[card.emoji]}`;
+            imgEl.className = 'w-9 h-9 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]';
         }
     } else {
         setTextIfChanged(badgeEl, t.badge);
@@ -2832,7 +2833,10 @@ function updateHeroRoundCardUI() {
             if (ringEl.getAttribute('stroke') !== '#E05A3A') ringEl.setAttribute('stroke', '#E05A3A');
             if (ringEl.getAttribute('stroke-dashoffset') !== '0') ringEl.setAttribute('stroke-dashoffset', '0');
         }
-        if (imgEl && imgEl.getAttribute('src') !== 'options_gallery/images/thumbs/spaghetti_3d_96.webp') imgEl.src = 'options_gallery/images/thumbs/spaghetti_3d_96.webp';
+        if (imgEl) {
+            if (imgEl.getAttribute('src') !== 'icon-64.webp') imgEl.src = 'icon-64.webp';
+            imgEl.className = 'w-9 h-9 rounded-[10px] object-contain shadow-sm';
+        }
     }
 
     // Update Chores Card Labels for Solo vs. Duo/Group Mode
@@ -4165,28 +4169,18 @@ function confirmPassPlayHandoff() {
 let currentContextDeckId = 'dinner';
 
 function initSmartContextPill() {
-    const textEl = document.getElementById('context-smart-text');
-    if (!textEl) return;
-    const t = I18N[currentLang] || I18N.de;
     const now = new Date();
     const hour = now.getHours();
     const day = now.getDay(); // 0 = Sun, 6 = Sat
 
     if ((day === 0 || day === 6) && hour >= 9 && hour < 15) {
         currentContextDeckId = 'chores';
-        textEl.innerText = t.ctxWeekendChores || '🧹 Wochenende · Haushalt fair in 30 Sek. teilen';
     } else if (hour >= 6 && hour < 11) {
         currentContextDeckId = 'quickcook';
-        textEl.innerText = t.ctxMorningFood || '☀️ Guten Morgen · Schnelle Ideen für heute';
-    } else if (hour >= 11 && hour < 15) {
+    } else if (hour >= 11 && hour < 21) {
         currentContextDeckId = 'dinner';
-        textEl.innerText = t.ctxLunchFood || '🍴 Mittagszeit · In 30 Sek. wissen, was ihr esst';
-    } else if (hour >= 15 && hour < 21) {
-        currentContextDeckId = 'dinner';
-        textEl.innerText = t.ctxEveningFood || '🍕 Feierabend · Was essen wir heute Abend?';
     } else {
         currentContextDeckId = 'streaming';
-        textEl.innerText = t.ctxLateWatch || '🎬 Später Abend · Film oder Serie in 30 Sek.';
     }
 }
 
