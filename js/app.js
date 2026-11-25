@@ -3062,11 +3062,14 @@ function initPwaInstall() {
         return;
     }
 
+    let pwaBannerDelayElapsed = false;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPwaPrompt = e;
         updatePwaDirectInstallButtons(true);
-        checkAndShowPwaBanner();
+        if (pwaBannerDelayElapsed) {
+            checkAndShowPwaBanner();
+        }
     });
 
     window.addEventListener('appinstalled', () => {
@@ -3081,6 +3084,7 @@ function initPwaInstall() {
     }
 
     setTimeout(() => {
+        pwaBannerDelayElapsed = true;
         checkAndShowPwaBanner();
     }, 8000);
 }
