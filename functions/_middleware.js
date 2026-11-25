@@ -39,10 +39,44 @@ const DECK_OG_META = {
   custom: { e: '✨', de: 'Eigene Abstimmung', en: 'Custom Group Poll', es: 'Votación Personalizada', fr: 'Sondage Personnalisé', it: 'Sondaggio Personalizzato' }
 };
 
+const SITE_OG_META = {
+  de: {
+    title: 'Agreesy – Einigen ohne Diskussion in 30 Sekunden',
+    desc: 'Was essen, schauen oder schenken? Alle swipen geheim – das erste gemeinsame Match gewinnt in 30 Sek. Kostenlos, ohne Anmeldung & 100% lokal.',
+    image: 'https://agreesy.com/og-image.png',
+    locale: 'de_DE'
+  },
+  en: {
+    title: 'Agreesy – Decide Without Debating in 30 Seconds',
+    desc: 'What to eat, watch, or gift? Everyone swipes privately – the first mutual match wins in 30s. Free, no signup & 100% private.',
+    image: 'https://agreesy.com/og-image-en.png',
+    locale: 'en_US'
+  },
+  es: {
+    title: 'Agreesy – Decidid sin discutir en 30 segundos',
+    desc: '¿Qué cenar, ver o regalar? Cada uno desliza en secreto – el primer match común gana en 30s. Gratis, sin registro y 100% privado.',
+    image: 'https://agreesy.com/og-image-es.png',
+    locale: 'es_ES'
+  },
+  fr: {
+    title: 'Agreesy – Décidez sans débattre en 30 secondes',
+    desc: 'Quoi manger, regarder ou offrir ? Chacun swipe en secret – le premier match commun gagne en 30s. Gratuit, sans compte et 100% privé.',
+    image: 'https://agreesy.com/og-image-fr.png',
+    locale: 'fr_FR'
+  },
+  it: {
+    title: 'Agreesy – Decidete senza discutere in 30 secondi',
+    desc: 'Cosa mangiare, guardare o regalare? Ognuno fa swipe in segreto – il primo match comune vince in 30s. Gratis, senza account e 100% privato.',
+    image: 'https://agreesy.com/og-image-it.png',
+    locale: 'it_IT'
+  }
+};
+
 function buildDynamicOg(deckKey, fromRaw, langRaw) {
   const meta = DECK_OG_META[deckKey];
   if (!meta) return null;
   const lang = ['de', 'en', 'es', 'fr', 'it'].includes(langRaw) ? langRaw : 'de';
+  const siteMeta = SITE_OG_META[lang] || SITE_OG_META.de;
   const deckTitle = meta[lang] || meta.en;
   const from = (fromRaw || '').replace(/[<>"]/g, '').trim().slice(0, 28);
   const isChores = deckKey === 'chores' || deckKey === 'household';
@@ -68,7 +102,7 @@ function buildDynamicOg(deckKey, fromRaw, langRaw) {
     it: 'Tocca e fai swipe in segreto per 30 secondi. Il primo match comune vince subito, gratis e senza registrazione!'
   };
 
-  return { title: titles[lang], desc: descs[lang] };
+  return { title: titles[lang], desc: descs[lang], image: siteMeta.image, locale: siteMeta.locale };
 }
 
 export async function onRequest(context) {
@@ -208,18 +242,26 @@ export async function onRequest(context) {
       headers: newHeaders
     });
 
-    // 5. Dynamic WhatsApp / Telegram / iMessage OpenGraph Preview for shared links (?d=...&from=...&lang=...)
+    // 5. Dynamic WhatsApp / Telegram / iMessage / Social OpenGraph Preview (?d=...&from=...&lang=... or ?lang=...)
     const deckParam = (url.searchParams.get('d') || url.searchParams.get('deck') || '').toLowerCase();
-    if (deckParam && typeof HTMLRewriter !== 'undefined') {
-      const og = buildDynamicOg(deckParam, url.searchParams.get('from'), url.searchParams.get('lang'));
+    const langParam = (url.searchParams.get('lang') || '').toLowerCase();
+    if (typeof HTMLRewriter !== 'undefined') {
+      const og = deckParam
+        ? buildDynamicOg(deckParam, url.searchParams.get('from'), langParam)
+        : (['en', 'es', 'fr', 'it'].includes(langParam) ? SITE_OG_META[langParam] : null);
       if (og) {
+        const shareCanonicalUrl = url.toString();
         return new HTMLRewriter()
           .on('title', { element(el) { el.setInnerContent(og.title); } })
-          .on('meta[property="og:title"]', { element(el) { el.setAttribute('content', og.title); } })
-          .on('meta[name="twitter:title"]', { element(el) { el.setAttribute('content', og.title); } })
-          .on('meta[property="og:description"]', { element(el) { el.setAttribute('content', og.desc); } })
-          .on('meta[name="twitter:description"]', { element(el) { el.setAttribute('content', og.desc); } })
           .on('meta[name="description"]', { element(el) { el.setAttribute('content', og.desc); } })
+          .on('meta[property="og:title"]', { element(el) { el.setAttribute('content', og.title); } })
+          .on('meta[property="og:description"]', { element(el) { el.setAttribute('content', og.desc); } })
+          .on('meta[property="og:image"]', { element(el) { el.setAttribute('content', og.image); } })
+          .on('meta[property="og:locale"]', { element(el) { el.setAttribute('content', og.locale); } })
+          .on('meta[property="og:url"]', { element(el) { el.setAttribute('content', shareCanonicalUrl); } })
+          .on('meta[name="twitter:title"]', { element(el) { el.setAttribute('content', og.title); } })
+          .on('meta[name="twitter:description"]', { element(el) { el.setAttribute('content', og.desc); } })
+          .on('meta[name="twitter:image"]', { element(el) { el.setAttribute('content', og.image); } })
           .transform(outRes);
       }
     }

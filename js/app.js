@@ -740,9 +740,13 @@ function setLang(lang) {
     setText('t-random-pick-btn', t.randomPickBtn);
     setText('t-retry-btn', t.retryBtn);
     setText('t-footer', t.footerText);
+    setText('t-footer-share', t.footerShare);
     setText('t-footer-guides', t.footerGuides);
     setText('t-footer-impressum', t.footerImpressum);
     setText('t-footer-datenschutz', t.footerDatenschutz);
+    if (typeof updateSiteShareUI === 'function') {
+        updateSiteShareUI();
+    }
 
     // Screen P1 Zero
     setText('t-p1zero-title', t.p1ZeroTitle);
@@ -3647,4 +3651,136 @@ async function shareMatchCardImage(kind) {
             showToast(t.shareCardSavedToast || '📸 Match-Karte gespeichert – ab in die Gruppe!');
         }
     }, 'image/png');
+}
+
+/**************************************************************
+ * 10. MULTILINGUAL SITE SHARE MODAL & SOCIAL LINKS
+ **************************************************************/
+function getSiteShareData() {
+    const lang = ['de', 'en', 'es', 'fr', 'it'].includes(currentLang) ? currentLang : 'de';
+    const t = I18N[lang] || I18N.de;
+    const origin = (window.location.origin && window.location.origin.startsWith('http'))
+        ? window.location.origin
+        : 'https://agreesy.com';
+    const url = lang === 'de' ? `${origin}/` : `${origin}/?lang=${lang}`;
+    const imgRel = lang === 'de' ? 'og-image.png' : `og-image-${lang}.png`;
+    const imgAbs = `${origin}/${imgRel}`;
+    const title = t.siteShareTitle || 'Agreesy – Einigen ohne Diskussion in 30 Sekunden';
+    const desc = t.siteShareDesc || '';
+    const subject = t.siteShareEmailSubject || title;
+    const shortDisplayUrl = lang === 'de' ? 'agreesy.com' : `agreesy.com/?lang=${lang}`;
+    return { lang, t, url, imgRel, imgAbs, title, desc, subject, shortDisplayUrl };
+}
+
+function updateSiteShareUI() {
+    const data = getSiteShareData();
+    const { t, url, imgRel, imgAbs, title, desc, subject, shortDisplayUrl } = data;
+
+    const setElText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el && text !== undefined) el.innerText = text;
+    };
+    const setElHref = (id, href) => {
+        const el = document.getElementById(id);
+        if (el && href) el.setAttribute('href', href);
+    };
+
+    setElText('site-share-modal-title', t.siteShareModalTitle);
+    setElText('site-share-modal-sub', t.siteShareModalSub);
+    setElText('site-share-preview-title', title);
+    setElText('site-share-preview-desc', desc);
+    setElText('site-share-preview-url', shortDisplayUrl);
+    setElText('site-share-native-label', t.siteShareNativeBtn);
+    setElText('site-share-copy-label', t.siteShareCopyBtn);
+    setElText('site-share-follow-label', t.siteShareFollowLabel);
+
+    const previewImg = document.getElementById('site-share-preview-img');
+    if (previewImg) {
+        previewImg.setAttribute('src', imgRel);
+        previewImg.setAttribute('alt', title);
+    }
+
+    const waText = `${title}\n${desc}\n${url}`;
+    setElHref('site-share-wa', `https://wa.me/?text=${encodeURIComponent(waText)}`);
+    setElHref('site-share-email', `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${title}\n\n${desc}\n\n${url}`)}`);
+    setElHref('site-share-telegram', `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(`${title} — ${desc}`)}`);
+    setElHref('site-share-x', `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`);
+    setElHref('site-share-pinterest', `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imgAbs)}&description=${encodeURIComponent(`${title} – ${desc}`)}`);
+
+    const nativeBtn = document.getElementById('site-share-native-btn');
+    if (nativeBtn) {
+        if (typeof navigator.share === 'function') {
+            nativeBtn.classList.remove('hidden');
+            nativeBtn.classList.add('flex');
+        } else {
+            nativeBtn.classList.add('hidden');
+            nativeBtn.classList.remove('flex');
+        }
+    }
+}
+
+function openSiteShareModal() {
+    updateSiteShareUI();
+    const modal = document.getElementById('modal-site-share');
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closeSiteShareModal() {
+    const modal = document.getElementById('modal-site-share');
+    if (modal) modal.classList.add('hidden');
+}
+
+async function shareSiteNative() {
+    const { title, desc, url } = getSiteShareData();
+    if (typeof navigator.share === 'function') {
+        try {
+            await navigator.share({ title, text: desc, url });
+            return;
+        } catch (err) {
+            if (err && err.name === 'AbortError') return;
+        }
+    }
+    copySiteShareLink();
+}
+
+function copySiteShareLink() {
+    const { t, url } = getSiteShareData();
+    const labelEl = document.getElementById('site-share-copy-label');
+    const doneText = t.siteShareCopiedBtn || 'Link kopiert ✓';
+
+    const onCopied = () => {
+        if (labelEl) {
+            labelEl.innerText = doneText;
+            setTimeout(() => {
+                const latest = getSiteShareData();
+                if (labelEl) labelEl.innerText = latest.t.siteShareCopyBtn || 'Link kopieren';
+            }, 2200);
+        }
+        if (typeof showToast === 'function') {
+            showToast(doneText);
+        }
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(onCopied).catch(() => {
+            fallbackCopyText(url);
+            onCopied();
+        });
+    } else {
+        fallbackCopyText(url);
+        onCopied();
+    }
+}
+
+function fallbackCopyText(text) {
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+    } catch (e) {}
 }

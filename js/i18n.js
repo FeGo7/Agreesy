@@ -256,7 +256,17 @@ const I18N = {
         soloMatchBadge: "Deine Auswahl",
         soloMatchTitle: "Dein Treffer für heute",
         soloNextPickBtn: "Nächsten Favoriten zeigen ({cur}/{total})",
-        groupMatchBadge: "Gruppen-Match ({votes}/{total} Stimmen)"
+        groupMatchBadge: "Gruppen-Match ({votes}/{total} Stimmen)",
+        footerShare: "Teilen",
+        siteShareModalTitle: "Agreesy teilen",
+        siteShareModalSub: "Teile Agreesy mit Partner, Freunden oder deiner WG – inkl. Vorschau in deiner Sprache.",
+        siteShareTitle: "Agreesy – Einigen ohne Diskussion in 30 Sekunden",
+        siteShareDesc: "Was essen, schauen oder schenken? Alle swipen geheim – das erste gemeinsame Match gewinnt in 30 Sek. Kostenlos, ohne Anmeldung & 100% lokal.",
+        siteShareNativeBtn: "Direkt teilen…",
+        siteShareCopyBtn: "Link kopieren",
+        siteShareCopiedBtn: "Link kopiert ✓",
+        siteShareFollowLabel: "Folge Agreesy",
+        siteShareEmailSubject: "Agreesy – Einigen ohne Diskussion in 30 Sekunden"
     },
     en: {
         badge: "Quickstart · 8 cards in 30 sec.",
@@ -502,7 +512,17 @@ const I18N = {
         soloMatchBadge: "Your selection",
         soloMatchTitle: "Your pick for today",
         soloNextPickBtn: "Show next favorite ({cur}/{total})",
-        groupMatchBadge: "Group Match ({votes}/{total} votes)"
+        groupMatchBadge: "Group Match ({votes}/{total} votes)",
+        footerShare: "Share",
+        siteShareModalTitle: "Share Agreesy",
+        siteShareModalSub: "Share Agreesy with your partner, friends, or roommates — with a localized preview.",
+        siteShareTitle: "Agreesy – Decide Without Debating in 30 Seconds",
+        siteShareDesc: "What to eat, watch, or gift? Everyone swipes privately – the first mutual match wins in 30s. Free, no signup & 100% private.",
+        siteShareNativeBtn: "Share via device…",
+        siteShareCopyBtn: "Copy link",
+        siteShareCopiedBtn: "Link copied ✓",
+        siteShareFollowLabel: "Follow Agreesy",
+        siteShareEmailSubject: "Agreesy – Decide Without Debating in 30 Seconds"
     },
     es: {
         badge: "Inicio rápido · 8 cartas en 30 s",
@@ -748,7 +768,17 @@ const I18N = {
         soloMatchBadge: "Tu elección",
         soloMatchTitle: "Tu plan para hoy",
         soloNextPickBtn: "Ver siguiente favorito ({cur}/{total})",
-        groupMatchBadge: "Match de grupo ({votes}/{total} votos)"
+        groupMatchBadge: "Match de grupo ({votes}/{total} votos)",
+        footerShare: "Compartir",
+        siteShareModalTitle: "Compartir Agreesy",
+        siteShareModalSub: "Comparte Agreesy con tu pareja, amigos o piso – con vista previa en tu idioma.",
+        siteShareTitle: "Agreesy – Decidid sin discutir en 30 segundos",
+        siteShareDesc: "¿Qué cenar, ver o regalar? Cada uno desliza en secreto – el primer match común gana en 30s. Gratis, sin registro y 100% privado.",
+        siteShareNativeBtn: "Compartir…",
+        siteShareCopyBtn: "Copiar enlace",
+        siteShareCopiedBtn: "Enlace copiado ✓",
+        siteShareFollowLabel: "Sigue a Agreesy",
+        siteShareEmailSubject: "Agreesy – Decidid sin discutir en 30 segundos"
     },
     fr: {
         badge: "Accès rapide · 8 cartes en 30 s",
@@ -994,7 +1024,17 @@ const I18N = {
         soloMatchBadge: "Ton choix",
         soloMatchTitle: "Ton coup de cœur",
         soloNextPickBtn: "Voir le favori suivant ({cur}/{total})",
-        groupMatchBadge: "Match de groupe ({votes}/{total} voix)"
+        groupMatchBadge: "Match de groupe ({votes}/{total} voix)",
+        footerShare: "Partager",
+        siteShareModalTitle: "Partager Agreesy",
+        siteShareModalSub: "Partage Agreesy avec ton ou ta partenaire, tes amis ou colocs – avec aperçu dans ta langue.",
+        siteShareTitle: "Agreesy – Décidez sans débattre en 30 secondes",
+        siteShareDesc: "Quoi manger, regarder ou offrir ? Chacun swipe en secret – le premier match commun gagne en 30s. Gratuit, sans compte et 100% privé.",
+        siteShareNativeBtn: "Partager…",
+        siteShareCopyBtn: "Copier le lien",
+        siteShareCopiedBtn: "Lien copié ✓",
+        siteShareFollowLabel: "Suivre Agreesy",
+        siteShareEmailSubject: "Agreesy – Décidez sans débattre en 30 secondes"
     },
     it: {
         badge: "Avvio rapido · 8 carte in 30 s",
@@ -1240,6 +1280,16 @@ const I18N = {
         soloMatchBadge: "La tua scelta",
         soloMatchTitle: "La tua scelta per oggi",
         soloNextPickBtn: "Mostra prossimo preferito ({cur}/{total})",
-        groupMatchBadge: "Match di gruppo ({votes}/{total} voti)"
+        groupMatchBadge: "Match di gruppo ({votes}/{total} voti)",
+        footerShare: "Condividi",
+        siteShareModalTitle: "Condividi Agreesy",
+        siteShareModalSub: "Condividi Agreesy con partner, amici o coinquilini – con anteprima nella tua lingua.",
+        siteShareTitle: "Agreesy – Decidete senza discutere in 30 secondi",
+        siteShareDesc: "Cosa mangiare, guardare o regalare? Ognuno fa swipe in segreto – il primo match comune vince in 30s. Gratis, senza account e 100% privato.",
+        siteShareNativeBtn: "Condividi…",
+        siteShareCopyBtn: "Copia link",
+        siteShareCopiedBtn: "Link copiato ✓",
+        siteShareFollowLabel: "Segui Agreesy",
+        siteShareEmailSubject: "Agreesy – Decidete senza discutere in 30 secondi"
     }
 };
