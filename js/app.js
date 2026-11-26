@@ -1450,7 +1450,19 @@ function startGame(deckId) {
     lastMatchMeta = null;
 
     showScreen('screen-game');
-    trackVirtualPath(partnerLikes !== null ? '/@invite-' + deck.id : '/@' + deck.id);
+    const viaWa = (window.location.search.indexOf('via=wa') !== -1) ? '-wa' : '';
+    if (partnerLikes !== null) {
+        const playerNum = Math.max(2, completedPlayers.length + 1);
+        const invitePath = (targetPlayerCount >= 3)
+            ? `/@invite${viaWa}-g${targetPlayerCount}-p${playerNum}-${deck.id}`
+            : `/@invite${viaWa}-p${playerNum}-${deck.id}`;
+        trackVirtualPath(invitePath);
+    } else {
+        const modePrefix = (targetPlayerCount === 1)
+            ? 'solo'
+            : (targetPlayerCount >= 3 ? `group-${targetPlayerCount}` : 'duo');
+        trackVirtualPath(`/@${modePrefix}-${deck.id}`);
+    }
 
     const p2LiveEl = document.getElementById('p2-live-indicator');
     const p2TextEl = document.getElementById('p2-live-text');
@@ -2899,12 +2911,22 @@ function copyShareLink() {
 }
 
 function shareViaWhatsApp() {
-    const url = document.getElementById('share-url-input').value;
+    let url = document.getElementById('share-url-input').value;
+    if (url && url.indexOf('via=wa') === -1) {
+        const hashIdx = url.indexOf('#');
+        if (hashIdx !== -1) {
+            const base = url.slice(0, hashIdx);
+            const sep = base.indexOf('?') === -1 ? '?' : '&';
+            url = base + sep + 'via=wa' + url.slice(hashIdx);
+        } else {
+            url += (url.indexOf('?') === -1 ? '?' : '&') + 'via=wa';
+        }
+    }
     const myName = getUserProfile().name;
     const t = I18N[currentLang];
     const challengeMsg = t.waChallengeText || "Ich habe meine Auswahl getroffen. Schau mal rein, wo wir übereinstimmen:";
     const text = encodeURIComponent(`${myName}: ${challengeMsg}\n${url}`);
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer');
 }
 
 function sendWinnerToPartner() {
