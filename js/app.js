@@ -665,9 +665,17 @@ function checkDirectDeckParam() {
     }
     if (!targetDeck && window.location.pathname.startsWith('/@')) {
         const slug = window.location.pathname.slice(2).split('/')[0];
+        const transientStates = ['share', 'match', 'duel', 'nomatch', 'chores-done'];
         if (DECKS[slug] && slug !== 'custom') {
             targetDeck = slug;
-        } else if (window.location.protocol.startsWith('http')) {
+        } else if (slug.startsWith('invite-')) {
+            const rawDeck = slug.slice(7);
+            if (DECKS[rawDeck] && rawDeck !== 'custom') {
+                targetDeck = rawDeck;
+            } else if (window.location.protocol.startsWith('http')) {
+                window.history.replaceState(null, null, '/');
+            }
+        } else if (transientStates.includes(slug) && window.location.protocol.startsWith('http')) {
             window.history.replaceState(null, null, '/');
         }
     }
@@ -1388,7 +1396,7 @@ function startGame(deckId) {
     lastMatchMeta = null;
 
     showScreen('screen-game');
-    trackVirtualPath('/@' + deck.id);
+    trackVirtualPath(partnerLikes !== null ? '/@invite-' + deck.id : '/@' + deck.id);
 
     const p2LiveEl = document.getElementById('p2-live-indicator');
     const p2TextEl = document.getElementById('p2-live-text');
