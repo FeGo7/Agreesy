@@ -848,6 +848,11 @@ function setLang(lang) {
     setText('t-seasonal-nye', t.seasonalNye);
     setText('t-roulette-open-btn', t.rouletteOpenBtn);
     setText('t-roulette-title', t.rouletteTitle);
+    setText('t-custom-templates-label', t.customTemplatesLabel || 'Schnellstart-Vorlagen');
+    setText('t-desktop-qr-title', t.desktopQrTitle || 'Auf dem Handy öffnen');
+    setText('t-desktop-qr-sub', t.desktopQrSub || 'Scannen zum Swipen oder Teilen');
+    setText('t-desktop-keys-hint', t.desktopKeysHint || 'Tastatur: ← Nee · ↓ Veto · ↑ Super · → Geil');
+    if (typeof renderCustomTemplates === 'function') renderCustomTemplates();
     setText('t-roulette-sub', t.rouletteSub);
     setText('t-roulette-filter-label', t.rouletteFilterLabel);
     setText('t-roulette-spin-btn', t.rouletteSpinBtn);
@@ -1138,8 +1143,36 @@ function openCustomDeckModal() {
     if (titleInput) titleInput.value = '';
 
     setCustomDeckMode('match');
+    renderCustomTemplates();
     renderCustomOptionInputs(['', '', '']);
     showScreen('screen-custom');
+}
+
+function renderCustomTemplates() {
+    const bar = document.getElementById('custom-templates-bar');
+    if (!bar) return;
+    const t = I18N[currentLang] || I18N.de;
+    const templates = t.customTemplates || I18N.de.customTemplates || [];
+    bar.innerHTML = '';
+    templates.forEach((tpl, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'px-3 py-1.5 rounded-full surface-raised border border-[var(--border)] hover:border-[#E05A3A] text-[12px] font-bold text-primary-role transition-colors';
+        btn.textContent = tpl.label;
+        btn.onclick = () => applyCustomTemplate(idx);
+        bar.appendChild(btn);
+    });
+}
+
+function applyCustomTemplate(idx) {
+    const t = I18N[currentLang] || I18N.de;
+    const templates = t.customTemplates || I18N.de.customTemplates || [];
+    const tpl = templates[idx];
+    if (!tpl) return;
+    const titleInput = document.getElementById('custom-deck-title');
+    if (titleInput) titleInput.value = tpl.title;
+    setCustomDeckMode('match');
+    renderCustomOptionInputs(tpl.options.slice(0, 6));
 }
 
 function setCustomDeckMode(mode) {
@@ -1150,15 +1183,15 @@ function setCustomDeckMode(mode) {
     const choresCheck = document.getElementById('custom-mode-chores-check');
 
     if (customDeckMode === 'match') {
-        matchBtn.className = "w-full p-3 rounded-[10px] text-left text-[13px] font-medium border transition-colors flex items-center justify-between surface-raised border-[var(--border-strong)] text-primary-role";
-        choresBtn.className = "w-full p-3 rounded-[10px] text-left text-[13px] font-normal border transition-colors flex items-center justify-between surface border-[var(--border)] text-secondary-role";
-        if (matchCheck) matchCheck.innerText = "●";
-        if (choresCheck) choresCheck.innerText = "○";
+        matchBtn.className = "w-full p-3.5 rounded-[16px] text-left text-[13px] font-bold border transition-colors flex items-center justify-between border-[#E05A3A] bg-[#E05A3A]/10 text-primary-role";
+        choresBtn.className = "w-full p-3.5 rounded-[16px] text-left text-[13px] font-medium border transition-colors flex items-center justify-between surface-raised border-[var(--border)] text-secondary-role";
+        if (matchCheck) { matchCheck.innerText = "●"; matchCheck.className = "text-[#E05A3A] shrink-0 ml-2"; }
+        if (choresCheck) { choresCheck.innerText = "○"; choresCheck.className = "shrink-0 ml-2"; }
     } else {
-        choresBtn.className = "w-full p-3 rounded-[10px] text-left text-[13px] font-medium border transition-colors flex items-center justify-between surface-raised border-[var(--border-strong)] text-primary-role";
-        matchBtn.className = "w-full p-3 rounded-[10px] text-left text-[13px] font-normal border transition-colors flex items-center justify-between surface border-[var(--border)] text-secondary-role";
-        if (choresCheck) choresCheck.innerText = "●";
-        if (matchCheck) matchCheck.innerText = "○";
+        choresBtn.className = "w-full p-3.5 rounded-[16px] text-left text-[13px] font-bold border transition-colors flex items-center justify-between border-[#E05A3A] bg-[#E05A3A]/10 text-primary-role";
+        matchBtn.className = "w-full p-3.5 rounded-[16px] text-left text-[13px] font-medium border transition-colors flex items-center justify-between surface-raised border-[var(--border)] text-secondary-role";
+        if (choresCheck) { choresCheck.innerText = "●"; choresCheck.className = "text-[#E05A3A] shrink-0 ml-2"; }
+        if (matchCheck) { matchCheck.innerText = "○"; matchCheck.className = "shrink-0 ml-2"; }
     }
 }
 
@@ -1173,7 +1206,7 @@ function renderCustomOptionInputs(existingValues) {
         row.className = "flex items-center gap-2.5";
         row.innerHTML = `
             <span class="w-5 text-right text-[12px] font-mono tabular-nums text-muted-role">${String(idx + 1).padStart(2, '0')}</span>
-            <input type="text" maxlength="50" value="${val.replace(/"/g, '&quot;')}" placeholder="${t.customOptionPlaceholder} ${idx + 1}" class="custom-opt-input flex-1 surface rounded-[8px] px-3 py-2 text-[13px] font-normal focus:outline-none focus:border-[var(--text-secondary)] text-primary-role placeholder:text-muted-role">
+            <input type="text" maxlength="50" value="${val.replace(/"/g, '&quot;')}" placeholder="${t.customOptionPlaceholder} ${idx + 1}" class="custom-opt-input flex-1 surface-raised rounded-[14px] px-3.5 py-2.5 text-[13.5px] font-medium focus:outline-none focus:border-[#E05A3A] text-primary-role placeholder:text-muted-role transition-colors">
         `;
         container.appendChild(row);
     });
@@ -1366,6 +1399,7 @@ function trackVirtualPath(virtualPath) {
             const keepHash = (window.location.hash && (window.location.hash.startsWith('#m=') || window.location.hash.startsWith('#c='))) ? window.location.hash : '';
             window.history.pushState(null, '', nextPath + keepHash);
         }
+        if (typeof renderDesktopQrCode === 'function') renderDesktopQrCode();
     } catch (e) {}
 }
 
@@ -4309,3 +4343,284 @@ function selectFoodDeck(deckId) {
     closeFoodPickerModal();
     startGame(deckId);
 }
+
+// --- DESKTOP OPTIMIZATIONS: KEYBOARD SWIPE + LIVE QR CODE ---
+document.addEventListener('keydown', (e) => {
+    const gameScreen = document.getElementById('screen-game');
+    if (!gameScreen || gameScreen.classList.contains('hidden')) return;
+    const activeTag = document.activeElement ? document.activeElement.tagName : '';
+    if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') return;
+    const anyModalOpen = ['modal-profile', 'modal-timeout', 'modal-pass-play', 'modal-food-picker', 'roulette-modal', 'site-share-modal', 'legal-modal', 'pwa-modal']
+        .some(id => {
+            const el = document.getElementById(id);
+            return el && !el.classList.contains('hidden');
+        });
+    if (anyModalOpen) return;
+
+    if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handleSwipe(false);
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleSwipe(true);
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (typeof handleSuperLike === 'function') handleSuperLike();
+    } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (typeof handleVeto === 'function') handleVeto();
+    }
+});
+
+function dismissDesktopQrCard() {
+    const card = document.getElementById('desktop-qr-card');
+    if (card) card.classList.add('!hidden');
+    try { sessionStorage.setItem('agreesy_hide_desktop_qr', '1'); } catch (e) {}
+}
+
+// Compact ISO 18004 QR Code Generator (Byte mode, ECC Level L, Versions 1-8)
+const AgreesyQR = (() => {
+    const CAP_L = [0, 17, 32, 53, 78, 106, 134, 154, 192];
+    const TOTAL_CW = [0, 26, 44, 70, 100, 134, 172, 196, 242];
+    const ECC_PER_BLOCK = [0, 7, 10, 15, 20, 26, 18, 20, 24];
+    const BLOCKS_L = [0, 1, 1, 1, 1, 1, 2, 2, 2];
+    const ALIGN_POS = [[], [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42]];
+
+    const EXP = new Uint8Array(512);
+    const LOG = new Uint8Array(256);
+    for (let i = 0, x = 1; i < 255; i++) {
+        EXP[i] = x;
+        EXP[i + 255] = x;
+        LOG[x] = i;
+        x = (x << 1) ^ (x & 0x80 ? 0x11d : 0);
+    }
+    function gfMul(a, b) {
+        return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]];
+    }
+    function rsGen(deg) {
+        let poly = [1];
+        for (let i = 0; i < deg; i++) {
+            const next = new Array(poly.length + 1).fill(0);
+            for (let j = 0; j < poly.length; j++) {
+                next[j] ^= poly[j];
+                next[j + 1] ^= gfMul(poly[j], EXP[i]);
+            }
+            poly = next;
+        }
+        return poly;
+    }
+    function rsEncode(data, eccLen) {
+        const gen = rsGen(eccLen);
+        const res = new Uint8Array(data.length + eccLen);
+        res.set(data);
+        for (let i = 0; i < data.length; i++) {
+            const coef = res[i];
+            if (coef !== 0) {
+                for (let j = 0; j < gen.length; j++) {
+                    res[i + j] ^= gfMul(gen[j], coef);
+                }
+            }
+        }
+        return res.slice(data.length);
+    }
+
+    function encode(text) {
+        const bytes = new TextEncoder().encode(text);
+        let ver = 1;
+        while (ver <= 8 && bytes.length > CAP_L[ver]) ver++;
+        if (ver > 8) return null;
+
+        const totalBytes = TOTAL_CW[ver];
+        const eccLen = ECC_PER_BLOCK[ver];
+        const numBlocks = BLOCKS_L[ver];
+        const dataCap = totalBytes - eccLen * numBlocks;
+
+        const bits = [];
+        const pushBits = (val, len) => {
+            for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1);
+        };
+        pushBits(0b0100, 4); // Byte mode
+        pushBits(bytes.length, 8);
+        for (const b of bytes) pushBits(b, 8);
+        pushBits(0, Math.min(4, dataCap * 8 - bits.length));
+        while (bits.length % 8 !== 0) bits.push(0);
+        const padBytes = [0xec, 0x11];
+        for (let i = 0; bits.length < dataCap * 8; i++) pushBits(padBytes[i % 2], 8);
+
+        const dataCW = new Uint8Array(dataCap);
+        for (let i = 0; i < dataCap; i++) {
+            let v = 0;
+            for (let b = 0; b < 8; b++) v = (v << 1) | bits[i * 8 + b];
+            dataCW[i] = v;
+        }
+
+        const shortBlockLen = Math.floor(dataCap / numBlocks);
+        const longBlocks = dataCap % numBlocks;
+        const dataBlocks = [];
+        const eccBlocks = [];
+        let offset = 0;
+        for (let b = 0; b < numBlocks; b++) {
+            const len = shortBlockLen + (b >= numBlocks - longBlocks ? 1 : 0);
+            const block = dataCW.slice(offset, offset + len);
+            offset += len;
+            dataBlocks.push(block);
+            eccBlocks.push(rsEncode(block, eccLen));
+        }
+
+        const finalCW = [];
+        const maxDataLen = shortBlockLen + (longBlocks > 0 ? 1 : 0);
+        for (let i = 0; i < maxDataLen; i++) {
+            for (let b = 0; b < numBlocks; b++) {
+                if (i < dataBlocks[b].length) finalCW.push(dataBlocks[b][i]);
+            }
+        }
+        for (let i = 0; i < eccLen; i++) {
+            for (let b = 0; b < numBlocks; b++) finalCW.push(eccBlocks[b][i]);
+        }
+
+        const size = ver * 4 + 17;
+        const mat = Array.from({ length: size }, () => new Int8Array(size).fill(-1));
+        const reserved = Array.from({ length: size }, () => new Uint8Array(size));
+
+        const setFn = (r, c, v) => {
+            if (r >= 0 && r < size && c >= 0 && c < size) {
+                mat[r][c] = v ? 1 : 0;
+                reserved[r][c] = 1;
+            }
+        };
+        const drawFinder = (r0, c0) => {
+            for (let dr = -1; dr <= 7; dr++) {
+                for (let dc = -1; dc <= 7; dc++) {
+                    const r = r0 + dr, c = c0 + dc;
+                    if (r < 0 || r >= size || c < 0 || c >= size) continue;
+                    const inOuter = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+                    const onBorder = dr === 0 || dr === 6 || dc === 0 || dc === 6;
+                    const inCore = dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4;
+                    setFn(r, c, inOuter && (onBorder || inCore));
+                }
+            }
+        };
+        drawFinder(0, 0);
+        drawFinder(0, size - 7);
+        drawFinder(size - 7, 0);
+
+        for (let i = 8; i < size - 8; i++) {
+            setFn(6, i, i % 2 === 0);
+            setFn(i, 6, i % 2 === 0);
+        }
+        setFn(size - 8, 8, 1);
+
+        const aligns = ALIGN_POS[ver];
+        for (const ar of aligns) {
+            for (const ac of aligns) {
+                if (reserved[ar][ac]) continue;
+                for (let dr = -2; dr <= 2; dr++) {
+                    for (let dc = -2; dc <= 2; dc++) {
+                        setFn(ar + dr, ac + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1);
+                    }
+                }
+            }
+        }
+
+        // Reserve format info cells
+        for (let i = 0; i < 9; i++) {
+            if (i !== 6) {
+                reserved[8][i] = 1;
+                reserved[i][8] = 1;
+            }
+        }
+        for (let i = 0; i < 8; i++) {
+            reserved[8][size - 1 - i] = 1;
+            if (i < 7) reserved[size - 1 - i][8] = 1;
+        }
+        if (ver >= 7) {
+            for (let r = 0; r < 6; r++) {
+                for (let c = 0; c < 3; c++) {
+                    reserved[r][size - 11 + c] = 1;
+                    reserved[size - 11 + c][r] = 1;
+                }
+            }
+            // Write version info (ECC version bits)
+            const vBits = ver === 7 ? 0x07c94 : 0x085bc;
+            for (let i = 0; i < 18; i++) {
+                const bit = (vBits >> i) & 1;
+                const r = Math.floor(i / 3), c = size - 11 + (i % 3);
+                mat[r][c] = bit;
+                mat[c][r] = bit;
+            }
+        }
+
+        // Place data bits (zigzag) + Mask 0 ((r + c) % 2 === 0)
+        const allBits = [];
+        for (const cw of finalCW) {
+            for (let b = 7; b >= 0; b--) allBits.push((cw >> b) & 1);
+        }
+        let bitIdx = 0;
+        let up = true;
+        for (let col = size - 1; col > 0; col -= 2) {
+            if (col === 6) col--;
+            for (let i = 0; i < size; i++) {
+                const r = up ? size - 1 - i : i;
+                for (let dc = 0; dc < 2; dc++) {
+                    const c = col - dc;
+                    if (!reserved[r][c]) {
+                        const rawBit = bitIdx < allBits.length ? allBits[bitIdx++] : 0;
+                        mat[r][c] = rawBit ^ (((r + c) % 2 === 0) ? 1 : 0);
+                    }
+                }
+            }
+            up = !up;
+        }
+
+        // Format info for ECC-L (01) + Mask 0 (000) -> 0x77c4 (after BCH + XOR 0x5412)
+        const fmt = 0x77c4;
+        for (let i = 0; i <= 5; i++) setFn(8, i, (fmt >> i) & 1);
+        setFn(8, 7, (fmt >> 6) & 1);
+        setFn(8, 8, (fmt >> 7) & 1);
+        setFn(7, 8, (fmt >> 8) & 1);
+        for (let i = 9; i <= 14; i++) setFn(14 - i, 8, (fmt >> i) & 1);
+        for (let i = 0; i <= 7; i++) setFn(size - 1 - i, 8, (fmt >> i) & 1);
+        for (let i = 8; i <= 14; i++) setFn(8, size - 15 + i, (fmt >> i) & 1);
+
+        return mat;
+    }
+
+    function toSvg(text) {
+        const mat = encode(text);
+        if (!mat) return '';
+        const size = mat.length;
+        let paths = '';
+        for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+                if (mat[r][c] === 1) paths += `M${c},${r}h1v1h-1z`;
+            }
+        }
+        return `<svg viewBox="0 0 ${size} ${size}" class="w-full h-full" shape-rendering="crispEdges"><rect width="${size}" height="${size}" fill="#ffffff"/><path d="${paths}" fill="#111827"/></svg>`;
+    }
+
+    return { toSvg };
+})();
+
+function renderDesktopQrCode() {
+    try {
+        if (sessionStorage.getItem('agreesy_hide_desktop_qr') === '1') {
+            const card = document.getElementById('desktop-qr-card');
+            if (card) card.classList.add('!hidden');
+            return;
+        }
+    } catch (e) {}
+    const wrap = document.getElementById('desktop-qr-svg-wrap');
+    if (!wrap) return;
+    let url = window.location.href;
+    if (!url.startsWith('http')) {
+        url = 'https://agreesy.com/';
+    } else if (url.length > 180) {
+        url = window.location.origin + window.location.pathname;
+    }
+    const svg = AgreesyQR.toSvg(url);
+    if (svg) wrap.innerHTML = svg;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    renderDesktopQrCode();
+});
