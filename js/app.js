@@ -236,28 +236,41 @@ function renderProfileBlacklistUI() {
     }
 
     if (total === 0) {
-        listEl.innerHTML = `<div class="text-[11.5px] text-muted-role py-1">${t.profileBlacklistEmpty || 'Noch keine Karten ausgeblendet'}</div>`;
+        listEl.innerHTML = '';
+        const empty = document.createElement('div');
+        empty.className = 'text-[11.5px] text-muted-role py-1';
+        empty.textContent = t.profileBlacklistEmpty || 'Noch keine Karten ausgeblendet';
+        listEl.appendChild(empty);
         return;
     }
 
-    const itemsHtml = [];
-    cards.forEach(item => {
-        itemsHtml.push(`
-            <div class="flex items-center justify-between gap-2 surface-raised px-2.5 py-1.5 rounded-[8px]">
-                <span class="truncate text-[11.5px] text-primary-role">🚫 ${item.label}</span>
-                <button type="button" onclick="removeBlacklistedCard('${item.key}')" class="text-[11px] font-bold text-secondary-role hover:text-primary-role px-1.5">✕</button>
-            </div>
-        `);
-    });
-    seen.forEach(item => {
-        itemsHtml.push(`
-            <div class="flex items-center justify-between gap-2 surface-raised px-2.5 py-1.5 rounded-[8px]">
-                <span class="truncate text-[11.5px] text-primary-role">👁️ ${item.title}</span>
-                <button type="button" onclick="removeSeenMediaItem('${item.id}')" class="text-[11px] font-bold text-secondary-role hover:text-primary-role px-1.5">✕</button>
-            </div>
-        `);
-    });
-    listEl.innerHTML = itemsHtml.join('');
+    listEl.innerHTML = '';
+    const appendBlacklistRow = (prefix, label, onRemove) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-2 surface-raised px-2.5 py-1.5 rounded-[8px]';
+        const span = document.createElement('span');
+        span.className = 'truncate text-[11.5px] text-primary-role';
+        span.textContent = `${prefix} ${label}`;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'text-[11px] font-bold text-secondary-role hover:text-primary-role px-1.5';
+        btn.textContent = '✕';
+        btn.addEventListener('click', onRemove);
+        row.appendChild(span);
+        row.appendChild(btn);
+        listEl.appendChild(row);
+    };
+    cards.forEach(item => appendBlacklistRow('🚫', item.label, () => removeBlacklistedCard(item.key)));
+    seen.forEach(item => appendBlacklistRow('👁️', item.title, () => removeSeenMediaItem(item.id)));
+}
+
+function escapeHtml(str) {
+    return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 // 0-BYTE WEB AUDIO SYNTHESIZER (Walt Disney, Hans Zimmer & John Carmack)
@@ -1117,10 +1130,10 @@ function renderDeckList() {
                 </div>
                 <div class="min-w-0">
                     <div class="font-medium text-[14px] text-primary-role truncate">
-                        ${deck.title[currentLang] || deck.title.de}
+                        ${escapeHtml(deck.title[currentLang] || deck.title.de)}
                     </div>
                     <div class="text-[12px] text-secondary-role line-clamp-2 leading-snug mt-0.5">
-                        ${deck.sub[currentLang] || deck.sub.de}
+                        ${escapeHtml(deck.sub[currentLang] || deck.sub.de)}
                     </div>
                 </div>
             </div>
@@ -1204,10 +1217,17 @@ function renderCustomOptionInputs(existingValues) {
     existingValues.forEach((val, idx) => {
         const row = document.createElement('div');
         row.className = "flex items-center gap-2.5";
-        row.innerHTML = `
-            <span class="w-5 text-right text-[12px] font-mono tabular-nums text-muted-role">${String(idx + 1).padStart(2, '0')}</span>
-            <input type="text" maxlength="50" value="${val.replace(/"/g, '&quot;')}" placeholder="${t.customOptionPlaceholder} ${idx + 1}" class="custom-opt-input flex-1 surface-raised rounded-[14px] px-3.5 py-2.5 text-[13.5px] font-medium focus:outline-none focus:border-[#E05A3A] text-primary-role placeholder:text-muted-role transition-colors">
-        `;
+        const numSpan = document.createElement('span');
+        numSpan.className = "w-5 text-right text-[12px] font-mono tabular-nums text-muted-role";
+        numSpan.textContent = String(idx + 1).padStart(2, '0');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 50;
+        input.value = val;
+        input.placeholder = `${t.customOptionPlaceholder} ${idx + 1}`;
+        input.className = "custom-opt-input flex-1 surface-raised rounded-[14px] px-3.5 py-2.5 text-[13.5px] font-medium focus:outline-none focus:border-[#E05A3A] text-primary-role placeholder:text-muted-role transition-colors";
+        row.appendChild(numSpan);
+        row.appendChild(input);
         container.appendChild(row);
     });
 
@@ -1674,13 +1694,17 @@ function renderCurrentCard() {
 /**************************************************************
  * 6. SWIPE ACTIONS, SUDDEN-DEATH MATCH & ANTI-MATCH ENGINE
  **************************************************************/
+let isSwipeLocked = false;
+
 function handleSwipe(isLike) {
+    if (isSwipeLocked) return;
     closeTimeoutModal();
-    playSwipeClick(isLike);
     const deck = DECKS[currentDeckId];
     if (!deck || !activeRoundCards.length) return;
     const card = activeRoundCards[currentCardIndex];
     if (!card) return;
+    isSwipeLocked = true;
+    playSwipeClick(isLike);
     const cardEl = document.getElementById('active-card');
 
     if (cardEl) {
@@ -1696,6 +1720,7 @@ function handleSwipe(isLike) {
             clearInterval(timerInterval);
             lastMatchMeta = { mode: 'duo', isSuperMatch: (mySuperLikeId === card.id) };
             setTimeout(() => {
+                isSwipeLocked = false;
                 triggerMatchScreen(card);
             }, 220);
             return;
@@ -1703,6 +1728,7 @@ function handleSwipe(isLike) {
     }
 
     setTimeout(() => {
+        isSwipeLocked = false;
         currentCardIndex++;
         if (currentCardIndex < activeRoundCards.length) {
             renderCurrentCard();
@@ -2735,10 +2761,14 @@ function renderChoresSummaryUI() {
 
             const row = document.createElement('div');
             row.className = "flex items-center justify-between gap-2 p-2.5 rounded-[8px] surface-raised";
-            row.innerHTML = `
-                <span class="font-medium text-primary-role">${title}</span>
-                <span class="text-[11px] font-mono text-secondary-role whitespace-nowrap">${badgeText}</span>
-            `;
+            const titleSpan = document.createElement('span');
+            titleSpan.className = "font-medium text-primary-role";
+            titleSpan.textContent = title;
+            const badgeSpan = document.createElement('span');
+            badgeSpan.className = "text-[11px] font-mono text-secondary-role whitespace-nowrap";
+            badgeSpan.textContent = badgeText;
+            row.appendChild(titleSpan);
+            row.appendChild(badgeSpan);
             volListEl.appendChild(row);
         });
     }
@@ -2756,10 +2786,14 @@ function renderChoresSummaryUI() {
 
             const row = document.createElement('div');
             row.className = "flex items-center justify-between gap-2 p-2.5 rounded-[8px] surface-raised";
-            row.innerHTML = `
-                <span class="font-medium text-primary-role">${title}</span>
-                <span class="text-[11px] font-mono text-secondary-role whitespace-nowrap">${statusText}</span>
-            `;
+            const titleSpan = document.createElement('span');
+            titleSpan.className = "font-medium text-primary-role";
+            titleSpan.textContent = title;
+            const statusSpan = document.createElement('span');
+            statusSpan.className = "text-[11px] font-mono text-secondary-role whitespace-nowrap";
+            statusSpan.textContent = statusText;
+            row.appendChild(titleSpan);
+            row.appendChild(statusSpan);
             antiListEl.appendChild(row);
         });
 
@@ -2847,10 +2881,21 @@ function shareChoresPlanViaWhatsApp() {
  **************************************************************/
 function copyShareLink() {
     const input = document.getElementById('share-url-input');
-    input.select();
-    navigator.clipboard.writeText(input.value);
-    const t = I18N[currentLang];
-    document.getElementById('t-copy-btn').innerText = t.copiedBtn;
+    if (!input) return;
+    const t = I18N[currentLang] || I18N.de;
+    const onCopied = () => {
+        const btnText = document.getElementById('t-copy-btn');
+        if (btnText) btnText.innerText = t.copiedBtn;
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(input.value).then(onCopied).catch(() => {
+            if (typeof fallbackCopyText === 'function') fallbackCopyText(input.value);
+            onCopied();
+        });
+    } else {
+        if (typeof fallbackCopyText === 'function') fallbackCopyText(input.value);
+        onCopied();
+    }
 }
 
 function shareViaWhatsApp() {
@@ -3848,9 +3893,13 @@ function renderDecisionStats() {
     if (favBox && favList) {
         if (favs.length > 0) {
             favBox.classList.remove('hidden');
-            favList.innerHTML = favs.slice(0, 8).map(f =>
-                `<span class="px-2.5 py-1 rounded-full surface-raised border border-[#E05A3A]/25 text-[11px] font-semibold text-primary-role inline-flex items-center gap-1">${f.emoji} ${f.title}</span>`
-            ).join('');
+            favList.innerHTML = '';
+            favs.slice(0, 8).forEach(f => {
+                const chip = document.createElement('span');
+                chip.className = 'px-2.5 py-1 rounded-full surface-raised border border-[#E05A3A]/25 text-[11px] font-semibold text-primary-role inline-flex items-center gap-1';
+                chip.textContent = `${f.emoji || '✨'} ${f.title || ''}`;
+                favList.appendChild(chip);
+            });
         } else {
             favBox.classList.add('hidden');
         }
@@ -3875,7 +3924,14 @@ function renderDecisionStats() {
         row.className = 'flex items-center justify-between gap-2 text-[11.5px] py-1 border-b border-[var(--border)] last:border-b-0';
         const d = new Date(item.ts);
         const dateStr = `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
-        row.innerHTML = `<span class="text-primary-role font-semibold truncate">${item.emoji} ${item.title}</span><span class="text-muted-role font-mono text-[10.5px] shrink-0">${dateStr}</span>`;
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'text-primary-role font-semibold truncate';
+        titleSpan.textContent = `${item.emoji || '✨'} ${item.title || ''}`;
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'text-muted-role font-mono text-[10.5px] shrink-0';
+        dateSpan.textContent = dateStr;
+        row.appendChild(titleSpan);
+        row.appendChild(dateSpan);
         listEl.appendChild(row);
     });
 }
@@ -4350,12 +4406,7 @@ document.addEventListener('keydown', (e) => {
     if (!gameScreen || gameScreen.classList.contains('hidden')) return;
     const activeTag = document.activeElement ? document.activeElement.tagName : '';
     if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') return;
-    const anyModalOpen = ['modal-profile', 'modal-timeout', 'modal-pass-play', 'modal-food-picker', 'roulette-modal', 'site-share-modal', 'legal-modal', 'pwa-modal']
-        .some(id => {
-            const el = document.getElementById(id);
-            return el && !el.classList.contains('hidden');
-        });
-    if (anyModalOpen) return;
+    if (typeof isAnyModalOpen === 'function' && isAnyModalOpen()) return;
 
     if (e.key === 'ArrowLeft') {
         e.preventDefault();

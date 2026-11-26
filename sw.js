@@ -1,5 +1,5 @@
 ﻿// Agreesy Service Worker (Network-First for 100% instant UI updates, Cache for offline)
-const CACHE_NAME = 'agreesy-v61';
+const CACHE_NAME = 'agreesy-v62';
 const ASSETS = [
   './',
   './index.html',
@@ -7,7 +7,7 @@ const ASSETS = [
   './icon.svg',
   './icon-64.webp',
   './icon-192.png',
-  './js/bundle.min.js'
+  './js/bundle.min.js?v=62'
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,20 +32,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Network-First for ALL resources (HTML, JS, CSS) to prevent stale UI caching
+// Network-First for same-origin resources; safe offline fallback for navigation only
 self.addEventListener('fetch', (event) => {
   const req = event.request;
+  const isSameOrigin = req.url.startsWith(self.location.origin);
   event.respondWith(
     fetch(req)
       .then((networkRes) => {
-        if (networkRes && networkRes.status === 200 && req.method === 'GET') {
+        if (isSameOrigin && networkRes && networkRes.status === 200 && req.method === 'GET') {
           const clone = networkRes.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
         }
         return networkRes;
       })
       .catch(() => {
-        return caches.match(req).then((cached) => cached || caches.match('./index.html'));
+        return caches.match(req, { ignoreSearch: true }).then((cached) => {
+          if (cached) return cached;
+          if (req.mode === 'navigate') return caches.match('./index.html');
+          return new Response('', { status: 504, statusText: 'Offline' });
+        });
       })
   );
 });
