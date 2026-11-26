@@ -1665,13 +1665,13 @@ function renderCurrentCard() {
 
     document.getElementById('card-tag').innerText = card.tag[currentLang] || card.tag.de;
 
-    // Microsoft Fluent 3D Image Rendering (Centered with Ambient Glow)
+    // Editorial Gouache / Fluent Visual Rendering
     const imgEl = document.getElementById('card-image');
     const emojiEl = document.getElementById('card-emoji');
-    const fluentFileName = (typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji) ? FLUENT_EMOJI_MAP[card.emoji] : null;
+    const cardImgSrc = (typeof getCardImageSrc === 'function') ? getCardImageSrc(card) : null;
 
-    if (fluentFileName && imgEl) {
-        imgEl.src = `options_gallery/images/${fluentFileName}`;
+    if (cardImgSrc && imgEl) {
+        imgEl.src = cardImgSrc;
         imgEl.alt = card.title[currentLang] || card.title.de || '';
         imgEl.classList.remove('hidden');
         if (emojiEl) emojiEl.classList.add('hidden');
@@ -1923,9 +1923,9 @@ function renderSoloDuelCardSlot(slotSuffix, card) {
     const titleEl = document.getElementById(`duel-title-${slotSuffix}`);
     const descEl = document.getElementById(`duel-desc-${slotSuffix}`);
 
-    const fluentFile = (typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji) ? FLUENT_EMOJI_MAP[card.emoji] : null;
-    if (fluentFile && imgEl) {
-        imgEl.src = `options_gallery/images/${fluentFile}`;
+    const duelImgSrc = (typeof getCardImageSrc === 'function') ? getCardImageSrc(card) : null;
+    if (duelImgSrc && imgEl) {
+        imgEl.src = duelImgSrc;
         imgEl.alt = card.title[currentLang] || card.title.de || '';
         imgEl.classList.remove('hidden');
         if (emojiEl) emojiEl.classList.add('hidden');
@@ -2594,13 +2594,13 @@ function revealMatchScreen(card) {
         winnerCardEl.className = "w-full rounded-[24px] p-6 mb-4 flex flex-col items-center text-center surface relative z-20 transition-all";
     }
 
-    // Microsoft Fluent 3D Image Rendering for Winner Card
+    // Editorial Gouache / Fluent Visual Rendering for Winner Card
     const winnerImgEl = document.getElementById('winner-image');
     const winnerEmojiEl = document.getElementById('winner-emoji');
-    const fluentWinnerFile = (typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji) ? FLUENT_EMOJI_MAP[card.emoji] : null;
+    const winnerImgSrc = (typeof getCardImageSrc === 'function') ? getCardImageSrc(card) : null;
 
-    if (fluentWinnerFile && winnerImgEl) {
-        winnerImgEl.src = `options_gallery/images/${fluentWinnerFile}`;
+    if (winnerImgSrc && winnerImgEl) {
+        winnerImgEl.src = winnerImgSrc;
         winnerImgEl.alt = card.title[currentLang] || card.title.de || '';
         winnerImgEl.classList.remove('hidden');
         if (winnerEmojiEl) winnerEmojiEl.classList.add('hidden');
@@ -3035,8 +3035,9 @@ function updateHeroRoundCardUI() {
                 ringEl.setAttribute('stroke', '#E05A3A');
                 ringEl.setAttribute('stroke-dashoffset', Math.round(offset));
             }
-            if (imgEl && card && typeof FLUENT_EMOJI_MAP !== 'undefined' && card.emoji && FLUENT_EMOJI_MAP[card.emoji]) {
-                imgEl.src = `options_gallery/images/${FLUENT_EMOJI_MAP[card.emoji]}`;
+            const resumeImgSrc = (typeof getCardImageSrc === 'function') ? getCardImageSrc(card) : null;
+            if (imgEl && resumeImgSrc) {
+                imgEl.src = resumeImgSrc;
                 imgEl.className = 'w-7 h-7 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]';
             }
         } else {

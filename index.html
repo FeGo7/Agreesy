@@ -1579,13 +1579,13 @@
         </div>
     </aside>
 
-    <!-- Bundled & Minified App Scripts v64 -->
-    <script src="js/bundle.min.js?v=64" defer></script>
+    <!-- Bundled & Minified App Scripts v65 -->
+    <script src="js/bundle.min.js?v=65" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             const hadController = !!navigator.serviceWorker.controller;
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=64')
+                navigator.serviceWorker.register('./sw.js?v=65')
                     .then(reg => {
                         reg.update();
                     })

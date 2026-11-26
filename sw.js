@@ -1,5 +1,5 @@
 ﻿// Agreesy Service Worker (Network-First for 100% instant UI updates, Cache for offline)
-const CACHE_NAME = 'agreesy-v64';
+const CACHE_NAME = 'agreesy-v65';
 const ASSETS = [
   './',
   './index.html',
@@ -7,8 +7,10 @@ const ASSETS = [
   './icon.svg',
   './icon-64.webp',
   './icon-192.png',
-  './js/bundle.min.js?v=64',
+  './js/bundle.min.js?v=65',
   './options_gallery/gouache/pasta.webp',
+  './options_gallery/gouache/pizza.webp',
+  './options_gallery/gouache/sushi.webp',
   './options_gallery/gouache/movies.webp',
   './options_gallery/gouache/chores.webp',
   './options_gallery/gouache/cocktails.webp',

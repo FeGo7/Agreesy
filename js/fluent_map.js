@@ -1,3 +1,35 @@
+const GOUACHE_EMOJI_MAP = {
+  "🍝": "pasta.webp",
+  "🍕": "pizza.webp",
+  "🍣": "sushi.webp",
+  "🥢": "sushi.webp",
+  "🍿": "movies.webp",
+  "🎬": "movies.webp",
+  "🧹": "chores.webp",
+  "🧺": "chores.webp",
+  "🍸": "cocktails.webp",
+  "🍷": "cocktails.webp",
+  "🥂": "cocktails.webp",
+  "🍾": "cocktails.webp",
+  "🏖️": "vacation.webp",
+  "🏝️": "vacation.webp",
+  "✈️": "vacation.webp",
+  "🎁": "gifts.webp",
+  "🎀": "gifts.webp",
+  "🎅": "gifts.webp"
+};
+
+function getCardImageSrc(card) {
+  if (!card || !card.emoji) return null;
+  if (GOUACHE_EMOJI_MAP[card.emoji]) {
+    return `options_gallery/gouache/${GOUACHE_EMOJI_MAP[card.emoji]}`;
+  }
+  if (typeof FLUENT_EMOJI_MAP !== 'undefined' && FLUENT_EMOJI_MAP[card.emoji]) {
+    return `options_gallery/images/${FLUENT_EMOJI_MAP[card.emoji]}`;
+  }
+  return null;
+}
+
 const FLUENT_EMOJI_MAP = {
   "🍝": "spaghetti_3d.png",
   "🍕": "pizza_3d.png",
