@@ -1,5 +1,5 @@
 ﻿// Agreesy Service Worker (Network-First for 100% instant UI updates, Cache for offline)
-const CACHE_NAME = 'agreesy-v63';
+const CACHE_NAME = 'agreesy-v64';
 const ASSETS = [
   './',
   './index.html',
@@ -7,7 +7,13 @@ const ASSETS = [
   './icon.svg',
   './icon-64.webp',
   './icon-192.png',
-  './js/bundle.min.js?v=63'
+  './js/bundle.min.js?v=64',
+  './options_gallery/gouache/pasta.webp',
+  './options_gallery/gouache/movies.webp',
+  './options_gallery/gouache/chores.webp',
+  './options_gallery/gouache/cocktails.webp',
+  './options_gallery/gouache/vacation.webp',
+  './options_gallery/gouache/gifts.webp'
 ];
 
 self.addEventListener('install', (event) => {
