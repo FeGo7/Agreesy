@@ -38,7 +38,21 @@ const GOUACHE_EMOJI_MAP = {
   "🎲": "boardgames.webp",
   "♟️": "boardgames.webp",
   "🃏": "boardgames.webp",
-  "🧩": "boardgames.webp"
+  "🧩": "boardgames.webp",
+  "🍽️": "dining.webp",
+  "👨‍🍳": "dining.webp",
+  "🥘": "dining.webp",
+  "🍳": "eggs.webp",
+  "🥣": "eggs.webp",
+  "🥔": "potatoes.webp",
+  "🧖‍♀️": "spa.webp",
+  "🧖": "spa.webp",
+  "💆‍♀️": "spa.webp",
+  "🕯️": "spa.webp",
+  "🛋️": "couch.webp",
+  "🏠": "couch.webp",
+  "🏡": "couch.webp",
+  "🛏️": "couch.webp"
 };
 
 function getCardImageSrc(card) {
