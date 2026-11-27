@@ -567,7 +567,7 @@
                 <span id="t-pill-datenight">Date-Night</span>
             </button>
             <button type="button" onclick="startGame('boardgames')" class="min-h-[40px] px-3.5 py-2 rounded-full row-card text-[12.5px] font-bold text-primary-role inline-flex items-center gap-1.5 shrink-0">
-                <span>🎲</span>
+                <img src="options_gallery/gouache/boardgames.webp" alt="" width="18" height="18" class="w-[18px] h-[18px] object-contain shrink-0">
                 <span id="t-pill-boardgames">Brettspiele</span>
             </button>
             <button type="button" onclick="startGame('weekend')" class="min-h-[40px] px-3.5 py-2 rounded-full row-card text-[12.5px] font-bold text-primary-role inline-flex items-center gap-1.5 shrink-0">
@@ -1579,13 +1579,13 @@
         </div>
     </aside>
 
-    <!-- Bundled & Minified App Scripts v65 -->
-    <script src="js/bundle.min.js?v=65" defer></script>
+    <!-- Bundled & Minified App Scripts v66 -->
+    <script src="js/bundle.min.js?v=66" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             const hadController = !!navigator.serviceWorker.controller;
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js?v=65')
+                navigator.serviceWorker.register('./sw.js?v=66')
                     .then(reg => {
                         reg.update();
                     })
